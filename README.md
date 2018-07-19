@@ -21,7 +21,7 @@ and then
 `library(catlearn)`.
 
 ## Installing the latest (unstable) version
-f you're not sure what "unstable" means in this context, 
+If you're not sure what "unstable" means in this context, 
 you probably want to install the **stable** version instead. If you're sure you want the unstable version, 
 first install devtools and its dependencies. Then run:
 
