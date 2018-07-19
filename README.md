@@ -10,6 +10,7 @@ Catlearn is a package for R, and is very easy to install within that
 environment. 
 For a tutorial introduction to catlearn, and the Open Models
 initiative more generally, see [Wills et al. (2017)](http://www.willslab.org.uk/pubs/wills2016plm.pdf).
+There is also some information about catlearn on [R-forge](http://catlearn.r-forge.r-project.org/)
 
 ## Installing the stable version
 Make sure you're running the latest version of R and then type:
