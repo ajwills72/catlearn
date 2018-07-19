@@ -1,0 +1,10 @@
+useDynLib(catlearn)
+exportPattern("^[^\\.]")
+importFrom(Rcpp, evalCpp)
+importFrom("graphics", "axis", "box", "legend", "lines", "plot")
+importFrom("stats", "aggregate", "runif", "optim")
+importFrom("utils", "combn", "data")
+importFrom("parallel", "detectCores", "makeCluster", "stopCluster")
+importFrom("doParallel", "registerDoParallel")
+importFrom("foreach", "foreach", "%dopar%")
+
