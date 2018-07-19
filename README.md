@@ -8,5 +8,5 @@ you probably want to install the **stable** version instead, from CRAN, by typin
 
 If you're sure you want the unstable version, first install devtools and its dependencies. Then run:
 
-`devtools::install_github("matsukik/grt")`
+`devtools::install_github("ajwills72/catlearn")`
 
