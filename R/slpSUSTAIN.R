@@ -47,30 +47,33 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     ## SUSTAIN to other slp functions. To avoid this potentially
     ## confusing difference, the following line is needed
     colskip <- st$colskip + 1
-        
+
     ## Imports from st
     lambda <- st$lambda
     w <-st$w
     cluster <- st$cluster
 
     ## Setting up factors for later
-    
+
     ## fac.dims: The dimension each position in the stimulus input refers
     ## to. For example, in a three dimensional stimulus with 2,3, and 2, levels
     ## on the dimensions, this would return 1 1 2 2 2 3 3
-    
+
     fac.dims <- rep(seq_along(st$dims), st$dims)
 
     ## The numbers 1:N, where N is the length of fac.dims. Useful in various
     ## pieces of code later on
-    
+
     fac.na <- seq(sum(st$dims))
-    
+
     ## fac.queried: The positions of the queried dimension values in the
     ## stimulus input
-    
-    fac.queried <- seq(sum(st$dims) + 1, ncol(tr) - colskip + 1)
-    
+    if (tr['ctrl'] %in% c(1, 2)) {
+      fac.queried <- seq(sum(st$dims) + 1, ncol(tr) - colskip + 1)
+    } else {
+      fac.queried <- fac.na
+    }
+
     ## Setting up environment
     ## Arrays for xout
     xout <- rep(0, nrow(tr))
@@ -81,13 +84,13 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     for (i in 1:nrow(tr)) {
 
         ## Setting up current trial
-        
+
         ## trial - Import current trial
         trial <- tr[i, ]
 
         ## input - Set up stimulus representation
         input <- as.vector(trial[colskip:(colskip + sum(st$dims) - 1)])
-        
+
         ## Reset network if requested to do so.
         if (trial['ctrl'] %in% c(1, 4)) {
             ## Revert to a single cluster centered on the current trial's
@@ -108,7 +111,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             }
 
             ## If w is NA, set up zero weights to a single cluster
-            
+
             if(length(w) == 1) {
                 if(is.na(w)) {
                     w <- matrix(rep(0, ncol(cluster)), nrow = 1)
@@ -116,14 +119,14 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             }
 
         }
-        
+
         ## Equation 4 - Calculate distances of stimulus from each cluster's
         ## position
         mu <- .calc.distances(input, cluster, fac.dims, fac.na)
 
-        ## c.act - The activations of clusters and recognition scores        
+        ## c.act - The activations of clusters and recognition scores
         c.act <- .cluster.activation(lambda, st$r, st$beta, mu)
-        
+
         ## C.out - Activations of output units (Eq. 7)
         ## AW: OK, 2018-03-23
         C.out <- w[which.max(c.act$act), ] * c.act$out[which.max(c.act$act)]
@@ -159,7 +162,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             ## dimension that has the highest activation.
 
             t.queried <- which.max(C.out[fac.queried])
- 
+
             ## If the highest-activated unit has a target value of
             ## less than one, the model has made an error and recruits
             ## a new cluster.
@@ -171,17 +174,17 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
 
             in.order <- C.out[fac.queried][order(C.out[fac.queried])]
             if(in.order[1] == in.order[2]) new.cluster <- TRUE
-            
+
         }
 
         ### Cluster recruitment in unsupervised learning
-        ## AW: OK, 2018-04-19    
-       
+        ## AW: OK, 2018-04-19
+
         if (trial["ctrl"] == 3 & max(c.act$act) < st$tau) new.cluster <- TRUE
 
         ### Adding a new cluster if appropriate.
         ## AW: OK, 2018-04-19
-        
+
         if(new.cluster == TRUE) {
             ## Create new cluster centered on current stimulus
 
@@ -195,7 +198,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
 
             ## The new cluster also needs a set of distances to the
             ## presented stimulus (which will of course be zero)
-            
+
             mu <- rbind(mu, vector(mode = "numeric",
                                    length = length(st$dims)))
 
@@ -212,7 +215,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             cluster[win, fac.na] <-
                 cluster[win, fac.na] +
                 (st$eta * (input - cluster[win,fac.na]))
-            
+
             ## Upquate receptive tuning field (Equ. 13)
             ## (Note: mu.lambda includes the minus sign, hence the absence of a
             ## minus sign in its first use below, and the presence of the
@@ -220,7 +223,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             ## AW: OK, 2018-03-23
             lambda <- lambda + (st$eta * exp(c.act$mu.lambda[win, ]) *
                                 (1 + c.act$mu.lambda[win, ]))
-   
+
 
             ## Equation 14 - one-layer delta learning rule (Widrow & Hoff, 1960)
             ## AW: Corrected, 2018-03-23
@@ -244,7 +247,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     if (xtdo) {
         extdo <- cbind("probabilities" = prob.o, "winning" = xout,
                        "activation" = activations,
-                       "recognition score" = rec)        
+                       "recognition score" = rec)
     }
 
     if (xtdo) {
@@ -256,4 +259,3 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     }
     return(ret)
 }
-

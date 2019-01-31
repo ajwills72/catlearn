@@ -70,11 +70,11 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
 
   Argument \code{st} must be a list containing the following items:
 
-  \code{r} - Attentional focus parameter
+  \code{r} - Attentional focus parameter, always non-negative.
 
-  \code{beta} - Cluster competition parameter
+  \code{beta} - Cluster competition parameter, always non-negative.
 
-  \code{d} - Decision consistency parameter
+  \code{d} - Decision consistency parameter, always non-negative
 
   \code{eta} - Learning rate parameter
 
@@ -83,7 +83,7 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   trial is a supervised learning trial, set tau to 0. slpSUSTAIN can
   accomodate both supervised and unsupervised learning within the same
   simulation, using the \code{ctrl} column in \code{tr} (see below).
-  
+
   \code{lambda} - Vector containing the initial receptive field tuning
   value for each stimulus dimension; the order corresponds to the order
   of dimensions in \code{tr}, below. For a stimulus with three
@@ -91,13 +91,13 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   1, 1].
 
   \code{cluster} - A matrix of the initial positions of each recruited
-  cluster. If set to NA then, each time the network is reset, a single
-  cluster will be created, centered on the stimulus presented on the
-  current trial.
+  cluster. If set to NA, \code{cluster = NA}, then each time the network is
+  reset, a single cluster will be created, centered on the stimulus
+  presented on the current trial.
 
-  \code{w} - A matrix of initial connection weights. If set to NA then,
-  each time the network is reset, zero-strength weights to a single
-  cluster will be created.
+  \code{w} - A matrix of initial connection weights. If set to NA as w = NA
+  then, \code{w = NA}, each time the network is reset, zero-strength weights
+  to a single cluster will be created.
 
   \code{dims} - Vector containing the length of each dimension
   (excluding category dimension, see \code{tr}, below), i.e the number
@@ -133,7 +133,7 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
 
   Unsupervised learning in \code{slpSUSTAIN} is at an early stage of
   testing, as we have not yet established any CIRP for unsupervised
-  learning. 
+  learning.
 
   \code{opt1, opt2, \dots} - optional columns, which may have any names
   you wish, and you may have as many as you like, but they must be
@@ -152,9 +152,6 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   stimulus, dimension 1 is [0 1] and dimension 2 is [0 1 0] with
   category membership [0 1], then the input representation is [0 1 0 1 0
   0 1].
-  \code{t} - Indicator of supervised vs. unsupervised learning. The
-  values can be either 1 = supervised learning or 0 = unsupervised
-  learning. It can also vary trial by trial, within the same simulation.
 
 }
 
@@ -179,4 +176,14 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
 }
 \author{
 Lenard Dome, Andy Wills
+}
+
+\note{
+
+1. There has been an attempt to fit data to slpSUSTAIN, an issue was created
+   on GitHub specifically related to parameter optimasition. Check out
+   \emph{Issue #2} on the project's GitHub page
+   https://github.com/ajwills72/catlearn/issues/2.
+2. There is no mention of the limits of learning rate, but ideally it should be
+   between 0 and 1.
 }
