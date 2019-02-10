@@ -76,7 +76,7 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
 
   \code{d} - Decision consistency parameter, always non-negative
 
-  \code{eta} - Learning rate parameter
+  \code{eta} - Learning rate parameter, see Note 1
 
   \code{tau} - Threshold parameter for cluster recruitment under
   unsupervised learning conditions (Love et al., 2004, Eq. 11). If every
@@ -95,9 +95,9 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   reset, a single cluster will be created, centered on the stimulus
   presented on the current trial.
 
-  \code{w} - A matrix of initial connection weights. If set to NA as w = NA
-  then, \code{w = NA}, each time the network is reset, zero-strength weights
-  to a single cluster will be created.
+  \code{w} - A matrix of initial connection weights. If set to NA as
+  \code{w = NA} then, each time the network is reset,
+  zero-strength weights to a single cluster will be created.
 
   \code{dims} - Vector containing the length of each dimension
   (excluding category dimension, see \code{tr}, below), i.e the number
@@ -180,10 +180,7 @@ Lenard Dome, Andy Wills
 
 \note{
 
-1. There has been an attempt to fit data to slpSUSTAIN, an issue was created
-   on GitHub specifically related to parameter optimasition. Check out
-   \emph{Issue #2} on the project's GitHub page
-   https://github.com/ajwills72/catlearn/issues/2.
-2. There is no mention of the limits of learning rate, but ideally it should be
-   between 0 and 1.
+1. Love et al. (2004) do not explicitly set a range for the learning
+rate; we recommend a range of 0-1.
+
 }
