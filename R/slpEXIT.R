@@ -63,8 +63,8 @@ slpEXIT <-function(st, tr,xtdo=FALSE) {
         ## Angus, Andy: If Inf returned due to loss of accuracy,
         ## set to machine maximum
         exemstep <- exp(colSums(w_exemplars * a_ex))
-        exemstep[exemstep == Inf] <- .Machine$doube.xmax
-        exemstep[exemstep == -Inf] <- -.Machine$doube.xmax        
+        exemstep[exemstep == Inf] <- .Machine$double.xmax
+        exemstep[exemstep == -Inf] <- -.Machine$double.xmax        
         g <- a_in * sig * exemstep
         
         ## calculate current attention strengths alpha_i
