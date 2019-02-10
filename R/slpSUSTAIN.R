@@ -66,14 +66,6 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
 
     fac.na <- seq(sum(st$dims))
 
-    ## fac.queried: The positions of the queried dimension values in the
-    ## stimulus input
-    if (tr['ctrl'] %in% c(1, 2)) {
-      fac.queried <- seq(sum(st$dims) + 1, ncol(tr) - colskip + 1)
-    } else {
-      fac.queried <- fac.na
-    }
-
     ## Setting up environment
     ## Arrays for xout
     xout <- rep(0, nrow(tr))
@@ -87,6 +79,14 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
 
         ## trial - Import current trial
         trial <- tr[i, ]
+
+        ## fac.queried: The positions of the queried dimension values in the
+        ## stimulus input
+        if (trial['ctrl'] %in% c(0, 1, 2)) {
+            fac.queried <- seq(sum(st$dims) + 1, ncol(tr) - colskip + 1)
+        } else {
+            fac.queried <- fac.na
+        }
 
         ## input - Set up stimulus representation
         input <- as.vector(trial[colskip:(colskip + sum(st$dims) - 1)])
