@@ -1,4 +1,4 @@
-## Author: René Schlegelmilch, Andy Wills
+## Author: René Schlegelmilch, Andy Wills, Angus Inkster
 ## Equation numbers reference to the Appendix of Kruschke (2001, JEP:LMC).
     
 slpEXIT <-function(st, tr,xtdo=FALSE) {
@@ -28,7 +28,6 @@ slpEXIT <-function(st, tr,xtdo=FALSE) {
     
     ## go through all the trials and apply model
     for(j in 1:nrow(tr)){
-    
         ## first define indicator variables for correct cats
         ## cCat: index of present cat; eCat: absent cats
         cCat <- eCat <- c()
@@ -60,13 +59,22 @@ slpEXIT <-function(st, tr,xtdo=FALSE) {
         }
         
         ## calculate current activation of gain nodes g
-        ## Equation (4) 
-        g <- a_in * sig * exp(colSums(w_exemplars * a_ex))
-
+        ## Equation (4)
+        ## Angus, Andy: If Inf returned due to loss of accuracy,
+        ## set to machine maximum
+        exemstep <- exp(colSums(w_exemplars * a_ex))
+        exemstep[exemstep == Inf] <- .Machine$doube.xmax
+        exemstep[exemstep == -Inf] <- -.Machine$doube.xmax        
+        g <- a_in * sig * exemstep
+        
         ## calculate current attention strengths alpha_i
-        ## Equation (5) 
-        alpha_i <- g/((sum(g^st$P))^(1/st$P))
-
+        ## Equation (5)
+        ## Angus, Andy: If zero returned due to lack of accuracy,
+        ## set to machine minimum
+        sumstep <- g^st$P
+        sumstep[sumstep == 0] <- .Machine$double.xmin
+        alpha_i <- g/((sum(sumstep))^(1/st$P))
+        
         ## calculate category activation
         ## Equation (1)
         out_act <- (alpha_i) %*% t(w_in_out)

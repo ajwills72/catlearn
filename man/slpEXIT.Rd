@@ -141,7 +141,7 @@
 
   }
   
-\author{René Schlegelmilch, Andy Wills}
+\author{René Schlegelmilch, Andy Wills, Angus Inkster}
 
 \references{
   Kruschke, J. K. (1996). Base rates in category learning. \emph{Journal 
