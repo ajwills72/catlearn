@@ -72,7 +72,7 @@ slpEXIT <-function(st, tr,xtdo=FALSE) {
         ## Angus, Andy: If zero returned due to lack of accuracy,
         ## set to machine minimum
         sumstep <- g^st$P
-        sumstep[sumstep == 0] <- .Machine$double.xmin
+        sumstep[sumstep == 0 & a_in == 1] <- .Machine$double.xmin
         alpha_i <- g/((sum(sumstep))^(1/st$P))
         
         ## calculate category activation
