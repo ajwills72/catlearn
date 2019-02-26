@@ -156,6 +156,57 @@ _Andy Wills_, 23rd March 2017. International Convention of Psychological Science
 
 **Introduction to catlearn**. _Andy Wills_. 26th Jan 2017. School of Psychology, Plymouth University, UK.
 
+# Roadmap
+
+The current plan for version 0.7 is:
+
+- New functions:
+
+	- slpATRIUM (Inkster, Schlegelmilch)
+
+	- slpMack75 (Dome)
+	
+	- Datasets and simulations (Dome, Spicer, Wills)
+
+- Enhanced functions:
+
+	- slpSUSTAIN (Dome)
+	
+	- slpEXIT (Inkster, Schlegelmlich, Wills)
+
+Further plans currently seeking a developer include: 
+
+- Models: Actor-critic, Esber-Haselgrove, McLaren-Mackintosh, PMEGCM-RT, Rational Model, SAMBA, Temporal-difference model
+
+- Re-implement in C/C++ for speed: slpDIVA, slpMBMF
+
+## Timetable
+
+Contributors should provide their working, tested, Rd-documented code by **1st September 2019** if it is to be included in version 0.7.
+
+We aim to release version 0.7 to CRAN by _30th September 2019_. 
+
+# History
+
+Dates of CRAN releases, along with email-list announcements:
+
+- Version 0.6 ("Fried chicken")
+
+	- 2019-02-18: Version 0.6.1 [announcement](version-0.6.1-email.txt).
+
+	- 2018-07-17: Version 0.6 [announcement](version-0.6-email.txt).
+
+- Version 0.5 ("Excellent bacon") 
+
+	- 2017-12-11: [announcement](version-0.5-email.txt).
+	
+- Version 0.4 ("Dinky doughnut")
+
+	- 2017-02-23: [announcement](version-0.4-email.txt).
+
+- Version 0.3 ("Cream cake") 
+
+	- 2016-08-18: [announcement](version-0.3-email.txt).
 
 # References
 

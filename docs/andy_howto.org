@@ -1,0 +1,228 @@
+How to develop packages in R using SVN and r-forge.
+
+* Getting your machine ready for development work
+
+1. Install the latest version of R  from CRAN
+2. Install the latest version of Rcpp from CRAN
+3. Make sure you've installed the tools to build packages on your
+machine, see 
+
+Linux:   https://cran.r-project.org/bin/linux/
+OS X:    http://r.research.att.com/tools/
+Windows: https://cran.r-project.org/bin/windows/Rtools/ 
+
+* Check out the repository (only once)
+ - Navigate to the local development directory: ~/r_packages
+ - Use SVN to checkout the files from R-forge:
+
+   svn checkout svn+ssh://ajwills@r-forge.r-project.org/svnroot/catlearn
+
+* Build and perform checks on the package
+ - Navigate inside the _development_ directory.
+ - Run the checks (NB: due to R-forge directory structure, it will
+   always be 'pkg').
+
+  R CMD build pkg
+
+  R CMD check catlearn_0.24.tar.gz
+
+- For a more rigorous check before CRAN submission
+
+  R CMD check --as-cran catlearn_0.24.tar.gz
+
+- If you pass this, the next level is to pass the winbuilder
+  checks. Check your package against both r-release and r-devel
+
+http://win-builder.r-project.org/
+
+- If and only if this works, upload to CRAN
+
+https://cran.r-project.org/submit.html
+
+* Automated tests
+Write automated tests for new functions. Run all automated tests. Tutorial here:
+
+http://r-pkgs.had.co.nz/tests.html
+
+* Common warnings
+** Rd file is non-ascii
+Specifying encoding:
+
+\encoding{UTF-8}
+
+or convert to ascii
+
+iconv -f utf8 -t ascii slpRW.Rd > slpRW.Rd~
+
+* Install the package
+ - Navigate inside the _development_ directory, e.g. ~/r_packages/catlearn
+ - Install the package using the following inside R:
+
+install.packages("catlearn_0.5.4.tar.gz", repos = NULL, type = "source")
+
+DO NOT USE "R CMD INSTALL" ... it seems to have broken with R 3.5, at
+least for this package, and generates segfaults.
+
+* Make your changes
+NOTE: These changes should be made to the local _development_ copy.
+* Re-install package
+  As for install package
+* Commit changes to the pacakge
+** Check for changes
+  - Enter the _catlearn_ directory in the local development directory
+  - Check the status of files:
+
+   svn status
+
+  - Add files to the repository where needed:
+
+   svn add data/shin92.RData
+** Commit changes
+ - Commit changes with an informative message:
+
+   svn commit -m "Added Shin & Nosofsky (1992) data set"
+* Dealing with RCpp development
+Rcpp::compileAttributes()
+** Now not needed?
+https://github.com/RcppCore/Rcpp/issues/636
+Currently (2017-02-22) Rcpp has some problems playing nicely with
+R-devel. This means that packages using Rcpp are refused by CRAN.  The
+Rcpp people are working on this but, for now, this is the solution:
+
+1. Build the development release of r-devel. (Instructions for doing
+   this in debian are on CRAN.)
+
+2. Do these normal steps using R-devel rather than R:
+
+- Load the library
+
+  library(Rcpp)
+
+- Compile the source
+
+  sourceCpp('path/to/source')
+
+- Update hooks
+
+  Rcpp::compileAttributes()
+
+- Build, check, install as usual (using R-devel)
+
+3. Go inside the 'pkg' directory, run R-devel, and type this:
+
+tools::package_native_routine_registration_skeleton(".") 
+
+This puts a c file to standard output that you then copy to 
+
+src/init.c
+
+4. Rebuild, re-check. Worst case you need to also adapt NAMESPACE.
+
+* Writing vignettes in Sweave
+** Example from the Sweave vignette.
+Retrieve the path of a file in a package:
+
+   rnwfile <- system.file("Sweave", "example-1.Rnw", package = "utils")
+
+Run Sweave:
+
+Sweave(rnwfile)
+
+which creates a .tex file and other bits it'll need to make the PDF.
+Make the PDF with
+
+tools::texi2pdf("example-1.tex")
+** Extracting code from a vignette:
+
+Stangle(rnwfile)
+
+produces code in example-1.R
+
+* Branching a repo
+Sections marked PMO (package maintainer only) should only be done by
+the project lead (normally Andy). However, the can be done by anyone
+who's checked out the repo at the root directory.
+
+- Create a branch (PMO):
+Make sure you're in the root directory for the repo on your machine
+then:
+
+svn copy ^/pkg ^/branches/angus-branch -m "Branching for Angus to add COVIS."
+
+- Checkout the branch
+(This should be done by the person using the branch).
+
+svn checkout
+svn+ssh://ainkster@r-forge.r-project.org/svnroot/catlearn/branches/angus-branch
+
+- Merging trunk developments to branch
+(Person using the branch should do this regularly)
+
+svn merge ^/pkg
+svn commit -m "Sync trunk changes to angus-branch."
+
+- Merging a branch back into the trunk (PMO)
+Make sure you're in the root directory for the trunk on your machine
+('pkg' for catlearn) then:
+
+svn merge ^/branches/angus-branch
+svn commit -m "Merge rw-branch with trunk."
+This can be done multiple times.
+
+** Explanation of branching
+Hi,
+
+NOTE: I'm working on getting better instructions for this. Let me know
+if/where you get stuck.
+
+I've created you a private branch of the catlearn project. This is a
+copy of the catlearn package you can add COVIS into without changing
+the copy that produces the download for r-forge and CRAN (aka 'the
+trunk').
+
+Using RStudio, or the command line, checkout from:
+
+svn+ssh://jpminda@r-forge.r-project.org/svnroot/catlearn/branches/minda-branch
+
+using whatever password you chose when you set yourself up on
+r-forge.
+
+As you're developing your code, you should regularly update your
+branch from the trunk so you don't get out of sync with the main
+package. From the command line the way to do this is to navigate into
+your local working copy of the repo and type:
+
+svn merge ^/pkg
+svn commit -m "Sync trunk changes to minda-branch."
+
+This works from the command line. I don't know how to do that first
+command from within the RStudio, I'm afraid (let me know if you work
+it out).
+
+When we're ready to share your code with the world, I can show you how
+to merge your branch back into the trunk. 
+
+All the best
+
+Andy
+
+* General notes
+
+- Only keep in the R-forge SVN that which you intend to include in the
+  package release. 
+
+* Notes on v.0.5 release
+* Code cut from .cpp files to avoid CRAN warnings
+** slpcovis.cpp
+Line 381: crule = crule; 
+
+Seems pointless, and generates a compiler warning -- because why would
+anyone intend to assign a variable to itself, an action that can have
+no consequence? Compiler assumes it's a typo.
+
+REMOVED.
+** slpRW.cpp, slpBM.cpp
+Variable j is initialised but not used. This generates a compiler
+warning -- for same reasons as above.
+
+REMOVED/

@@ -1,0 +1,44 @@
+Hi,
+
+Version 0.5 of the 'catlearn' package is now available.
+
+Catlearn is an archive of formal models of categorization and
+learning, plus benchmark datasets to test them against. It's also an
+archive of simulations using those models. It's free and open source
+software ... and always will be.
+
+New to version 0.5 are implementations of Nosofsky's Generalized
+Context Model, Daw/Gillan's hybrid model-based model-free learning
+model, and the Bush & Mosteller model.
+
+In addition, most archived simulations now also record the process of
+parameter optimization they used; and the Rescorla-Wagner model
+implementation now runs much faster. The DIVA model implementation had
+a minor update. The ALCOVE and COVIS model implementations remain in
+the same good state as version 0.4.
+
+Catlearn is a package for R, and is very easy to install within that
+environment. Make sure you're running the latest version of R
+(particularly important for Windows users), and then type:
+
+install.packages('catlearn')
+
+and then
+
+library(catlearn).
+
+For a tutorial introduction to catlearn, and the Open Models
+initiative more generally, see Wills et al. (2017).
+
+Thanks to all the contributors to catlearn, and particular thanks to
+Lenard Dome, Garrett Honke, Rene Schegelmilch, and Stuart Spicer, who
+all contributed new code for the version 0.5 release.
+
+All the best
+
+Andy
+
+Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster,
+A.B.(2017). Progress in modeling through distributed collaboration:
+Concepts, tools, and category-learning examples. The Psychology of
+Learning and Motivation

@@ -1,0 +1,37 @@
+catlearn
+
+The problem
+
+Formal models in psychology are failing to live up to their potential due to a lack of effective collaboration.
+
+What is a formal model?
+
+A formal model is one that unambiguously specifies transformations from independent variables to dependent variables. For example, in category learning, category structure might be one independent variable, and classification accuracy one dependent variable.
+
+Formal models are normally expressed mathematically, or in the form of a computer program.
+
+Formal models are important because they allow the unambiguous comparison of the relative adequacy of theories.
+
+However, relatively little progress has been made so far because the
+comparison between models has been too narrow. For example, two models might be compared against the results of one experiment.
+
+A solution
+
+The route to faster progress in formal modelling is to compare models across a much broader set of phenomena.
+
+However, this goal is not achievable by any individual or small group
+in a reasonable amount of time. For example, one career.
+
+Collaboration would solve this problem. But a suitable framework for efficient distributed collaboration has been lacking until now.
+
+The catlearn project provides free and open-source software tools to facilitate distributed collaboration in this field.
+
+What is catlearn?
+
+catlearn is an archival record of key datasets, formal models, and simulations. It supplements, rather than supplants, journal article publication. It is an extension (package) of the R environment. 
+
+Where to find out more
+
+http://catlearn.r-forge.r-project.org/
+
+Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster, A.B. (2017). Progress in modeling through distributed collaboration: Concepts, tools, and category-learning examples. Psychology of Learning and Motivation, 66.

@@ -1,0 +1,38 @@
+Hi,
+
+Version 0.6.1 of the 'catlearn' package is now available.
+
+Catlearn is an archive of formal models of categorization and
+learning, plus benchmark datasets to test them against. It's also an
+archive of simulations using those models. It's free and open source
+software ... and always will be.
+
+Version 0.6.1 is a maintenance release with a series of minor
+enhancements to existing functions.
+
+Catlearn is a package for R, and is very easy to install within that
+environment. Make sure you're running the latest version of R, and
+then type:
+
+install.packages('catlearn')
+
+and then
+
+library(catlearn).
+
+For a tutorial introduction to catlearn, and the Open Models
+initiative more generally, see Wills et al. (2017).
+
+Thanks to all the contributors to catlearn, and particular thanks to
+Angus Inkster and Lenard Dome, who both contributed new code for
+the version 0.6.1 release.
+
+All the best
+
+Andy
+2019-02-26
+
+Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster,
+A.B.(2017). Progress in modeling through distributed collaboration:
+Concepts, tools, and category-learning examples. The Psychology of
+Learning and Motivation

@@ -1,0 +1,44 @@
+Hi,
+
+Version 0.4 of 'catlearn' is now available for Windows, Mac, and
+Linux. This update adds three model implementations:
+
+* COVIS (Ashby et al., 1998) - lead programmer: Angus Inkster
+* DIVA (Kurtz, 2007)         - lead programmer: Garrett Honke
+* Rescorla-Wagner (1972)     - lead programmer: Stuart Spicer
+
+'catlearn' is a free and open archive of model implementations, data
+sets, and simulations, designed to facilitate collaboration on the
+formal modeling of psychological processes, see:
+
+http://catlearn.r-forge.r-project.org/
+
+If you are going to the ICPS conference in Vienna this month, you
+might like to attend the half-way workshop I'm running on catlearn:
+
+A Practical Introduction to Distributed Collaboration for Formal
+Modeling
+ICPS, Vienna
+Thu, Mar 23, 10:30am - 1:20pm, Hall N2.
+
+You can also join the mailing list at: 
+
+https://lists.r-forge.r-project.org/mailman/listinfo/catlearn-package
+
+Finally, I'm particularly keen to talk to you, and assist, if...
+
+* You have a formal model you'd like to make publicly available in
+this archive. 
+
+* You have ideas for independently-replicated phenomena that could
+  be included in the archive.
+
+* You'd like to publicly archive your simulations of datasets with
+  models. 
+
+All the best
+
+Prof. Andy Wills
+School of Psychology
+Plymouth University, UK
+www.willslab.co.uk
