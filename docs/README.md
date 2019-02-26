@@ -192,21 +192,21 @@ Dates of CRAN releases, along with email-list announcements:
 
 - Version 0.6 ("Fried chicken")
 
-	- 2019-02-18: Version 0.6.1 [announcement](version-0.6.1-email.txt).
+	- 2019-02-18: Version 0.6.1 [announcement](announce/version-0.6.1-email.txt).
 
-	- 2018-07-17: Version 0.6 [announcement](version-0.6-email.txt).
+	- 2018-07-17: Version 0.6 [announcement](announce/version-0.6-email.txt).
 
 - Version 0.5 ("Excellent bacon") 
 
-	- 2017-12-11: [announcement](version-0.5-email.txt).
+	- 2017-12-11: [announcement](announce/version-0.5-email.txt).
 	
 - Version 0.4 ("Dinky doughnut")
 
-	- 2017-02-23: [announcement](version-0.4-email.txt).
+	- 2017-02-23: [announcement](announce/version-0.4-email.txt).
 
 - Version 0.3 ("Cream cake") 
 
-	- 2016-08-18: [announcement](version-0.3-email.txt).
+	- 2016-08-18: [announcement](announce/version-0.3-email.txt).
 
 # References
 
