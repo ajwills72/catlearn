@@ -191,6 +191,7 @@ We aim to release version 0.7 to CRAN by _30th September 2019_.
 Dates of CRAN releases, along with email-list announcements:
 
 - Version 0.6 ("Fried chicken")
+	- 2019-03-18: Version 0.6.2: Minor patch so packages tests work on R 3.6.0
 
 	- 2019-02-18: Version 0.6.1 [announcement](announce/version-0.6.1-email.txt).
 
