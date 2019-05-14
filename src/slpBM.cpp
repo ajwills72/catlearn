@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-
-List slpBM (List st, NumericMatrix tr, bool xtdo = false) {
+// [[Rcpp::export]]
+List slpBM(List st, NumericMatrix tr, bool xtdo = false) {
   // Some basic variables
   long i, k;
   long nrow = tr.nrow(), ncol = tr.ncol();
