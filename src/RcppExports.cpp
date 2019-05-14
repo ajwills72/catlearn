@@ -5,6 +5,19 @@
 
 using namespace Rcpp;
 
+// slpEXIT
+List slpEXIT(List st, NumericMatrix tr, bool xtdo);
+RcppExport SEXP _catlearn_slpEXIT(SEXP stSEXP, SEXP trSEXP, SEXP xtdoSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type st(stSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type tr(trSEXP);
+    Rcpp::traits::input_parameter< bool >::type xtdo(xtdoSEXP);
+    rcpp_result_gen = Rcpp::wrap(slpEXIT(st, tr, xtdo));
+    return rcpp_result_gen;
+END_RCPP
+}
 // slpALCOVE
 List slpALCOVE(List st, NumericMatrix tr, std::string dec, bool humble, bool attcon, double absval, bool xtdo);
 RcppExport SEXP _catlearn_slpALCOVE(SEXP stSEXP, SEXP trSEXP, SEXP decSEXP, SEXP humbleSEXP, SEXP attconSEXP, SEXP absvalSEXP, SEXP xtdoSEXP) {
@@ -19,19 +32,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type absval(absvalSEXP);
     Rcpp::traits::input_parameter< bool >::type xtdo(xtdoSEXP);
     rcpp_result_gen = Rcpp::wrap(slpALCOVE(st, tr, dec, humble, attcon, absval, xtdo));
-    return rcpp_result_gen;
-END_RCPP
-}
-// slpBM
-List slpBM(List st, NumericMatrix tr, bool xtdo);
-RcppExport SEXP _catlearn_slpBM(SEXP stSEXP, SEXP trSEXP, SEXP xtdoSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type st(stSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type tr(trSEXP);
-    Rcpp::traits::input_parameter< bool >::type xtdo(xtdoSEXP);
-    rcpp_result_gen = Rcpp::wrap(slpBM(st, tr, xtdo));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -51,25 +51,11 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// slpRW
-List slpRW(List st, NumericMatrix tr, bool xtdo);
-RcppExport SEXP _catlearn_slpRW(SEXP stSEXP, SEXP trSEXP, SEXP xtdoSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type st(stSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type tr(trSEXP);
-    Rcpp::traits::input_parameter< bool >::type xtdo(xtdoSEXP);
-    rcpp_result_gen = Rcpp::wrap(slpRW(st, tr, xtdo));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_catlearn_slpEXIT", (DL_FUNC) &_catlearn_slpEXIT, 3},
     {"_catlearn_slpALCOVE", (DL_FUNC) &_catlearn_slpALCOVE, 7},
-    {"_catlearn_slpBM", (DL_FUNC) &_catlearn_slpBM, 3},
     {"_catlearn_slpCOVIS", (DL_FUNC) &_catlearn_slpCOVIS, 6},
-    {"_catlearn_slpRW", (DL_FUNC) &_catlearn_slpRW, 3},
     {NULL, NULL, 0}
 };
 
