@@ -15,6 +15,21 @@ using namespace std;
 
 // Utility Functions
 
+// Function to extract row from df
+// // [[Rcpp::export]]
+NumericVector exrow(DataFrame x, int row) {
+  int nCols=x.size();
+  NumericVector exrow(nCols), nRows = x[0];
+  for (int j = 0; j<nCols;j++) {
+    NumericVector column(nRows.length());
+    if (TYPEOF(x[j]) == 14){
+      column = x[j] ;
+    }
+    exrow[j] = column[row] ;
+  }
+  return exrow;
+}   
+
 // Function to find position of specific string in string vector
 // // [[Rcpp::export]]
 int posfind(StringVector names, std::string element){
@@ -181,7 +196,7 @@ NumericMatrix exgain_delta_calc(NumericVector g, NumericVector g_inits, NumericV
 // The function that follows is the full slpexit function in C++
 // It uses the above functions for speed and modularity
 // [[Rcpp::export]]
-List slpEXIT(List st, NumericMatrix tr, bool xtdo = false){
+List slpEXITcpp(List st, DataFrame tr, bool xtdo = false){
   // This clumsy section copies stuff out of an R List
   // There seems to be no way in RCpp to get direct access to
   // a List at input?
@@ -211,20 +226,20 @@ List slpEXIT(List st, NumericMatrix tr, bool xtdo = false){
   List output;
   // Setup output matrix
   NumericMatrix outmat(length,nCat);
-  StringVector trnames = colnames(tr);
+  StringVector trnames = tr.names();
   colFeat1 = posfind(trnames,"x1");
   colt1 = posfind(trnames,"t1");
   // Run loop for length of training matrix
   for(i=0;i<length;i++){
     // Initial setup for current trial
-    train = tr(i,_);
+    train = exrow(tr,i);
     // Get input node activations
     for(j=0;j<a_in.size();j++){
-      a_in(j) = train[(colFeat1+j)];
+      a_in(j) = train(colFeat1+j);
     }
     // Get teacher signals
     for(j=0;j<teacher.size();j++){
-      teacher(j) = train[(colt1+j)];
+      teacher(j) = train(colt1+j);
     }
     // Calculate exemplar node activations
     a_ex = a_ex_calc(exemplars, a_in, sig, c);
