@@ -103,7 +103,7 @@ Simulations of several dataset-model combinations (e.g. krus96exit is a simulati
 	
 ## Support functions:
 
-- act2probat (convert output model activation to a predicted rating).
+- act2probrat (convert output model activation to a predicted rating).
 
 # Contribute to catlearn
 
@@ -191,6 +191,8 @@ We aim to release version 0.7 to CRAN by _30th September 2019_.
 Dates of CRAN releases, along with email-list announcements:
 
 - Version 0.6 ("Fried chicken")
+	- 2019-05-23: Version 0.6.3: slpEXIT converted to C++ for speed
+
 	- 2019-03-18: Version 0.6.2: Minor patch so packages tests work on R 3.6.0
 
 	- 2019-02-18: Version 0.6.1 [announcement](announce/version-0.6.1-email.txt).
