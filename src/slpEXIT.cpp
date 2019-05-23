@@ -196,7 +196,7 @@ NumericMatrix exgain_delta_calc(NumericVector g, NumericVector g_inits, NumericV
 // The function that follows is the full slpexit function in C++
 // It uses the above functions for speed and modularity
 // [[Rcpp::export]]
-List slpEXITcpp(List st, DataFrame tr, bool xtdo = false){
+List slpEXIT(List st, DataFrame tr, bool xtdo = false){
   // This clumsy section copies stuff out of an R List
   // There seems to be no way in RCpp to get direct access to
   // a List at input?

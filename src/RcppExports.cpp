@@ -19,13 +19,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // slpEXIT
-List slpEXIT(List st, NumericMatrix tr, bool xtdo);
+List slpEXIT(List st, DataFrame tr, bool xtdo);
 RcppExport SEXP _catlearn_slpEXIT(SEXP stSEXP, SEXP trSEXP, SEXP xtdoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< List >::type st(stSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type tr(trSEXP);
+    Rcpp::traits::input_parameter< DataFrame >::type tr(trSEXP);
     Rcpp::traits::input_parameter< bool >::type xtdo(xtdoSEXP);
     rcpp_result_gen = Rcpp::wrap(slpEXIT(st, tr, xtdo));
     return rcpp_result_gen;
