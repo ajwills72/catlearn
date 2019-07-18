@@ -4,7 +4,7 @@
 
 lepelleymclaren2003train <- function(block1 = 20, block2 = 20,
                                      subj = 4, seed = 7624,
-                                     stim = FALSE) {
+                                     stim_enc = FALSE) {
 set.seed(seed)
 
 # stim numbers
@@ -59,7 +59,7 @@ colnames(biglist) <- c("ctrl", "stage", "subj", "blk", "stim",
                        "A", "B", "C", "D", "V", "W", "X", "Y", "t")
 
 # if stim is TRUE, return stimuli encodings as well
-if (stim = TRUE) {
+if (stim_enc == TRUE) {
     ret <- list("training set" = biglist,
                 "stimuli encoding" = stim)
 } else {

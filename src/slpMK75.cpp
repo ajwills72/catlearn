@@ -63,7 +63,7 @@ List slpMK75 (List st, NumericMatrix tr, bool xtdo = false) {
         // update weights
         wm[k] += delta[k] * inputs[k];              // update attentional strength
         error[k] = sumET[i] - activ[k];             // Calculate the prediction error of all association strength other than k
-        aw[k] += alr * fabs(tr(i, ncol-1) - error[k]) - fabs(tr(i, ncol-1) - activ[k]) * inputs[k];
+        aw[k] += alr * (fabs(tr(i, ncol-1) - error[k]) - fabs(tr(i, ncol-1) - activ[k])) * inputs[k];
         }
     }
 

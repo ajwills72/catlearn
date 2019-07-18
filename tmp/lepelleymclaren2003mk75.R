@@ -6,7 +6,7 @@ lepelleymclaren2003mk75 <- function(params = c(lr = 0.3, alr = 0.1),
     set.seed <- seed
     ## Set training matrix
     stim <- c("A", "B", "C", "D", "V", "W", "X", "Y")
-    tr <- lepelleymclaren2003train(subj = ppt, seed = seed)
+    tr <- lepelleymclaren2003train(subj = ppt)
     # Set initial model state
     init.state <- list(lr = params[1],
                        alr = params[2],
@@ -28,7 +28,7 @@ lepelleymclaren2003mk75 <- function(params = c(lr = 0.3, alr = 0.1),
         tmp <- outa[outa[, 1] == i, ]
         lasta <- by(tmp, tmp[, "subj"], tail, n = 1)
         lasta <- do.call(rbind, as.list(lasta))
-        outp <- rbind(outp, cbind(lastw, lasta[, 5:12]))
+        outp <- rbind(outp, cbind(lastw, lasta[, 4:11]))
     }
     colnames(outw)[4:11] <- stim
     colnames(outa)[4:11] <- stim

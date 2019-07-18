@@ -62,8 +62,8 @@ in taking a closer look, look at values from trials 160-165.
 slpMK75(st, lepelleymclaren2003train(), xtdo = TRUE)$xouta[160:165, ]
 slpMK75(st, lepelleymclaren2003train(), xtdo = TRUE)$xoutw[160:165, ]
 #+END_SRC
-Outputs from S1 looks pretty promising though!!
+Outputs from S1 look pretty promising though!!
 * TODO documentations
-** main function
-** simulation
-** training matrix
+** DONE main function
+** TODO simulation
+** TODO training matrix
