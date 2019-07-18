@@ -2,8 +2,9 @@
 # block2 = stage 2 blocks
 # novel items from stage 2 are omitted at the moment
 
-lepelleymclaren2003ap <- function(block1 = 20, block2 = 20,
-                            subj = 4, seed = 7624) {
+lepelleymclaren2003train <- function(block1 = 20, block2 = 20,
+                                     subj = 4, seed = 7624,
+                                     stim = FALSE) {
 set.seed(seed)
 
 # stim numbers
@@ -57,7 +58,13 @@ for (ppt in 1:subj) {
 colnames(biglist) <- c("ctrl", "stage", "subj", "blk", "stim",
                        "A", "B", "C", "D", "V", "W", "X", "Y", "t")
 
-ret <- list("training set" = biglist,
-            "stimuli encoding" = stim)
+# if stim is TRUE, return stimuli encodings as well
+if (stim = TRUE) {
+    ret <- list("training set" = biglist,
+                "stimuli encoding" = stim)
+} else {
+    ret <- biglist
+}
+
 return(ret)
 } # end of function
