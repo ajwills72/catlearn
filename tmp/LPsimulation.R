@@ -153,3 +153,7 @@ grid.arrange(s1_v_graph, s2_v_graph, s1_a_graph, s2_a_graph, ncol=2)
 g <- arrangeGrob(s1_v_graph, s2_v_graph, s1_a_graph, s2_a_graph, ncol=2) #generates g
 ggsave(file="graphOutput.png", g) #saves g
 
+## Lenard's code to extract output at last trial for each ppt
+
+tmp <- by(trialData, trialData[, "simP"], tail, n = 1)
+tom <- do.call(rbind, as.list(tmp))[, c(1, 2, 8:39)]
