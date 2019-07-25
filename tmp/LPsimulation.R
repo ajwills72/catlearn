@@ -156,4 +156,4 @@ ggsave(file="graphOutput.png", g) #saves g
 ## Lenard's code to extract output at last trial for each ppt
 
 tmp <- by(trialData, trialData[, "simP"], tail, n = 1)
-tom <- do.call(rbind, as.list(tmp))[, c(1, 2, 8:39)]
+tom <- do.call(rbind, as.list(tmp))[, c(1, 8:39)]

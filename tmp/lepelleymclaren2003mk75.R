@@ -1,3 +1,4 @@
+source("LPsimulation.R")
 source("lepelleymclaren2003train.R")
 Rcpp::sourceCpp("../src/slpMK75.cpp")
 lepelleymclaren2003mk75 <- function(params = c(lr = 0.3, alr = 0.1),
@@ -37,7 +38,11 @@ lepelleymclaren2003mk75 <- function(params = c(lr = 0.3, alr = 0.1),
                                 "Aa", "Ba", "Ca", "Da",
                                 "Va", "Wa", "Xa", "Ya")
     ret <- list("trial-level data of weights" = outw,
-                "trial-level data of weights" = outw,
+                "trial-level data of alphas" = outa,
                 "last output by subj per stage" = outp)
     return(ret)
 }
+
+lenard <- lepelleymclaren2003mk75()[[3]]
+lenard
+tom
