@@ -40,57 +40,64 @@ List slpMK75 (List st, NumericMatrix tr, bool xtdo = false) {
     {
       wm = clone(initw);
       aw = clone(initaw);
-    } 
+    }
 
-    if ( tr(i, 0) == 3) 
-    {           
-      wm = clone(initw);                  // Reset weights but not alphas
+    if ( tr(i, 0) == 3)                   // Reset weights but not alphas
+    {
+      wm = clone(initw);
+    }
+
+    if ( tr(i, 0) == 4)                   // Reset alphas but not weights
+    {
+      aw = clone(initaw);
     }
 
     for (k = 0; k < nw; ++k) {
       inputs[k] = tr(i, colskip+k);        // Subset stimuli activations at current trial.
       activ[k] = inputs[k] * wm[k];        // Generate current stimuli weights.
     }
-    
+
     sumET[i] = sum(activ);                 // Record output
 
     for (k = 0; k < nw; ++k) {
       delta[k] = lr * aw[k] * (tr(i, ncol-1) - activ[k]); // Calc change in associative strength.
     }
 
-    if ( tr(i, 0)  != 2) { 
+    if ( tr(i, 0)  != 2) {
       for (k = 0; k < nw; ++k) {
         // update weights
         wm[k] += delta[k] * inputs[k];              // update attentional strength
         error[k] = sumET[i] - activ[k];             // Calculate the prediction error of all association strength other than k
+        // Update alpha values according to Le Pelley et al. (2016)'s Equation 2
         aw[k] += alr * (fabs(tr(i, ncol-1) - error[k]) - fabs(tr(i, ncol-1) - activ[k])) * inputs[k];
-        }
+      }
     }
 
+    // Limiting alphas to 0.1 or 1 as described by Le Pelley et al. (2016)
     for (k = 0; k < nw; ++k) {
       if (aw[k] > 1) {
         aw[k] = 1;
       } else if (aw[k] < 0.1) {
-      aw[k] = 0.1;
+        aw[k] = 0.1;
       }
     }
 
     if (xtdo) {
       wmOUT(i, _) = wm;                    // If xtdo = true, record updated weights to
       awOUT(i, _) = aw;
-                                          // relevant row (i.e. trial).
+      // relevant row (i.e. trial).
     }
   }
 
   if (xtdo) {
     return Rcpp::List::create(Rcpp::Named("suma") = sumET,
-                              Rcpp::Named("xoutw") = wmOUT,
-                              Rcpp::Named("xouta") = awOUT,
-                              Rcpp::Named("w") = wm,
-                              Rcpp::Named("alpha") = aw);
+        Rcpp::Named("xoutw") = wmOUT,
+        Rcpp::Named("xouta") = awOUT,
+        Rcpp::Named("w") = wm,
+        Rcpp::Named("alpha") = aw);
   } else {
     return Rcpp::List::create(Rcpp::Named("suma") = sumET,
-                              Rcpp::Named("w") = wm,
-                              Rcpp::Named("alpha") = aw);
+        Rcpp::Named("w") = wm,
+        Rcpp::Named("alpha") = aw);
   }
 }
