@@ -3,7 +3,7 @@ using namespace Rcpp;
 
 //[[Rcpp::export]]
 
-List slpMK75 (List st, NumericMatrix tr, bool xtdo = false) {
+List slpMack75 (List st, NumericMatrix tr, bool xtdo = false) {
   // Some basic variables
   long i, k;
   long nrow = tr.nrow(), ncol = tr.ncol();
@@ -25,7 +25,8 @@ List slpMK75 (List st, NumericMatrix tr, bool xtdo = false) {
   NumericVector inputs(nw);
   NumericVector activ(nw);
   NumericVector delta(nw);
-  NumericVector error(nw);
+  NumericVector error1(nw);
+  NumericVector error2(nw);
   NumericVector sumET(nrow);
   NumericMatrix wmOUT(nrow, nw);
   NumericMatrix awOUT(nrow, nw);
@@ -36,40 +37,47 @@ List slpMK75 (List st, NumericMatrix tr, bool xtdo = false) {
   // Run simulation
   for (i = 0; i < nrow; ++i) {
 
-    if ( tr(i, 0)  == 1)                   // Reset model to initial state if new participant.
+    // Reset model to initial state if new participant.
+    if ( tr(i, 0)  == 1)
     {
       wm = clone(initw);
       aw = clone(initaw);
     }
 
-    if ( tr(i, 0) == 3)                   // Reset weights but not alphas
+    // Reset weights but not alphas
+    if ( tr(i, 0) == 3)
     {
       wm = clone(initw);
     }
 
-    if ( tr(i, 0) == 4)                   // Reset alphas but not weights
+    // Reset alphas but not weights
+    if ( tr(i, 0) == 4)
     {
       aw = clone(initaw);
     }
 
     for (k = 0; k < nw; ++k) {
-      inputs[k] = tr(i, colskip+k);        // Subset stimuli activations at current trial.
-      activ[k] = inputs[k] * wm[k];        // Generate current stimuli weights.
+      inputs[k] = tr(i, colskip+k); // Subset activations at current trial.
+      activ[k] = inputs[k] * wm[k]; // Generate current stimuli weights.
     }
 
     sumET[i] = sum(activ);                 // Record output
 
+    // Calculate changes in associative strengths
     for (k = 0; k < nw; ++k) {
-      delta[k] = lr * aw[k] * (tr(i, ncol-1) - activ[k]); // Calc change in associative strength.
+      delta[k] = lr * aw[k] * (tr(i, ncol-1) - activ[k]); 
     }
 
     if ( tr(i, 0)  != 2) {
       for (k = 0; k < nw; ++k) {
         // update weights
-        wm[k] += delta[k] * inputs[k];              // update attentional strength
-        error[k] = sumET[i] - activ[k];             // Calculate the prediction error of all association strength other than k
+        wm[k] += delta[k] * inputs[k];
+        // Calculate the prediction error of all association strengths other than k
+        error1[k] = tr(i, ncol-1) - (sumET[i] - activ[k]);
+        // Calculate the prediction error of current stimuli/stimulus
+        error2[k] = tr(i, ncol-1) - activ[k];
         // Update alpha values according to Le Pelley et al. (2016)'s Equation 2
-        aw[k] += alr * (fabs(tr(i, ncol-1) - error[k]) - fabs(tr(i, ncol-1) - activ[k])) * inputs[k];
+        aw[k] += alr * (fabs(error1[k]) - fabs(error2[k])) * inputs[k];
       }
     }
 
@@ -83,16 +91,17 @@ List slpMK75 (List st, NumericMatrix tr, bool xtdo = false) {
     }
 
     if (xtdo) {
-      wmOUT(i, _) = wm;                    // If xtdo = true, record updated weights to
+     // If xtdo = true, record updated weights to
+      wmOUT(i, _) = wm;
       awOUT(i, _) = aw;
       // relevant row (i.e. trial).
     }
   }
 
   if (xtdo) {
-    return Rcpp::List::create(Rcpp::Named("suma") = sumET,
-        Rcpp::Named("xoutw") = wmOUT,
+    return Rcpp::List::create(Rcpp::Named("xoutw") = wmOUT,
         Rcpp::Named("xouta") = awOUT,
+        Rcpp::Named("suma") = sumET,
         Rcpp::Named("w") = wm,
         Rcpp::Named("alpha") = aw);
   } else {

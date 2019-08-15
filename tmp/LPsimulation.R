@@ -2,7 +2,7 @@
 # Two learning rules: Rescorla & Wagner (1972) and Mackintosh (1975). 
 # Mackintosh based on description in Beesley, Nguyen, Pearson, & Le Pelley (2015)
 
-rm(list=ls())
+# rm(list=ls())
 
 library(pracma)
 library(tidyverse)

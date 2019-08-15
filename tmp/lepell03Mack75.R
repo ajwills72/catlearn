@@ -1,13 +1,18 @@
 source("LPsimulation.R")
-source("lepelleymclaren2003train.R")
+source("lepell03train.R")
 Rcpp::sourceCpp("../src/slpMK75.cpp")
-lepelleymclaren2003mk75 <- function(params = c(lr = 0.3, alr = 0.1),
+lepell03Mack75 <- function(params = c(lr = 0.3, alr = 0.1),
                                     ppt = 4,
-                                    seed = 7624) {
+                                    block1 = 20,
+                                    block2 = 20,
+                                    seed = 7624,
+                                    xtdo = FALSE) {
     set.seed <- seed
     ## Set training matrix
     stim <- c("A", "B", "C", "D", "V", "W", "X", "Y")
-    tr <- lepelleymclaren2003train(subj = ppt)
+    tr <- lepell03train(subj = ppt,
+                               block1 = block1,
+                               block2 = block2)
     # Set initial model state
     init.state <- list(lr = params[1],
                        alr = params[2],
@@ -16,20 +21,22 @@ lepelleymclaren2003mk75 <- function(params = c(lr = 0.3, alr = 0.1),
                        colskip = 5)
 
     # Run simulation
-    out <- slpMK75(init.state, tr, xtdo = TRUE)
+    out <- slpMack75(init.state, tr, xtdo = TRUE)
     outw <- cbind(tr[, 2:4], out$xoutw) 
     outa <- cbind(tr[, 2:4], out$xouta) 
     outp <- NULL
     outmp <- NULL
     # Extract last output for each stage by each participants
-    for (i in 1:2) {
-        tmp <- outw[outw[, 1] == i, ]
+    for (k in 1:2) {
+    for (i in 1:4) {
+        tmp <- outw[outw[, 1] == i & outw[, 2] == k, ]
         lastw <- by(tmp, tmp[, "subj"], tail, n = 1)
         lastw <- do.call(rbind, as.list(lastw))
-        tmp <- outa[outa[, 1] == i, ]
+        tmp <- outa[outa[, 1] == i & outw[, 2] == k, ]
         lasta <- by(tmp, tmp[, "subj"], tail, n = 1)
         lasta <- do.call(rbind, as.list(lasta))
         outp <- rbind(outp, cbind(lastw, lasta[, 4:11]))
+    }
     }
     colnames(outw)[4:11] <- stim
     colnames(outa)[4:11] <- stim
@@ -37,12 +44,14 @@ lepelleymclaren2003mk75 <- function(params = c(lr = 0.3, alr = 0.1),
                                 "Vw", "Ww", "Xw", "Yw",
                                 "Aa", "Ba", "Ca", "Da",
                                 "Va", "Wa", "Xa", "Ya")
-    ret <- list("trial-level data of weights" = outw,
-                "trial-level data of alphas" = outa,
-                "last output by subj per stage" = outp)
+    
+        ret <- list("trial-level data of weights" = outw,
+                    "trial-level data of alphas" = outa,
+                    "last output by subj per stage" = outp)
+
     return(ret)
 }
 
-lenard <- lepelleymclaren2003mk75()[[3]]
+lenard <- lepell03Mack75()[[3]]
 lenard
 tom

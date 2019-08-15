@@ -1,10 +1,5 @@
-# block1 = stage 1 blocks
-# block2 = stage 2 blocks
-# novel items from stage 2 are omitted at the moment
-# stimuli encodings are just for now - the documentation will include them
-lepelleymclaren2003train <- function(block1 = 20, block2 = 20,
-                                     subj = 4, seed = 7624,
-                                     stim_enc = FALSE) {
+lepell03train <- function(block1 = 20, block2 = 20,
+                                     subj = 4, seed = 7624) {
     set.seed(seed)
 
     # stim numbers
@@ -16,7 +11,7 @@ lepelleymclaren2003train <- function(block1 = 20, block2 = 20,
                     "DY", "AX", "BY", "CV", "DW"))
 
     # Input Representations for Stage 1
-    ################## stim A  B  C  D  V  W  X  Y  t
+    ####### colnames: stim A  B  C  D  V  W  X  Y  t
     stage1 <-  matrix(c(1, 1, 0, 0, 0, 1, 0, 0, 0, 1,
                         2, 1, 0, 0, 0, 0, 1, 0, 0, 1,
                         3, 0, 1, 0, 0, 1, 0, 0, 0, -1,
@@ -27,7 +22,7 @@ lepelleymclaren2003train <- function(block1 = 20, block2 = 20,
                         8, 0, 0, 0, 1, 0, 0, 0, 1, 1),
                       nrow = 8, byrow = TRUE)
     # stage 2 is uniform for both conditions
-    ############### stim  A  B  C  D  V  W  X  Y  t
+    ###### colnames: stim  A  B  C  D  V  W  X  Y  t
     stage2 <- rbind(c(9,  1, 0, 0, 0, 0, 0, 1, 0, 1),
                     c(10, 0, 1, 0, 0, 0, 0, 0, 1, -1),
                     c(11, 0, 0, 1, 0, 1, 0, 0, 0, 1),
@@ -35,7 +30,7 @@ lepelleymclaren2003train <- function(block1 = 20, block2 = 20,
 
     biglist <- NULL
     makelist <- NULL
-    block  <- NULL
+    block <- NULL
 
     # condition
     # create the simulated training matrix for each ppt and bind it together
@@ -59,12 +54,5 @@ lepelleymclaren2003train <- function(block1 = 20, block2 = 20,
                            "A", "B", "C", "D", "V", "W", "X", "Y", "t")
 
     # if stim is TRUE, return stimuli encodings as well
-    if (stim_enc == TRUE) {
-        ret <- list("training set" = biglist,
-                    "stimuli encoding" = stim)
-    } else {
-        ret <- biglist
-    }
-
-    return(ret)
+    return(biglist)
 } # end of function

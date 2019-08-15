@@ -39,12 +39,13 @@ Another reason why I added this option is because in the simulation, there
 are four outcomes, where 1 and 2 are unique to stage 1, while 3 and 4 are
 unique to stage 2. Resetting weights without alphas just makes it easier to
 handle it.
+** TODO update code after multiple-column outcomes are added
 * TODO debugging
 ** DONE Naming things
 Naming things is not easy...
-function: slpMK75
-train of ap: lepelleymclaren2003train
-sim: lepelleymclaren2003mk75
+function: slpMack75
+train of ap: lepell03train
+sim: lepell03Mack75
 ** DONE Data frame problems
 There was some problem with how I extracted elements of a list as a data
 frame and not a numerical matrix. This cause the Rcpp function to end with an
@@ -74,8 +75,12 @@ facsimile.
 ** TODO stage 1 differs marginally
 Predictive cues differ in the 1/10000 and unpredictive cues differ in the
 1/100.
+<2019-08-15 Thu> I think the differences result from the way outcomes are
+represented in the two implementations. I eliminated the possibility that it
+resulted from how trials were randomized - because changing it had no effect.
 ** NOTE stage 2 are the same
-I would say that our mackintosh implementation works, because 
+I would say that our mackintosh implementation works, because when values
+reach the ceiling, they are the same.
 * TODO additional features
 ** DONE resetting weights without alphas
 This seemed a smart move, and I can imagine myriad of uses. I can change the
