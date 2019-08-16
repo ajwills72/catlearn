@@ -3,7 +3,7 @@
 \title{
 
     Input representation of lepell03 for models input-compatible with 
-    slpBM, slpRW, slpMack75, slpSUSTAIN, slpEXIT.
+    slpBM, slpRW, slpMack75.
 
 }
 
@@ -98,13 +98,13 @@ This routine was originally developed to support Wills et al. (n.d.).
 
 \note {
 
-1. For simplicity, both test phase and novel stimuli introduced in Stage 2
-(EF, GH, IJ, KL) are left out from this training matrix.
+1. For brewity, both test phase and novel stimuli introduced in Stage 2
+(EF, GH, IJ, KL) are left out from this training set.
 
 2. All single linear operators, which are implemented in catlearn, use a single
 feedback column. These functions are slpBM, slpRW, slpMack75. Additional features
 in development include enabling these functions to process multiple feedback 
-columns. To maintain consistency across implementation and in lack of time,
+columns. But to maintain consistency across implementation and in lack of time,
 we decided to push this feature to later releases.
 
 }
