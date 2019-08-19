@@ -1,5 +1,5 @@
-\name{slpMK75}
-\alias{slpMK75}
+\name{slpMack75}
+\alias{slpMack75}
 \title{
 
 }
@@ -9,7 +9,7 @@ Le Pelley et al. (2016), see Note 1.
 }
 \usage{
 
-slpMK75(st, tr, xtdo = FALSE)
+slpMack75(st, tr, xtdo = FALSE)
 
 }
 \arguments{

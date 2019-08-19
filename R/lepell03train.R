@@ -6,9 +6,6 @@ lepell03train <- function(block1 = 20, block2 = 20,
     # 1 = AV, 2 = AW, 3 = BV, 4 = BW
     # 5 = CX, 6 = CY, 7 = DX, 8 = DY
     # 9 = AX, 10 = BY, 11 = CV, 12 = DW
-    stim <- cbind(1:12,
-                  c("AV", "AW", "BV", "BW", "CX", "CY", "DX",
-                    "DY", "AX", "BY", "CV", "DW"))
 
     # Input Representations for Stage 1
     ####### colnames: stim A  B  C  D  V  W  X  Y  t
@@ -53,6 +50,5 @@ lepell03train <- function(block1 = 20, block2 = 20,
     colnames(biglist) <- c("ctrl", "subj", "stage", "blk", "stim",
                            "A", "B", "C", "D", "V", "W", "X", "Y", "t")
 
-    # if stim is TRUE, return stimuli encodings as well
     return(biglist)
 } # end of function

@@ -1,8 +1,8 @@
 \name{lepell03}
 \docType{data}
-\alias{krus96}
+\alias{lepell03}
 \encoding{UTF-8}
-\title{Learned Predictiveness AP}
+\title{Learned Predictiveness}
 \description{
 
    In the learning predictiveness design, participants trained on cues A, C 

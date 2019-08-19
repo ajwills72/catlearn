@@ -77,7 +77,7 @@ This routine was originally developed to support Wills et al. (n.d.).
 
 \author{
 
-    Lenard Dome, Andy Wills, Tom Beesley
+    Lenard Dome, Andy Wills
 
 }
 
