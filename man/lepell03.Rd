@@ -2,7 +2,7 @@
 \docType{data}
 \alias{lepell03}
 \encoding{UTF-8}
-\title{Learned Predictiveness}
+\title{Learned Predictiveness AP}
 \description{
 
    In the learning predictiveness design, participants trained on cues A, C 
@@ -50,9 +50,16 @@
     Stage 2 was made up of 4 blocks, with each trial type occurring once
     within block.
 
-    This dataset only includes the learning phases, because the paper does
-    not provide the actual response proportions for the test phase. The data
-    are as described in the Results section. 
+    Wills et al. (n.d.) discuss the classification of these data as an
+    Auxilliary Phenomenon, rathen than a CIRP (Canonically Independently
+    Replicated Phenomenon). Briefly, these particular results have been
+    independently replicated, but are arguably not the best exemplar of
+    the known phenomena. For example, the current dataset only includes the 
+    learning phases, because the paper does not provide the actual response
+    proportions for the test phases. The data are as described in the 
+    Results section of Le Pelley and Mclaren (2003).
+
+
 
 }
 
@@ -62,7 +69,21 @@
     associative change in human causal learning. 
     \emph{The Quarterly Journal of Experimental Psychology: Section B, 56(1)},
     68–79.
+    
 }
+
+\references{
+
+    Le Pelley, M. E., & McLaren, I. P. L. (2003). Learned associability and 
+    associative change in human causal learning. 
+    \emph{The Quarterly Journal of Experimental Psychology: Section B, 56(1)},
+    68–79.
+    
+    Wills et al. (n.d.). Benchmarks for category
+    learning. \emph{Manuscript in preparation}.
+
+}
+
 
 \author{
 

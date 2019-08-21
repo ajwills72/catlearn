@@ -2,7 +2,7 @@
 \alias{lepell03Mack75}
 \title{
 
-    Simulation of CIRP lepell03 with the Mackintosh (1975) model implementation
+    Simulation of AP lepell03 with the Mackintosh (1975) model implementation
 }
 
 \description{
