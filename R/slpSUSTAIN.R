@@ -42,6 +42,7 @@
     return(clus)
 }
 
+
 slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     ## Internally, colskip is implemented slightly differently in slp
     ## SUSTAIN to other slp functions. To avoid this potentially
@@ -52,7 +53,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     lambda <- st$lambda
     w <-st$w
     cluster <- st$cluster
-
+    maxcat <- st$maxcat
     ## Setting up factors for later
 
     ## fac.dims: The dimension each position in the stimulus input refers
@@ -98,7 +99,6 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             w <- st$w
             lambda <- st$lambda
             cluster <-st$cluster
-
             ## If cluster is NA, set up a single cluster centered on
             ## the first training stimulus. (The length == 1 thing is
             ## to avoid a tedious warning message).
@@ -178,9 +178,16 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
         }
 
         ### Cluster recruitment in unsupervised learning
+        ### and in unsupervised free-sorting tasks
+        ### (e.g. Medin et al. 1987)
         ## AW: OK, 2018-04-19
 
-        if (trial["ctrl"] == 3 & max(c.act$act) < st$tau) new.cluster <- TRUE
+        if (trial["ctrl"] == 3 & maxcat > 0) {
+            if (max(c.act$act) < st$tau &
+                maxcat > nrow(cluster)) new.cluster <- TRUE
+        } else if (trial["ctrl"] == 3 & maxcat == 0) {
+            if (max(c.act$act) < st$tau) new.cluster <- TRUE
+        }
 
         ### Adding a new cluster if appropriate.
         ## AW: OK, 2018-04-19

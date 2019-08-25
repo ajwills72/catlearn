@@ -9,7 +9,7 @@ Supervised and Unsupervised STratified Adaptive Incremental Network
 }
 
 \usage{
-slpSUSTAIN(st, tr, xtdo = FALSE)
+slpSUSTAIN(st, tr, restrict = FALSE, xtdo = FALSE)
 }
 
 \arguments{
@@ -103,6 +103,13 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   (excluding category dimension, see \code{tr}, below), i.e the number
   of nominal spaces in the representation of each dimension. For Figure
   1 of Love et al. (2004), dims = [2, 2, 2].
+
+  \code{maxcat} - An integer specifying the maximum number of clusters to
+  be recruited. It has been used by Love et al. (2004) to simulate a
+  free-sorting task in Medin, Wattenmaker, & Hampson (1987), where
+  participants needed to sort items into two categories. This parameter
+  will only be used during unsupervised learning. If it is not used,
+  just set to 0.
 
   \code{colskip} - Number of optional columns skipped in \code{tr},
   PLUS ONE. So, if there are no optional columns, set colskip to 1.
