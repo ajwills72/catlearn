@@ -9,7 +9,7 @@ Supervised and Unsupervised STratified Adaptive Incremental Network
 }
 
 \usage{
-slpSUSTAIN(st, tr, restrict = FALSE, xtdo = FALSE)
+slpSUSTAIN(st, tr, xtdo = FALSE)
 }
 
 \arguments{
@@ -105,11 +105,11 @@ slpSUSTAIN(st, tr, restrict = FALSE, xtdo = FALSE)
   1 of Love et al. (2004), dims = [2, 2, 2].
 
   \code{maxcat} - An integer specifying the maximum number of clusters to
-  be recruited. It has been used by Love et al. (2004) to simulate a
-  free-sorting task in Medin, Wattenmaker, & Hampson (1987), where
-  participants needed to sort items into two categories. This parameter
-  will only be used during unsupervised learning. If it is not used,
-  just set to 0.
+  be recruited. A similar restriction has been used by Love et al. (2004)
+  to simulate an unsupervised free-sorting task from Experiment 1 in Medin,
+  Wattenmaker, & Hampson (1987), where participants needed to sort 
+  items into two predefined categories. This parameter will only be used 
+  during unsupervised learning. If it is not used, set it to 0.
 
   \code{colskip} - Number of optional columns skipped in \code{tr},
   PLUS ONE. So, if there are no optional columns, set colskip to 1.
@@ -120,7 +120,7 @@ slpSUSTAIN(st, tr, restrict = FALSE, xtdo = FALSE)
 
   \code{ctrl} - A vector of control codes. The control codes are
   processed prior to the trial and prior to updating cluster's position,
-  lambdas and weights (Love et al., 2004, Equ.  12, 13 and 14,
+  lambdas and weights (Love et al., 2004, Eq.  12, 13 and 14,
   respectively). The available values are:
 
   0 = do supervised learning.
@@ -174,6 +174,10 @@ slpSUSTAIN(st, tr, restrict = FALSE, xtdo = FALSE)
   McDonnell, J. V., & Gureckis, T. M. (2011). Adaptive clustering models
   of categorization. In E. M. Pothos & A. J. Wills (Eds.), \emph{Formal
   Approaches in Categorization}, pp. 220-252.
+
+  Medin, D. L., Wattenmaker, W. D., & Hampson, S. E. (1987). Family 
+  resemblance, conceptual cohesiveness, and category construction. 
+  \emph{Cognitive Psychology, 19(2)}, 242–279.
 
   Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster,
   A.B.(2017). Progress in modeling through distributed collaboration:

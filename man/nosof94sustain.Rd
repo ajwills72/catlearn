@@ -37,9 +37,9 @@
 
 \details{
 
- NOTE: In catlearn version 0.6, the underlying slpSUSTAIN function is
+ NOTE: In catlearn version 0.7, the underlying slpSUSTAIN function is
  written in R, and hence this simulation can take several minutes to
- run. A goal for version 0.7 is to re-write slpSUSTAIN in C++, which
+ run. A goal for version 0.8 is to re-write slpSUSTAIN in C++, which
  will reduce the run time of this simulation to a few seconds.
 
  A simulation using \code{\link{slpSUSTAIN}} and

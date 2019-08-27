@@ -1,4 +1,4 @@
-medin87train <- function(ppt = 1, block = 10, seed = 7649) {
+medin87train <- function(ppt = 1, block = 1, seed = 7649) {
     set.seed(seed)
 
     train <- matrix(c(1, 1, 1, 1,
