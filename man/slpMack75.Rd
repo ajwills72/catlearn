@@ -31,7 +31,7 @@ represents the different types of information required by the model,
 such as the elemental representation of the training stimuli, and the
 presence or absence of an outcome. It returns the output activation on
 each trial (a.k.a sum of associative strengths of cues present on that
-trial), as a vector. The slpMK75 function also returns the final state of
+trial), as a vector. The slpMack75 function also returns the final state of
 the model - a vector of associative and attentional strengths between
 each stimulus and the outcome representation.
 
@@ -47,8 +47,8 @@ between 0.1 and 1.
 \code{w} - a vector of initial associative strengths. If you are not
 sure what to use here, set all values to zero.
 
-\code{alpha} - a vector of initial attentional strengths, set between 0.1 and 1.
-If the updated value is above 1 or below 0.1, it is capped to 1 and 0.1 
+\code{alpha} - a vector of initial attentional strengths. If the 
+updated value is above 1 or below 0.1, it is capped to 1 and 0.1
 respectively.
 
 \code{colskip} - the number of optional columns to be skipped in the tr
@@ -62,12 +62,17 @@ presented to the model. Trials are always presented in the order
 specified. The columns must be as described below, in the order
 described below:
 
-\code{ctrl} - a vector of control codes. Available codes are: 0 = normal
-trial; 1 = reset model (i.e. set associative strengths back to
-their initial values as specified in w (see above)); 2 = Freeze
-learning; 3 = Reset associative weights to initial state, but keep
-attentional strengths in alpha (see above); 4 = Reset attentional strengths
-to initial state, but keep association weights (see above). 
+\code{ctrl} - a vector of control codes. Available codes are: 
+
+    0 = normal trial 
+    1 = reset model (i.e. set associative strengths back to
+    their initial values as specified in w)
+    2 = Freeze learning
+    3 = Reset associative weights to initial state, but keep
+    attentional strengths in alpha
+    4 = Reset attentional strengths to initial state, but keep 
+    association weights.
+
 Control codes are actioned before the trial is processed.
 
 \code{opt1, opt2, \dots} - any number of preferred optional columns, the
@@ -85,12 +90,12 @@ simple applications, one element is used for each stimulus (e.g. a
 simulation of blocking (Kamin, 1969), A+, AX+, would have two inputs,
 one for A and one for X). In simple applications, all present elements
 have an activation of 1 and all absence elements have an activation of
-0. However, slpMK75 supports any real number for activations, e.g. one
+0. However, slpMack75 supports any real number for activations, e.g. one
 might use values between 0 and 1 to represent differing cue saliences.
 
 \code{t} - Teaching signal (a.k.a. lambda). Traditionally, 1 is used to
 represent the presence of the outcome, and 0 is used to represent the
-absence of the outcome, although slpMK75 supports any real values for lambda.
+absence of the outcome, although slpMack75 supports any real values for lambda.
 If you are planning to use multiple outcomes, see Note 2.
 
 Argument \code{xtdo} (eXTenDed Output) - if set to TRUE, function will

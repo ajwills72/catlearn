@@ -53,7 +53,7 @@
     Other parameters of the model set as follows: initial 'w' are set to 0;
     initial 'alpha' are set to 0. These are general conventions for simulating
     with simple associative learning models and cannot be changed without 
-    modifying the function.
+    modifying the \code{slpMack75} function.
 
     The simulation uses 100 simulated participants. Like in Le Pelley and
     McLaren (2003), simulated participants complete 14 blocks of training

@@ -11,7 +11,7 @@
    outcomes. In a subsequent phase, outcomes 1 and 2 are exchanged for new
    outcomes (3, 4), while cues V, W, X, Y are selectively paired with 
    previously predictive cues. For example AX and CV compounds would only
-   occur with outcome outcome 3, whereas BY and DW would only occur with
+   occur with outcome 3, whereas BY and DW would only occur with
    outcome 4. The main finding is that, during test, participants rate AC and
    BD to be more predictive of outcomes 3 and 4 than VX and WY, respectively. 
    Participants seem to learn new cue-outcome relationships quicker for 
@@ -34,7 +34,6 @@
     \item{prop}{Mean response proportions for all trials, averaged
         across participants. If \code{prop} equals to .5, then it means
         that participants gave the correct response on half of the trials.}
-
     }
 
 }
@@ -56,11 +55,10 @@
     independently replicated, but are arguably not the best exemplar of
     the known phenomena. For example, the current dataset only includes the 
     learning phases, because the paper does not provide the actual response
-    proportions for the test phases. The data are as described in the 
-    Results section of Le Pelley and Mclaren (2003).
-
-
-
+    proportions for the test phases. Trianing accuracy also reflects the
+    main findings: people learn faster about previously predictive cues.
+    The data are as described in the Results section of Le Pelley and Mclaren
+    (2003).
 }
 
 \source{
