@@ -1,5 +1,0 @@
-Actually, I looked at the simulation and now seemsto have discovered a bug on 
-line 72 in slpSUSTAIN which occurs only if colskip is bigger then 1 in case 
-of an unsupervised learning condition. It calculates the queried dimensions 
-the same way for both conditions. So even if learning is unsupervised, it 
-extracts the last columns which will be st$dims + 1. 
