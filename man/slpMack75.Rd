@@ -1,7 +1,7 @@
 \name{slpMack75}
 \alias{slpMack75}
 \title{
-
+Mackintosh (1975) associative learning model
 }
 \description{
 

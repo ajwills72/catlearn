@@ -9,6 +9,10 @@ slpEXIT <- function(st, tr, xtdo = FALSE) {
     .Call('_catlearn_slpEXIT', PACKAGE = 'catlearn', st, tr, xtdo)
 }
 
+slpMack75 <- function(st, tr, xtdo = FALSE) {
+    .Call('_catlearn_slpMack75', PACKAGE = 'catlearn', st, tr, xtdo)
+}
+
 slpRW <- function(st, tr, xtdo = FALSE) {
     .Call('_catlearn_slpRW', PACKAGE = 'catlearn', st, tr, xtdo)
 }
