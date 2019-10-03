@@ -54,6 +54,12 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     w <-st$w
     cluster <- st$cluster
     maxcat <- st$maxcat
+
+    ## maxcat introduced in v.0.7, so older sims will not have set it
+    ## We need to detect this and set to default value, otherwise older
+    ## simulations will break. AW 2019-10-03
+    if(is.null(maxcat)) maxcat  <- 0
+    
     ## Setting up factors for later
 
     ## fac.dims: The dimension each position in the stimulus input refers
