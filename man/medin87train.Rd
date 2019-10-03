@@ -17,7 +17,7 @@
 
 }
 
-\usage{medin87train(subjs = 2, blocks = 2, seed = 7649, missing = 'pad')}
+\usage{medin87train(blocks = 2, subjs = 2, seed = 7649, missing = 'pad')}
 
 \arguments{
 
@@ -87,9 +87,5 @@
 
 }
 
-\seealso{
 
-    \code{\link{medin87sustain}}
-
-}
 

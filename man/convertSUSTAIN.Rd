@@ -31,7 +31,10 @@
     Lenard Dome, Andy Wills
   }
   
-\seealso{\link{\code{slpSUSTAIN}}}
+  \seealso{
+
+    \code{\link{slpSUSTAIN}}
+  }
 
 \examples{
 
@@ -39,8 +42,8 @@
 ## two dimensions have two possible nominal values, while the
 ## third and fourth have three possible nominal values.
 
-dummy <- cbind(matrix(sample(1:2, 20, replace=T), ncol = 2),
-               matrix(sample(1:3, 20, replace=T), ncol = 2))
+dummy <- cbind(matrix(sample(1:2, 20, replace=TRUE), ncol = 2),
+               matrix(sample(1:3, 20, replace=TRUE), ncol = 2))
 
 ## Specify the number of nominal spaces for each dimension
 dims <- c(2, 2, 3, 3)
