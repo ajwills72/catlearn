@@ -209,6 +209,8 @@ Dates of CRAN releases, along with email-list announcements:
 
 - Version 0.6 ("Fried chicken")
 
+    - 2019-10-03: Version 0.6.5: slpSUSTAIN uprgaded to include unsupervised category learning. 
+
     - 2019-10-02: Version 0.6.4: slpMack75 added.
 	
 	- 2019-05-23: Version 0.6.3: slpEXIT converted to C++ for speed.
