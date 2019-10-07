@@ -37,9 +37,9 @@
 
 \details{
 
- NOTE: In catlearn version 0.6, the underlying slpSUSTAIN function is
- written in R, and hence this simulation can take several minutes to
- run. A goal for version 0.7 is to re-write slpSUSTAIN in C++, which
+ NOTE: The underlying slpSUSTAIN function is currently
+ written in R, and hence this simulation will take several minutes to
+ run. slpSUSTAIN may be converted to C++ in a future release, which
  will reduce the run time of this simulation to a few seconds.
 
  A simulation using \code{\link{slpSUSTAIN}} and
@@ -49,7 +49,7 @@
  Other parameters of slpSUSTAIN are set as follows: \code{tau} = 0,
  initial \code{lambda} = 1, initial \code{w} = 0, inital cluster
  centered on the first stimulus presented to the siumulated
- subject. These values are conventions of modeling with SUSTAIN, and
+ subject. These values are conventions of modelling with SUSTAIN, and
  should not be considered as free parameters. They are set within the
  \code{nosof94sustain} function, and hence can't be changed without
  re-writing the function.
@@ -72,9 +72,6 @@
  reveals a mean difference in the 96 reported response probabilities of
  less than 0.01.
  
- This simulation was originally developed to support Wills et
- al. (n.d.).
-
 }
 
 \author{
@@ -93,9 +90,6 @@
   learning: A replication and extension of Shepaard, Hovland, and
   Jenkins (1961). \emph{Memory and Cognition, 22}, 352--369.
 
-  Wills et al. (n.d.). Benchmarks for category learning. \emph{Manuscript
-  in preparation}.
-   
 }
 
 \seealso{

@@ -46,8 +46,7 @@ The latest stable version of catlearn contains the following:
 		
 - MBMF: model-based, model-free hybrid (_slpMBMF_)
 	
-- Rescorla-Wagner (_slpRW_)
-	
+- Rescorla-Wagner (_slpRW_)	
 	
 ## Simulations
 
@@ -126,7 +125,25 @@ Previous talks and workshops have included:
 
 ### 2019
 
-Andy Wills will be giving a couple of talks about catlearn in Europe in Q2.
+**Benchmark phenomena in category learning**.
+_Andy Wills_. 22nd June 2019.
+Annual Summer Interdisciplinary Conference (ASIC), Seefeld, Austria
+
+**The OpenModels project in category learning**.
+_Stuart Spicer and Angus Inkster_. 14th June 2019.
+Open Science symposium. Plymouth University, UK.
+
+**Progress in modelling through distributed collaboration**.
+_Andy Wills_. 16th April 2019.
+Tagung Experimentell Arbeitender Psychologen (TEAP) conference, London, UK
+
+**Progress in modelling through distributed collaboration**.
+_Andy Wills_. 21st March 2019.
+Open Science symposium. University of Ghent, Belgium.
+
+**Progress in modelling through distributed collaboration**.
+_Andy Wills_. 7th March 2019.
+PRomoting Open Science PRactices (PROSPR) seminar series, Lancaster University, UK
 
 ### 2018 
 
@@ -191,13 +208,18 @@ We aim to release version 0.7 to CRAN by _30th September 2019_.
 Dates of CRAN releases, along with email-list announcements:
 
 - Version 0.6 ("Fried chicken")
-	- 2019-05-23: Version 0.6.3: slpEXIT converted to C++ for speed
 
-	- 2019-03-18: Version 0.6.2: Minor patch so packages tests work on R 3.6.0
+    - 2019-10-03: Version 0.6.5: slpSUSTAIN uprgaded to include unsupervised category learning. 
 
-	- 2019-02-18: Version 0.6.1 [announcement](announce/version-0.6.1-email.txt).
+    - 2019-10-02: Version 0.6.4: slpMack75 added.
+	
+	- 2019-05-23: Version 0.6.3: slpEXIT converted to C++ for speed.
 
-	- 2018-07-17: Version 0.6 [announcement](announce/version-0.6-email.txt).
+	- 2019-03-18: Version 0.6.2: Minor patch so packages tests work on R 3.6.0.
+
+	- 2019-02-18: Version 0.6.1: Minor maintenance release.
+
+	- 2018-07-17: Version 0.6: slpEXIT and slpSUSTAIN added. 
 
 - Version 0.5 ("Excellent bacon") 
 
