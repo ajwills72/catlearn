@@ -1,28 +1,46 @@
-\name{slpATRIUMrs}
-\alias{slpATRIUMrs}
+\name{slpATRIUM}
+\alias{slpATRIUM}
 \title{
-    ATRIUM - Attention To Rules and Instances in a Unified Model
+  
+  ATRIUM category learning model
+
 }
 \description{
-   Mostly following model descriptions in Erickson & Kruschke (1998).
-   (Differences: In Eq.7 teaching signals are min(0,a_(mk)), which is
-   implemented as min(-1,a_(mk)) as done for ALCOVE (Kruschke; 1992), which 
-   is nested in ATRIUM.  All nodes are initialized at 0, which was not 
-   reported in the original paper.)
+
+  Attention To Rules and Instances in a Unified Model (Erickson &
+  Kruschke (1998). See Note 1.
+
 }
 \usage{
-slpATRIUMrs(st,tr,xtdo)
+
+slpATRIUM(st, tr, xtdo = FALSE)
+
 }
 \arguments{
-\item{st}{List of model parameters}
-\item{tr}{R-by-C matrix of training trials}
-\item{xtdo}{Boolean (required). If \code{FALSE} a matrix of category predictions 
-  is returned only (n-rows, and m-coloums for each n-trial and each m-
+
+  \item{st}{List of model parameters}
+
+  \item{tr}{R-by-C matrix of training trials}
+  
+  \item{xtdo}{Boolean specifying whether to include extended information
+    in the output (see below)}
+    . If \code{FALSE} a matrix of category predictions 
+  is returned only (n-rows, and m-columns for each n-trial and each m-
   category as presented to the model in  \code{tr}, see below. If \code{TRUE} 
   extended output is returned for all network nodes that are updated in 
   Equations 5, 12, 13, 14 and 15, for every trial presented to the model,
   see below.}
 }  
+
+\value{
+
+  Returns a list with the follwing items if \code{xtdo = FALSE}:
+
+  \item{prob}{A matrix of response proabilities for each output unit on
+  each trial.}
+
+  
+}
 
 
 \details{
@@ -171,7 +189,7 @@ The matrix cells must contain the corresponding values of the exemplars on
 each dimension.
 
 
-\author{René Schlegelmilch}
+\author{René Schlegelmilch, Andy Wills}
 
 \references{
   Erickson, M. A., & Kruschke, J. K. (1998). Rules and exemplars in category 
@@ -179,3 +197,12 @@ each dimension.
   Kruschke, J. K. (1992). ALCOVE: an exemplar-based connectionist model of 
   category learning. Psychological review, 99(1), 22.
 }
+
+\note{
+
+  1. ATRIUM uses ALCOVE as its exemplar module. We have assumed this is
+  a standard implementation of ALCOVE, and that hence the 0 in Equation
+  7 of Erickson & Kruschke (1998) is actually meant to be a -1 (as in
+  Equation 4B of Kruschke, 1992). 
+  
+  }

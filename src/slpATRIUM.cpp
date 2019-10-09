@@ -29,9 +29,7 @@ typedef  Map<VectorXd>  MapVecd;
 
 //---------------------------------------------------------------------------//
 // [[Rcpp::export]]
-List cppATRIUM(List st, NumericMatrix tr, bool xtdo) {
-// @Andy:
-// Do you know an easy way to set xtdo = FALSE by default if no input is given?
+List cppATRIUM(List st, NumericMatrix tr, bool xtdo = false) {
 
 //// task variables and model settings import from R
 // see rmd for variable descriptions (var names are the same below)
