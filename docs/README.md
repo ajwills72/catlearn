@@ -207,6 +207,10 @@ We aim to release version 0.7 to CRAN by _30th September 2019_.
 
 Dates of CRAN releases, along with email-list announcements:
 
+- Version 0.7 ("Gooey chocolate")
+
+	- 2019-10-10: Version 0.7.1: Stable release awaiting CRAN approval.
+
 - Version 0.6 ("Fried chicken")
 
     - 2019-10-03: Version 0.6.5: slpSUSTAIN uprgaded to include unsupervised category learning. 
