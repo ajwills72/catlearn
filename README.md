@@ -1,3 +1,12 @@
+!!! DISCLAIMER
+
+This is a developmental branch intended to implement Gluck and Bowers's
+adaptive network extension of the LMS rule (Rescorla & Wagner). Instead of
+modifying the current Rescorla&Wagner implementation, which would involve
+some fairly significant changes to the way the function is currently
+programmed, I decided to implement the Gluck and Bower adaptive LMS network
+model.
+
 # catlearn
 Formal Psychological Models of Categorization and Learning
 
