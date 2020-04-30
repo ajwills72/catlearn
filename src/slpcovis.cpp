@@ -5,7 +5,6 @@
 
 // [[Rcpp::plugins(cpp11)]]
 #include <Rcpp.h>
-#include <iostream>
 using namespace Rcpp;
 
 // Utility functions

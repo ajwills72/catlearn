@@ -100,17 +100,19 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   zero-strength weights to a single cluster will be created.
 
   \code{dims} - Vector containing the length of each dimension
-  (excluding category dimension, see \code{tr}, below), i.e the number
+  (excluding category dimension, see \code{tr}, below), i.e. the number
   of nominal spaces in the representation of each dimension. For Figure
   1 of Love et al. (2004), dims = [2, 2, 2].
 
-  \code{maxcat} - An integer specifying the maximum number of clusters to
-  be recruited during unsupervised learning. A similar restriction has been
-  used by Love et al. (2004) to simulate an unsupervised free-sorting task
-  from Experiment 1 in Medin, Wattenmaker, & Hampson (1987). In this
-  experiment, participants needed to sort items into two predefined 
-  categories. This parameter will only be used during unsupervised 
-  learning. If it is not used, set it to 0.
+  \code{maxcat} - optional. If set, maxcat is an integer specifying the
+  maximum number of clusters to be recruited during unsupervised
+  learning. A similar restriction has been used by Love et al. (2004) to
+  simulate an unsupervised free-sorting task from Experiment 1 in Medin,
+  Wattenmaker, & Hampson (1987). In this experiment, participants needed
+  to sort items into two predefined categories. This parameter will only
+  be used during unsupervised learning. If it is not set, or if it is
+  set to 0, there is no maximum to the number of clusters that can be
+  created.
 
   \code{colskip} - Number of optional columns skipped in \code{tr},
   PLUS ONE. So, if there are no optional columns, set colskip to 1.

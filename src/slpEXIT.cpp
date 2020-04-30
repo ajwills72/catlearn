@@ -4,10 +4,7 @@
 // Plugin for enabling C++11
 // [[Rcpp::plugins(cpp11)]]
 #include <Rcpp.h>
-#include <iostream>
-#include <limits>
 using namespace Rcpp;
-using namespace std;
 // For both personal and modular reasons, a number of utility and model functions
 // are defined before the full model function
 
@@ -16,7 +13,6 @@ using namespace std;
 // Utility Functions
 
 // Function to extract row from df
-// // [[Rcpp::export]]
 NumericVector exrow(DataFrame x, int row) {
   int nCols=x.size();
   NumericVector exrow(nCols), nRows = x[0];
@@ -31,9 +27,9 @@ NumericVector exrow(DataFrame x, int row) {
 }   
 
 // Function to find position of specific string in string vector
-// // [[Rcpp::export]]
 int posfind(StringVector names, std::string element){
   int i, position;
+  position = 0;
   for(i=0;i<names.size();i++){
     if(names[i] == element){
       position = i;
@@ -45,7 +41,6 @@ int posfind(StringVector names, std::string element){
 // Model Functions
 
 // Equation 1: Function to calculate output node activation
-// // [[Rcpp::export]]
 NumericVector out_act_calc(NumericMatrix w_in_out, NumericVector alpha_i){
   int i, j, nrow = w_in_out.nrow(), ncol = w_in_out.ncol();
   NumericVector out_act(nrow);
@@ -60,7 +55,6 @@ NumericVector out_act_calc(NumericMatrix w_in_out, NumericVector alpha_i){
 }
 
 // Equation 2: Function to calculate category choice probabilities
-// // [[Rcpp::export]]
 NumericVector probs_calc(NumericVector out_act, double phi){
   int i, ncol = out_act.size();
   NumericVector probs(ncol);
@@ -72,7 +66,6 @@ NumericVector probs_calc(NumericVector out_act, double phi){
 }
 
 // Equation 3: Function to calculate exemplar activations
-// // [[Rcpp::export]]
 NumericVector a_ex_calc(NumericMatrix exemplars, NumericVector a_in, NumericVector sig, double c){
   int i, j, nrow = exemplars.nrow(), ncol = exemplars.ncol();
   NumericVector a_ex(nrow);
@@ -87,7 +80,6 @@ NumericVector a_ex_calc(NumericMatrix exemplars, NumericVector a_in, NumericVect
 }
 
 // Equation 4: Function to calculate gain node activation
-// // [[Rcpp::export]]
 NumericVector g_calc(NumericMatrix w_exemplars, NumericVector a_in, NumericVector a_ex, NumericVector sig){
   int i, j, nrow = w_exemplars.nrow(), ncol = w_exemplars.ncol();
   NumericVector g(ncol);
@@ -110,14 +102,13 @@ NumericVector g_calc(NumericMatrix w_exemplars, NumericVector a_in, NumericVecto
 }
 
 // Equation 5: Function to calculate cue attention
-// // [[Rcpp::export]]
 NumericVector alpha_i_calc(NumericVector g, NumericVector a_in, double P){
   int i, ncol = g.size();
   NumericVector alpha_i(ncol);
   NumericVector sumstep(ncol);
   for(i=0; i < ncol; i++){
     sumstep(i) = pow(g(i),P);
-    if(sumstep(i) == 0 & a_in(i) == 1){
+    if((sumstep(i) == 0) & (a_in(i) == 1)){
       sumstep(i) = std::numeric_limits<double>::min();
     }
   }
@@ -128,7 +119,6 @@ NumericVector alpha_i_calc(NumericVector g, NumericVector a_in, double P){
 }
 
 // Equation 7: Function to calculate change in gain nodes
-// // [[Rcpp::export]]
 NumericVector gain_delta_calc(NumericVector teacher, NumericVector out_act, NumericVector a_in,
                          NumericVector alpha_i, NumericVector g, NumericMatrix w_in_out,
                          double l_gain, double P){
@@ -164,7 +154,6 @@ NumericVector gain_delta_calc(NumericVector teacher, NumericVector out_act, Nume
 }
 
 // Equation 8: Function to calculate change in associative weights
-// // [[Rcpp::export]]
 NumericMatrix weight_delta_calc(NumericVector teacher, NumericVector out_act, NumericVector alpha_i){
   int i, j, nrow = teacher.size(), ncol = alpha_i.size();
   NumericMatrix weight_delta(nrow,ncol);
@@ -177,7 +166,6 @@ NumericMatrix weight_delta_calc(NumericVector teacher, NumericVector out_act, Nu
 }
 
 // Equation 9: Function to calculate change in weights from exemplar to gain nodes
-// // [[Rcpp::export]]
 NumericMatrix exgain_delta_calc(NumericVector g, NumericVector g_inits, NumericVector a_ex, 
                            NumericMatrix exemplars){
   int i,j, nrow = exemplars.nrow(), ncol = exemplars.ncol();

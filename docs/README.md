@@ -1,6 +1,8 @@
 ![catlearn logo](catlearn-logo.png)
 
-Catlearn is an archive of formal models and simulations of categorization and associative learning in psychology. 
+[![](https://cranlogs.r-pkg.org/badges/grand-total/catlearn)](https://cran.r-project.org/package=catlearn)
+
+Catlearn is an archive of formal models of categorization and associative learning in psychology. 
 
 # Getting started
 
@@ -9,8 +11,6 @@ Some introductory materials on _catlearn_:
 - [a 20-minute video](http://www.willslab.org.uk/vid/catlearn-intro.mp4)
 
 - [a full-length article](http://www.willslab.org.uk/pubs/wills2016plm.pdf)
-
-- [handouts for a half-day tutorial](http://www.willslab.org.uk/icps2017/index.html)
 
 ## Mailing list
 
@@ -45,9 +45,10 @@ The latest stable version of catlearn contains the following:
 - Bush-Mosteller (_slpBM_)
 		
 - MBMF: model-based, model-free hybrid (_slpMBMF_)
-	
-- Rescorla-Wagner (_slpRW_)
-	
+
+- Mackintosh (1975) (_slpMack75_)
+
+- Rescorla-Wagner (_slpRW_)	
 	
 ## Simulations
 
@@ -69,9 +70,13 @@ Simulations of several dataset-model combinations (e.g. krus96exit is a simulati
 
 ### Stimulus frequency effect (_nosof88_)
 
+- nosof88exalcove
+
 - nosof88exalcove_opt
 	
 - nosof88oat
+
+- nosof88protoalcove
 	
 - nosof88protoalcove_opt
 	
@@ -80,6 +85,8 @@ Simulations of several dataset-model combinations (e.g. krus96exit is a simulati
 ### Type I-VI problems (_nosof94_)
 
 - nosof94bnalcove
+
+- nosof94exalcove
 	
 - nosof94exalcove_opt
 	
@@ -93,23 +100,31 @@ Simulations of several dataset-model combinations (e.g. krus96exit is a simulati
 	
 ### Category size (_shin92_)
 
+- shin92exalcove
+
 - shin92exalcove_opt
 	
 - shin92oat
+
+- shin92protoalcove
 	
 - shin92protoalcove_opt
 	
 - shin92train
 	
-## Support functions:
+## Support functions
 
 - act2probrat (convert output model activation to a predicted rating).
+
+- convertSUSTAIN (convert nominal-dimension input representation to a 'padded' format)
+
+- medin87train (input representation of Exp. 1 of Medin et al., 1987)
 
 # Contribute to catlearn
 
 If you'd like to contribute to this project by adding models,
 datasets, or simulations to the catlearn package,
-contact the package maintainer. See also: [contributing to catlearn](intro-catlearn.pdf)
+contact Andy Wills. 
 
 # Invite us to give a talk or workshop
 
@@ -126,7 +141,25 @@ Previous talks and workshops have included:
 
 ### 2019
 
-Andy Wills will be giving a couple of talks about catlearn in Europe in Q2.
+**Benchmark phenomena in category learning**.
+_Andy Wills_. 22nd June 2019.
+Annual Summer Interdisciplinary Conference (ASIC), Seefeld, Austria
+
+**The OpenModels project in category learning**.
+_Stuart Spicer and Angus Inkster_. 14th June 2019.
+Open Science symposium. Plymouth University, UK.
+
+**Progress in modelling through distributed collaboration**.
+_Andy Wills_. 16th April 2019.
+Tagung Experimentell Arbeitender Psychologen (TEAP) conference, London, UK
+
+**Progress in modelling through distributed collaboration**.
+_Andy Wills_. 21st March 2019.
+Open Science symposium. University of Ghent, Belgium.
+
+**Progress in modelling through distributed collaboration**.
+_Andy Wills_. 7th March 2019.
+PRomoting Open Science PRactices (PROSPR) seminar series, Lancaster University, UK
 
 ### 2018 
 
@@ -158,46 +191,31 @@ _Andy Wills_, 23rd March 2017. International Convention of Psychological Science
 
 # Roadmap
 
-The current plan for version 0.7 is:
+We aim to release version 0.8 to CRAN by 16th March 2020.
 
-- New functions:
-
-	- slpATRIUM (Inkster, Schlegelmilch)
-
-	- slpMack75 (Dome)
-	
-	- Datasets and simulations (Dome, Spicer, Wills)
-
-- Enhanced functions:
-
-	- slpSUSTAIN (Dome)
-	
-	- slpEXIT (Inkster, Schlegelmlich, Wills)
-
-Further plans currently seeking a developer include: 
-
-- Models: Actor-critic, Esber-Haselgrove, McLaren-Mackintosh, PMEGCM-RT, Rational Model, SAMBA, Temporal-difference model
-
-- Re-implement in C/C++ for speed: slpDIVA, slpMBMF
-
-## Timetable
-
-Contributors should provide their working, tested, Rd-documented code by **1st September 2019** if it is to be included in version 0.7.
-
-We aim to release version 0.7 to CRAN by _30th September 2019_. 
+Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 2nd March 2020, the latest unstable release on github will be used to check and build stable version 0.8 for release to CRAN. 
 
 # History
 
 Dates of CRAN releases, along with email-list announcements:
 
+- Version 0.7 ("Gooey chocolate")
+
+	- 2019-10-10: Version 0.7.1: Stable release on CRAN.
+
 - Version 0.6 ("Fried chicken")
-	- 2019-05-23: Version 0.6.3: slpEXIT converted to C++ for speed
 
-	- 2019-03-18: Version 0.6.2: Minor patch so packages tests work on R 3.6.0
+    - 2019-10-03: Version 0.6.5: slpSUSTAIN uprgaded to include unsupervised category learning. 
 
-	- 2019-02-18: Version 0.6.1 [announcement](announce/version-0.6.1-email.txt).
+    - 2019-10-02: Version 0.6.4: slpMack75 added.
+	
+	- 2019-05-23: Version 0.6.3: slpEXIT converted to C++ for speed.
 
-	- 2018-07-17: Version 0.6 [announcement](announce/version-0.6-email.txt).
+	- 2019-03-18: Version 0.6.2: Minor patch so packages tests work on R 3.6.0.
+
+	- 2019-02-18: Version 0.6.1: Minor maintenance release.
+
+	- 2018-07-17: Version 0.6: slpEXIT and slpSUSTAIN added. 
 
 - Version 0.5 ("Excellent bacon") 
 
