@@ -1,3 +1,5 @@
+# Subfunctions --------------------------
+
 ## Probability of making the right response (Eq. 8)
 ## AW: OK, 2018-03-21
 .prob.response <- function(C.out, decision.consistency) {
@@ -43,15 +45,19 @@
 }
 
 
+# Main function ----------------------------------
+
 slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
+
+## Imports from st --------------------------------
+
     ## Internally, colskip is implemented slightly differently in slp
     ## SUSTAIN to other slp functions. To avoid this potentially
     ## confusing difference, the following line is needed
     colskip <- st$colskip + 1
-
-    ## Imports from st
+  
     lambda <- st$lambda
-    w <-st$w
+    w <- st$w
     cluster <- st$cluster
     maxcat <- st$maxcat
 
@@ -59,7 +65,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     ## We need to detect this and set to default value, otherwise older
     ## simulations will break. AW 2019-10-03
     if(is.null(maxcat)) maxcat  <- 0
-    
+
     ## Setting up factors for later
 
     ## fac.dims: The dimension each position in the stimulus input refers
@@ -73,12 +79,40 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
 
     fac.na <- seq(sum(st$dims))
 
-    ## Setting up environment
+
+## Setting up environment ------------------------
+
     ## Arrays for xout
     xout <- rep(0, nrow(tr))
     activations <- rep(0,nrow(tr))
     prob.o <- NULL
     rec <- rep(0,nrow(tr))
+
+## Error checking ---------------------------------
+
+    ## check if colskip is correct
+    if (ncol(tr) != (colskip + length(cluster))) {
+        stop(paste("colskip is smaller or larger than needed.",
+                   "\nCheck number of optional columns!",
+                    sep = ""))
+        }
+
+    ## Check that dimensions and values match up, return error if they don't
+    base <- length(lambda)
+    error <- lengths(list(
+                          st$dims,
+                          length(tr[1, colskip:(colskip + sum(st$dims) - 1)])
+                          ))
+    if (any(base != error)) {
+        stop(paste(
+                   "length of dimensions mismatch. \n",
+                   "dim, lambda, w, ",
+                   "and cluster are not of equal lengths.\n"
+                   ),
+            call. = TRUE)
+        }
+
+## Run simulation ---------------------------------
 
     for (i in 1:nrow(tr)) {
 
@@ -221,7 +255,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
         }
 
         ## UPDATES
-        win <- which.max(c.act$out)
+        win <- which.max(c.act$act)
         if (trial['ctrl'] %in% c(0, 1, 3, 4)) {
             ## Update position of winning cluster (Equ. 12)
             ## AW: OK, 2018-03-23
@@ -253,7 +287,8 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
         rec[i] <- c.act$rec ## Recognition score
     }
 
-    ## Organise output
+## Organise output --------------------
+
     ## AW: 2018-04-19, OK
     rownames(prob.o) <- NULL
 
