@@ -32,7 +32,7 @@
 ## AW: OK, 2018-03-21
 .cluster.activation <- function(lambda, r, beta, mu) {
     mu.lambda <- sweep(mu, MARGIN = 2, -lambda, `*`)
-    nom <- sweep(exp(mu.lambda), MARGIN = 2, lambda ^ r, `*`)  
+    nom <- sweep(exp(mu.lambda), MARGIN = 2, lambda ^ r, `*`) 
     act <- apply(nom, MARGIN = 1, sum) / sum(lambda ^ r) # Equation 5
     out <- (act ^ beta / sum(act^beta)) * act # Equation 6
     rec <- sum(out) # Equation A6
@@ -55,7 +55,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     ## SUSTAIN to other slp functions. To avoid this potentially
     ## confusing difference, the following line is needed
     colskip <- st$colskip + 1
-  
+
     lambda <- st$lambda
     w <- st$w
     cluster <- st$cluster
@@ -64,7 +64,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     ## maxcat introduced in v.0.7, so older sims will not have set it
     ## We need to detect this and set to default value, otherwise older
     ## simulations will break. AW 2019-10-03
-    if(is.null(maxcat)) maxcat  <- 0
+    if(is.null(maxcat)) maxcat <- 0
 
     ## Setting up factors for later
 
@@ -83,6 +83,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
 ## Setting up environment ------------------------
 
     ## Arrays for xout
+    sim <- NULL
     xout <- rep(0, nrow(tr))
     activations <- rep(0,nrow(tr))
     prob.o <- NULL
@@ -91,19 +92,14 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
 ## Error checking ---------------------------------
 
     ## check if colskip is correct
-    if (ncol(tr) != (colskip + length(cluster))) {
-        stop(paste("colskip is smaller or larger than needed.",
-                   "\nCheck number of optional columns!",
-                    sep = ""))
-        }
+#    if (ncol(tr) != (colskip + length(fac.na))) {
+#        stop(paste("colskip is smaller or larger than needed.",
+#                   "\nCheck number of optional columns!",
+#                    sep = ""))
+#        }
 
     ## Check that dimensions and values match up, return error if they don't
-    base <- length(lambda)
-    error <- lengths(list(
-                          st$dims,
-                          length(tr[1, colskip:(colskip + sum(st$dims) - 1)])
-                          ))
-    if (any(base != error)) {
+    if (length(st$dims) != length(lambda)) {
         stop(paste(
                    "length of dimensions mismatch. \n",
                    "dim, lambda, w, ",
@@ -127,6 +123,15 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             fac.queried <- seq(sum(st$dims) + 1, ncol(tr) - colskip + 1)
         } else {
             fac.queried <- fac.na
+        }
+
+        ## On first trial, check if colskip is correct
+        ## Note, arguments evaluated from left to right, so it is only
+        ## executed during supervised trials
+        if (i == 1 && trial["ctrl"] %in% 0:2 &&
+            max(fac.queried) + 1 != ncol(tr)) {
+            stop("colskip is not correct.\nCheck number of optional columns!",
+            call. = TRUE)
         }
 
         ## input - Set up stimulus representation
@@ -159,7 +164,6 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             }
 
         }
-
         ## Equation 4 - Calculate distances of stimulus from each cluster's
         ## position
         mu <- .calc.distances(input, cluster, fac.dims, fac.na)
@@ -193,7 +197,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
         ## create a new cluster, as that has already been done).
         ## AW: 2018-03-23: OK
         new.cluster <- FALSE
-
+        exist.cluster <- FALSE
         ## Rules for new cluster under supervised learning
 
         if (trial["ctrl"] == 0) {
@@ -229,10 +233,24 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             if (max(c.act$act) < st$tau) new.cluster <- TRUE
         }
 
+        ## If new.cluster is true, make sure the cluster doesn't
+        ## already exist
+        if (new.cluster) {
+            ## Do not recruit new cluster if cluster already exists
+            sim <- rowSums(abs(sweep(cluster,
+                                 2,
+                                 as.vector(trial[colskip:(length(trial))]),
+                                 FUN = "-"
+                                 )))
+            if (any(sim == 0)) {
+                new.cluster <- FALSE
+                exist.cluster <- TRUE
+            }
+        }
+
         ### Adding a new cluster if appropriate.
         ## AW: OK, 2018-04-19
-
-        if(new.cluster == TRUE) {
+        if (new.cluster == TRUE) {
             ## Create new cluster centered on current stimulus
 
             cluster <- rbind(cluster,
@@ -255,7 +273,11 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
         }
 
         ## UPDATES
+        ## Check if cluster already exists, if yes, update that cluster
+        ## TODO which(sim == 0) should be the one randomly selected from matches
         win <- which.max(c.act$act)
+        if (exist.cluster == TRUE) win <- which(sim == 0)[1]
+
         if (trial['ctrl'] %in% c(0, 1, 3, 4)) {
             ## Update position of winning cluster (Equ. 12)
             ## AW: OK, 2018-03-23
@@ -270,7 +292,6 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             ## AW: OK, 2018-03-23
             lambda <- lambda + (st$eta * exp(c.act$mu.lambda[win, ]) *
                                 (1 + c.act$mu.lambda[win, ]))
-
 
             ## Equation 14 - one-layer delta learning rule (Widrow & Hoff, 1960)
             ## AW: Corrected, 2018-03-23

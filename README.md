@@ -1,3 +1,11 @@
+# TODO
+
+- [x] error/sanity checking
+- [ ] BUG1 resolve tied activations
+- [ ] BUG1 implement boolean to use old or new method
+- [x] BUG2 don't recruit new cluster if cluster already exists
+- [ ] BUG2 documentation note
+
 # catlearn
 Formal Psychological Models of Categorization and Learning
 

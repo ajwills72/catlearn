@@ -197,4 +197,11 @@ Lenard Dome, Andy Wills
 1. Love et al. (2004) do not explicitly set a range for the learning
 rate; we recommend a range of 0-1.
 
+2. In some rare cases, the model might make the wrong response, even when
+it already recruited a cluster. In that event, the implementation does not
+recruit a new cluster, but selects the old one specified in the feedback and
+updates it. Love et al. (2004) does not specify the model's behaviour under
+this possibility, so this is an assumption we made in the current 
+implementation.
+
 }
