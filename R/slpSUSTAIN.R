@@ -221,7 +221,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
         }
 
         ## UPDATES
-        win <- which.max(c.act$act)
+        win <- which.max(c.act$out)
         if (trial['ctrl'] %in% c(0, 1, 3, 4)) {
             ## Update position of winning cluster (Equ. 12)
             ## AW: OK, 2018-03-23
