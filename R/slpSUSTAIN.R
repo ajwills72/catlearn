@@ -129,7 +129,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
         ## Note, arguments evaluated from left to right, so it is only
         ## executed during supervised trials
         if (i == 1 && trial["ctrl"] %in% 0:2 &&
-            max(fac.queried) + 1 != ncol(tr)) {
+            max(fac.queried) != ncol(tr) - 1) {
             stop("colskip is not correct.\nCheck number of optional columns!",
             call. = TRUE)
         }
