@@ -1,7 +1,8 @@
 # TODO
 
 - [x] error/sanity checking
-- [ ] BUG1 resolve tied activations
+- [x] BUG1 resolve tied activations
+        - three different way the model might deal with ties: random, optimal, first
 - [ ] BUG1 implement boolean to use old or new method
 - [x] BUG2 don't recruit new cluster if cluster already exists
 - [ ] BUG2 documentation note

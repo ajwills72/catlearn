@@ -20,6 +20,9 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   \item{xtdo}{Boolean specifying whether to include extended information
   in the output (see below)} }
 
+  \item{ties}{How to deal with tied actvations. It can be either \code{random}
+     (default) or \code{first} (old behaviour) (see below)}
+
 \value{
 
   Returns a list with the following items if \code{xtdo = FALSE}:
@@ -163,6 +166,19 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   category membership [0 1], then the input representation is [0 1 0 1 0
   0 1].
 
+  Argument \code{ties} can be either \code{random} or \code{first}. It specifies
+  how the model behaves in the event, when clusters have the same activations
+  (see Note):
+
+  \code{random} - this is the function's default behaviour. It randomly selects
+  one cluster from the ones that have the same activations. We encourage to
+  set a particular seed with \code{set.seed} to increase reproducibility of
+  simulations.
+
+  \code{first} - this is the old behaviour of the function. It selects
+  the cluster that was first recruited from the set of clusters that have
+  the same activations.
+
 }
 
 \references{
@@ -203,5 +219,13 @@ recruit a new cluster, but selects the old one specified in the feedback and
 updates it. Love et al. (2004) does not specify the model's behaviour under
 this possibility, so this is an assumption we made in the current 
 implementation.
+
+3. On some cases, clusters can have the same activations because the stimuli
+are equally similar to many clusters. Love et al. (2004) does not specify
+how the model will behave in that event. So we have taken the assumption for
+our implementation that the model would pick randomly between the highest 
+activated clusters (given that they have the same activations). This, we felt,
+was in line with the approximation of lateral inhibition (Love et al. 
+2004, Eq. 6).
 
 }

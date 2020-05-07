@@ -30,24 +30,30 @@
 ## but also needed in later calculation, so returned.
 
 ## AW: OK, 2018-03-21
-.cluster.activation <- function(lambda, r, beta, mu) {
+.cluster.activation <- function(lambda, r, beta, mu, ties) {
     mu.lambda <- sweep(mu, MARGIN = 2, -lambda, `*`)
-    nom <- sweep(exp(mu.lambda), MARGIN = 2, lambda ^ r, `*`) 
+    nom <- sweep(exp(mu.lambda), MARGIN = 2, lambda ^ r, `*`)
     act <- apply(nom, MARGIN = 1, sum) / sum(lambda ^ r) # Equation 5
     out <- (act ^ beta / sum(act^beta)) * act # Equation 6
     rec <- sum(out) # Equation A6
-    out[which(act < max(act))] <- 0 # For all other non-winning clusters = 0
+    switch(
+           ties,
+           "random" = winner <- sample(which(act == max(act)), 1),
+           "first" = winner <- which.max(act)
+    )
+    out[-winner] <- 0 # For all other non-winning clusters = 0
     clus <- list("act" = act,
               "out" = out,
               "rec" = rec,
-              "mu.lambda" = mu.lambda)
+              "mu.lambda" = mu.lambda,
+              "winner" = winner)
     return(clus)
 }
 
 
 # Main function ----------------------------------
 
-slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
+slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
 
 ## Imports from st --------------------------------
 
@@ -89,14 +95,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
     prob.o <- NULL
     rec <- rep(0,nrow(tr))
 
-## Error checking ---------------------------------
-
-    ## check if colskip is correct
-#    if (ncol(tr) != (colskip + length(fac.na))) {
-#        stop(paste("colskip is smaller or larger than needed.",
-#                   "\nCheck number of optional columns!",
-#                    sep = ""))
-#        }
+### Error checking ---------------------------------
 
     ## Check that dimensions and values match up, return error if they don't
     if (length(st$dims) != length(lambda)) {
@@ -125,9 +124,12 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
             fac.queried <- fac.na
         }
 
+### Error checking ---------------------------------
+
         ## On first trial, check if colskip is correct
         ## Note, arguments evaluated from left to right, so it is only
-        ## executed during supervised trials
+        ## executed during supervised trials, because unsupervised trials
+        ## have no queried dimensions and it has not been tested.
         if (i == 1 && trial["ctrl"] %in% 0:2 &&
             max(fac.queried) + colskip - 1 != ncol(tr)) {
             stop("colskip is not correct.\nCheck number of optional columns!",
@@ -169,7 +171,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
         mu <- .calc.distances(input, cluster, fac.dims, fac.na)
 
         ## c.act - The activations of clusters and recognition scores
-        c.act <- .cluster.activation(lambda, st$r, st$beta, mu)
+        c.act <- .cluster.activation(lambda, st$r, st$beta, mu, ties)
 
         ## C.out - Activations of output units (Eq. 7)
         ## AW: OK, 2018-03-23
@@ -269,14 +271,15 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE) {
 
             ## ..and now we have to re-calculate the activation of all
             ## clusters
-            c.act <- .cluster.activation(lambda, st$r, st$beta, mu)
+            c.act <- .cluster.activation(lambda, st$r, st$beta, mu, ties)
         }
 
         ## UPDATES
         ## Check if cluster already exists, if yes, update that cluster
         ## TODO which(sim == 0) should be the one randomly selected from matches
-        win <- which.max(c.act$act)
-        if (exist.cluster == TRUE) win <- which(sim == 0)[1]
+        ifelse(exist.cluster == TRUE,
+               win <- which(sim == 0)[1],
+               win <- which.max(c.act$winner))
 
         if (trial['ctrl'] %in% c(0, 1, 3, 4)) {
             ## Update position of winning cluster (Equ. 12)
