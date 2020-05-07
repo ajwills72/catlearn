@@ -20,7 +20,8 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   \item{xtdo}{Boolean specifying whether to include extended information
   in the output (see below)} }
 
-  \item{ties}{How to deal with tied actvations. It can be either \code{random}
+  \item{ties}{How to deal with cases where multiple clusters have the same highest
+      activations. It can be either \code{random}
      (default) or \code{first} (old behaviour) (see below)}
 
 \value{
@@ -167,8 +168,8 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   0 1].
 
   Argument \code{ties} can be either \code{random} or \code{first}. It specifies
-  how the model behaves in the event, when clusters have the same activations
-  (see Note):
+  how the model behaves in the event, when there are multiple winning clusters
+  with the same activations (see Note):
 
   \code{random} - this is the function's default behaviour. It randomly selects
   one cluster from the ones that have the same activations. We encourage to
@@ -176,7 +177,7 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   simulations.
 
   \code{first} - this is the old behaviour of the function. It selects
-  the cluster that was first recruited from the set of clusters that have
+  the cluster that was first recruited from the clusters that have
   the same activations.
 
 }
