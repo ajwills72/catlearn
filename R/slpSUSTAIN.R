@@ -279,7 +279,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
         ## TODO which(sim == 0) should be the one randomly selected from matches
         ifelse(exist.cluster == TRUE,
                win <- which(sim == 0)[1],
-               win <- which.max(c.act$winner))
+               win <- c.act$winner)
 
         if (trial['ctrl'] %in% c(0, 1, 3, 4)) {
             ## Update position of winning cluster (Equ. 12)
