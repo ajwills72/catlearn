@@ -276,7 +276,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
 
         ## UPDATES
         ## Check if cluster already exists, if yes, update that cluster
-        ## TODO which(sim == 0) should be the one randomly selected from matches
+        ## otherwise select new one or the winner
         ifelse(exist.cluster == TRUE,
                win <- which(sim == 0)[1],
                win <- c.act$winner)
