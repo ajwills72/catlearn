@@ -18,11 +18,12 @@ slpSUSTAIN(st, tr, xtdo = FALSE, ties = "random")
   \item{tr}{Matrix of training items}
 
   \item{xtdo}{Boolean specifying whether to include extended information
-  in the output (see below)} }
+  in the output (see below)}
 
   \item{ties}{Model behaviour where multiple clusters have the same
       highest activations. Options are: \code{random}, \code{first}, see
       below.}
+    }
 
 \value{
 
