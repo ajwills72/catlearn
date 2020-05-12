@@ -1,7 +1,7 @@
 medin87sustain <- function(params = c(9.998779, 6.396300, 1.977312,
                                       0.096564, 0.5), seed = 7649) {
     set.seed(seed)
-    bigtr <- medin87train(ppt = 1000, block = 10)
+    bigtr <- medin87train(subjs = 1000, blocks = 10)
     bigtr <- cbind(bigtr[, 1:3], convertSUSTAIN(bigtr[, 4:7], c(2, 2, 2, 2)))
     ## Set initial model state
     init.state <- list(r = params[1], beta = params[2], d = params[3],
