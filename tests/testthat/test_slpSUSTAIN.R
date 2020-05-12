@@ -1,14 +1,14 @@
 ## Check slpSUSTAIN against short supervised and unsupervised experiments.
 context("slpSUSTAIN")
 load('../data/test_slpSUSTAIN.RData')
-out <- slpSUSTAIN(st, tr)
+out <- slpSUSTAIN(st, tr, ties = "first")
 
 test_that("slpSUSTAIN reproduces a short Shepard et al. (1961) Type I simulation.",
 {
     expect_equal(out$p[,1], corr)
 })
 
-out  <- slpSUSTAIN(init.state, bigtr)
+out  <- slpSUSTAIN(init.state, bigtr, ties = "first")
 
 test_that("slpSUSTAIN reproduces a short Medin et al. (1987) Exp. 1 simulation.",
 {
