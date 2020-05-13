@@ -13,7 +13,7 @@ nosof94sustain <- function(params = c(9.01245, 1.252233, 16.924073, 0.092327))
                        tau = 0.0, lambda = c(1, 1, 1), dims = c(2, 2, 2), cluster = NA,
                        w = NA, colskip = 4)
     ## Run simulation
-    out <- slpSUSTAIN(init.state,bigtr)
+    out <- slpSUSTAIN(init.state,bigtr, ties = "first")
     out <- out$probs # Strip out final state info
     ## Combine output to training list
     colnames(out) <- c('p1','p2')
