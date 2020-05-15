@@ -179,8 +179,9 @@ Andy Wills
   Catlearn Research Group (2016). Description of ALCOVE.
   \url{http://catlearn.r-forge.r-project.org/desc-alcove.pdf}
 
-  Kruschke, J. (1991). \emph{ALCOVE.c}. Retrieved 2015-07-20,
-\url{http://www.indiana.edu/~kruschke/articles/ALCOVE.c}
+  Kruschke, J. (1991). \emph{ALCOVE.c}. Retrieved 2015-07-20, page since
+  removed, but archival copy here:
+  \url{https://web.archive.org/web/20150605210526/http://www.indiana.edu/~kruschke/articles/ALCOVE.c}
 
 Kruschke, J. (1992). ALCOVE: an exemplar-based connectionist model of
 category learning. \emph{Psychological Review, 99}, 22-44
