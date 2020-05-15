@@ -206,6 +206,8 @@ Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
 
 - Version 0.7.x ("Gooey chocolate") **CURRENT**
 
+    - 2020-05-15: Version 0.7.3: slpALCOVE upgraded to include some checks for user errors in model specification.
+
     - 2020-05-13: Version 0.7.2: slpSUSTAIN upgraded to: (a) improve implementation of cluster recruitment in edge cases not covered in Love et al. (2004), and (b) add basic checking of common user errors.
 
 	- 2019-10-10: Version 0.7.1: Stable release on CRAN. [announcement](announce/version-0.7.1-email.txt).
