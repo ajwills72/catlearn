@@ -274,6 +274,32 @@ List slpALCOVE(List st, NumericMatrix tr, std::string dec = "ER",
   List alcout;
   alpha = initalpha;
   w = initw;
+  // Do some basic checking for user errors
+  int nin_h = h.nrow();
+  int nhid_h = h.ncol();
+  int tr_width = tr.ncol();
+  // Check 1: alpha matches h
+  if( nin != nin_h ) stop("Check 'st': size of 'alpha' and 'h' do not match.");
+  // Check 2: h matches w
+  if( nhid != nhid_h ) stop("Check 'st': size of 'w' and 'h' do not match.");
+  // Check 3: c, phi, la, lw within bounds
+  if( c <= 0 ) stop("Check 'st': 'c' must be > 0.");
+  if( r <= 0 ) stop("Check 'st': 'r' must be > 0.");
+  if( q <= 0 ) stop("Check 'st': 'q' must be > 0.");  
+  if( phi <= 0 ) stop("Check 'st': 'phi' must be > 0.");
+  if( la <= 0 ) stop("Check 'st': 'la' must be > 0."); 
+  if( la > 1 ) stop("Check 'st': 'la' must be <= 1.");  						     
+  if( lw <= 0 ) stop("Check 'st': 'lw' must be > 0."); 
+  if( lw > 1 ) stop("Check 'st': 'lw' must be <= 1.");
+  // Check 4: tr widith equals colskip + nout + nin *2
+  if( tr_width != colskip + nout + nin * 2 )
+    stop("Check 'colskip', 'tr': Incorrect number of columns in 'tr' given model spec. in 'st'.");
+  // Warning 1: High values of phi
+  if( phi > 20 ) Rf_warning("'phi' > 20: This may cause model instability.");
+  // Warning 2: Unusual values of r, q
+  if( !(r==1 || r==2) ) Rf_warning("'r' is neither 1 or 2: This is outside the model specification.");
+  if( !(q==1 || q==2) ) Rf_warning("'q' is neither 1 or 2: This is outside the model specification.");
+  
   // RUN THROUGH THE TRAINING LIST 
   for(trial = 0; trial < items; trial++) {
     if( tr(trial,0) == 1 ) { // Reset network to initial state

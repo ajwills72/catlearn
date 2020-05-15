@@ -4,13 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Version 0.7.2.
+## Version 0.7.3
 
 ### Added
 
-- **slpSUSTAIN** [errors] - colskip: if it is too large, the user will get a
+- **slpALCOVE** [error checking] - Throw error if (1) alpha and h don't match
+  in size, or (2) h and w don't match in size, or (3) c, phi, la, lw are
+  outside allowed values, or (4) width of tr does not match model spec in
+  st. Warn if: (5) phi exceeds 20, (6) r or q have a value other than 1
+  or 2. [@ajwills72](http://www.willslab.org.uk)
+
+## Version 0.7.2
+
+### Added
+
+- **slpSUSTAIN** [error checking] - colskip: if it is too large, the user will get a
     more informative error ([@lenarddome](https://github.com/lenarddome))
-- **slpSUSTAIN** [errors] - dimensions: if number of dimensions don't match
+- **slpSUSTAIN** [error checking] - dimensions: if number of dimensions don't match
     up (lambda, w, cluster, or dims), receive an error message ([@lenarddome](https://github.com/lenarddome))
 -  **slpSUSTAIN** [new features]  - tied activations: the model can select the
     cluster that was recruited earlier,

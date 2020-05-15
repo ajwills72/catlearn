@@ -197,7 +197,8 @@ Contributions of working, tested, Rd-documented code are welcome for considerati
 
 # History
 
-Dates of CRAN releases, along with email-list announcements:
+Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
+[CHANGELOG](CHANGELOG.md) for more detail):
 
 - Version 0.8.x ("Harmonious honey") _future_
 
