@@ -25,6 +25,11 @@ slpSUSTAIN(st, tr, xtdo = FALSE, ties = "random")
       below.}
     }
 
+  \item{nominal}{Input representation. Options are \code{TRUE} (default) for
+                 nominal binary representations, \code{FALSE} for continuously
+                 valued dimensions, see below. Note that it determines, how
+                 cluser activations are calculated.}
+
 \value{
 
   Returns a list with the following items if \code{xtdo = FALSE}:
@@ -182,6 +187,19 @@ slpSUSTAIN(st, tr, xtdo = FALSE, ties = "random")
   version 0.7.1 of \code{catlearn}, this was the default behaviour of
   \code{slpSUSTAIN}.
 
+  Argument \code{nominal} can be either \code{TRUE} (default) or \code{FALSE}.
+  It specifies the nature of the input representation and how stimuli distance 
+  from clusters are calculated:
+
+  \code{TRUE} - Stimuli are represented as nominally valued dimensions and 
+  cluster-stimuli distances are calculated as specified in Love et al. (2004).
+  This is the default beahviour of the model. It can also work with continuously
+  valued dimensions, see Note 3.)
+
+  \code{FALSE} - Stimuli are represented as continuously valued stimuli
+  dimensions. It calculates distances as defined by Equation A10 in Love
+  and Gureckis (2007).
+
 }
 
 \references{
@@ -228,6 +246,8 @@ conditions, so this is an assumption of our implementation. We'd argue
 that this is a reasonable implementation - without it SUSTAIN would add
 clusters indefinitely under conditions where the stimulus -> category
 associations are proabilistic rather than deterministic.
+
+3. Love and Gureckis 2007 and others
 
 4. In some cases, two or more clusters can have identical activations
 because the presented stimulus is equally similar to multiple

@@ -35,7 +35,9 @@
     nom <- sweep(exp(mu.lambda), MARGIN = 2, lambda ^ r, `*`)
     act <- apply(nom, MARGIN = 1, sum) / sum(lambda ^ r) # Equation 5
     out <- (act ^ beta / sum(act^beta)) * act # Equation 6
-    rec <- sum(out) # Equation A6
+    recA6 <- sum(out) # Equation A6
+    pact <- act/sum(act)
+    recENT <- -(pact %*% log(pact)) # Shannon Entropy
     switch(
            ties,
            "random" = winner <- sample(which(act == max(act)), 1),
@@ -44,7 +46,8 @@
     out[-winner] <- 0 # For all other non-winning clusters = 0
     clus <- list("act" = act,
               "out" = out,
-              "rec" = rec,
+              "recA6" = recA6,
+              "recENT" = recENT,
               "mu.lambda" = mu.lambda,
               "winner" = winner)
     return(clus)
@@ -93,7 +96,8 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
     xout <- rep(0, nrow(tr))
     activations <- rep(0,nrow(tr))
     prob.o <- NULL
-    rec <- rep(0,nrow(tr))
+    recA6 <- rep(0,nrow(tr))
+    recENT <- rep(0,nrow(tr))
 
 ### Error checking ---------------------------------
 
@@ -308,7 +312,8 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
         xout[i] <- win ## Identity of winning cluster
         activations[i] <- c.act$out[win] ## Activation of winning cluster
         prob.o <- rbind(prob.o, prob.r) ## Response probabilities
-        rec[i] <- c.act$rec ## Recognition score
+        recA6[i] <- c.act$recA6 ## Recognition score Equation A6
+        recENT[i] <- c.act$recENT ## Recognition entropy
     }
 
 ## Organise output --------------------
@@ -319,7 +324,8 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
     if (xtdo) {
         extdo <- cbind("probabilities" = prob.o, "winning" = xout,
                        "activation" = activations,
-                       "recognition score" = rec)
+                       "recognition score" = recA6,
+                       "recognition entropy" = recENT)
     }
 
     if (xtdo) {

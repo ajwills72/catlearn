@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+<<<<<<< HEAD:docs/CHANGELONG.md
 ## Version 0.7.3
+=======
+## 0.7.2 [dev]  *SUSTAIN branch
+>>>>>>> [admin] started prepping for love and gureckis 2007:docs/CHANGELOG.md
 
 ### Added
 
