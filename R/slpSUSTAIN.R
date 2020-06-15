@@ -11,21 +11,12 @@
 
 ## Calculating stimulus distance from a cluster (Eq. 4)
 ## AW: OK, 2018-03-21
-.calc.distances <- function(input, cluster, fac.dims, fac.na, decimal) {
+.calc.distances <- function(input, cluster, fac.dims, fac.na) {
     mu <- matrix(0, nrow = nrow(cluster),
-                     ncol = length(unique(fac.dims)))
-    if (decimal == FALSE) {
-        for (k in 1:nrow(cluster)) {
-            mu[k, ] <- as.vector(tapply(abs(input - cluster[k, fac.na]),
-                                        fac.dims, sum)) * 0.5 ## Equation 4
-        }
-    } else {
-        for (k in 1:nrow(cluster)) {
-            mu[k, ] <- unlist(tapply(abs(input - cluster[k, fac.na]),
-                                     fac.dims,
-                                     function(x) sum(log(1 + x)),
-                                     simplify = TRUE)) ## calculate log distance
-        }
+                 ncol = length(unique(fac.dims)))
+    for (k in 1:nrow(cluster)) {
+        mu[k, ] <- as.vector(tapply(abs(input - cluster[k, fac.na]), fac.dims,
+                                    sum)) * 0.5 ## Equation 4
     }
     return(mu)
 }
@@ -39,19 +30,12 @@
 ## but also needed in later calculation, so returned.
 
 ## AW: OK, 2018-03-21
-.cluster.activation <- function(lambda, r, beta, mu, ties, decimal) {
-        mu.lambda <- sweep(mu, MARGIN = 2, -lambda, `*`)
-    if (decimal == FALSE) {
-        nom <- sweep(exp(mu.lambda), MARGIN = 2, lambda ^ r, `*`)
-        act <- apply(nom, MARGIN = 1, sum) / sum(lambda ^ r) # Equation 5
-        out <- (act ^ beta / sum(act^beta)) * act # Equation 6
-    } else {
-        act <- apply(exp(mu.lambda), MARGIN = 1, sum) # Equation A10
-        out <- (act ^ beta / sum(act^beta)) * act # Equation 6
-    }
-    recA6 <- sum(out) # Equation A6
-    pact <- act/sum(act)
-    recENT <- -(pact %*% log(pact)) # Shannon Entropy
+.cluster.activation <- function(lambda, r, beta, mu, ties) {
+    mu.lambda <- sweep(mu, MARGIN = 2, -lambda, `*`)
+    nom <- sweep(exp(mu.lambda), MARGIN = 2, lambda ^ r, `*`)
+    act <- apply(nom, MARGIN = 1, sum) / sum(lambda ^ r) # Equation 5
+    out <- (act ^ beta / sum(act^beta)) * act # Equation 6
+    rec <- sum(out) # Equation A6
     switch(
            ties,
            "random" = winner <- sample(which(act == max(act)), 1),
@@ -60,8 +44,7 @@
     out[-winner] <- 0 # For all other non-winning clusters = 0
     clus <- list("act" = act,
               "out" = out,
-              "recA6" = recA6,
-              "recENT" = recENT,
+              "rec" = rec,
               "mu.lambda" = mu.lambda,
               "winner" = winner)
     return(clus)
@@ -70,7 +53,7 @@
 
 # Main function ----------------------------------
 
-slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random", decimal = FALSE) {
+slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
 
 ## Imports from st --------------------------------
 
@@ -110,8 +93,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random", decimal = FALSE) {
     xout <- rep(0, nrow(tr))
     activations <- rep(0,nrow(tr))
     prob.o <- NULL
-    recA6 <- rep(0,nrow(tr))
-    recENT <- rep(0,nrow(tr))
+    rec <- rep(0,nrow(tr))
 
 ### Error checking ---------------------------------
 
@@ -186,10 +168,10 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random", decimal = FALSE) {
         }
         ## Equation 4 - Calculate distances of stimulus from each cluster's
         ## position
-        mu <- .calc.distances(input, cluster, fac.dims, fac.na, decimal)
+        mu <- .calc.distances(input, cluster, fac.dims, fac.na)
 
         ## c.act - The activations of clusters and recognition scores
-        c.act <- .cluster.activation(lambda, st$r, st$beta, mu, ties, decimal)
+        c.act <- .cluster.activation(lambda, st$r, st$beta, mu, ties)
 
         ## C.out - Activations of output units (Eq. 7)
         ## AW: OK, 2018-03-23
@@ -289,8 +271,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random", decimal = FALSE) {
 
             ## ..and now we have to re-calculate the activation of all
             ## clusters
-            c.act <- .cluster.activation(lambda, st$r, st$beta, mu,
-                                         ties, decimal)
+            c.act <- .cluster.activation(lambda, st$r, st$beta, mu, ties)
         }
 
         ## UPDATES
@@ -327,8 +308,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random", decimal = FALSE) {
         xout[i] <- win ## Identity of winning cluster
         activations[i] <- c.act$out[win] ## Activation of winning cluster
         prob.o <- rbind(prob.o, prob.r) ## Response probabilities
-        recA6[i] <- c.act$recA6 ## Recognition score Equation A6
-        recENT[i] <- c.act$recENT ## Recognition entropy
+        rec[i] <- c.act$rec ## Recognition score
     }
 
 ## Organise output --------------------
@@ -339,8 +319,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random", decimal = FALSE) {
     if (xtdo) {
         extdo <- cbind("probabilities" = prob.o, "winning" = xout,
                        "activation" = activations,
-                       "recognition score" = recA6,
-                       "recognition entropy" = recENT)
+                       "recognition score" = rec)
     }
 
     if (xtdo) {

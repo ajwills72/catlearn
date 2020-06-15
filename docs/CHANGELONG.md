@@ -4,22 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-<<<<<<< HEAD
-<<<<<<< HEAD:docs/CHANGELONG.md
 ## Version 0.7.3
-=======
-=======
-
-## unreleased [dev]
-
-- **slpSUSTAIN** [new features] option to use continuous valued dimensions, including
-    logarithmic distance for similarity comparisons and a reduced exponential function
-    for cluster activations ([@lenarddome](https://github.com/lenarddome))
-- **slpSUSTAIN** [new features] recognition entropy added as of Edmunds et al.
-
->>>>>>> [docs] changelog update
-## 0.7.2 [dev]  *SUSTAIN branch
->>>>>>> [admin] started prepping for love and gureckis 2007:docs/CHANGELOG.md
 
 ### Added
 
