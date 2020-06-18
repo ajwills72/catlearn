@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## dev
+
+### Changed
+
+- **slpSUSTAIN** [fixed] in the absence of ties, the winning cluster is returned instead of a random integer between 0 and the number of the winning cluster ([@lenarddome](https://github.com/lenarddome))
+
 ## Version 0.7.3
 
 ### Added

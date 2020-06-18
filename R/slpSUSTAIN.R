@@ -21,6 +21,16 @@
     return(mu)
 }
 
+
+## Utility function for selecting a random cluster between those
+## who have tied activations
+
+.random <- function(act) {
+    tmp <- which(act == max(act))
+    ret <- tmp[sample(length(tmp), 1)]
+    return(ret)
+}
+
 ## Calculating cluster activation and related values (Eq.5, 6, A6)
 ## act - Activation of each cluster (Eq. 5)
 ## out - Activations after cluster competition (Eq. 6)
@@ -38,7 +48,7 @@
     rec <- sum(out) # Equation A6
     switch(
            ties,
-           "random" = winner <- sample(which(act == max(act)), 1),
+           "random" = winner <- .random(act),
            "first" = winner <- which.max(act)
     )
     out[-winner] <- 0 # For all other non-winning clusters = 0
