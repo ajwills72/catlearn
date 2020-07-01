@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## dev
+## Version 0.7.4
 
 ### Changed
 
-- **slpSUSTAIN** [fixed] in the absence of ties, the winning cluster is returned instead of a random integer between 0 and the number of the winning cluster ([@lenarddome](https://github.com/lenarddome))
+- **slpSUSTAIN** [fixed] a bug relating to new default behaviour `ties = "random"`, introduced in Version 0.7.2. The bug was that a random cluster was selected even in the absence of ties. This patch removes the error, with the code now working as documented ([@lenarddome](https://github.com/lenarddome))
 
 ## Version 0.7.3
 
