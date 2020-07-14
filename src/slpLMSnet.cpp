@@ -14,10 +14,9 @@ mat node_activation(rowvec input, mat weights) {
 }
 
 // Equation 4: calculate least mean square error
-double squared_differences(mat outnode, colvec teaching, int outcomes) {
-  Rcout << outnode << std::endl;
+double squared_differences(mat outnode, colvec teaching, double outcomes) {
   mat lms = outnode % teaching;
-  double sqdif = (1/outcomes) * (accu(powmat(lms, 2)));
+  double sqdif = (1/outcomes) * (accu(pow(lms, 2)));
   return sqdif;
 }
 
@@ -25,8 +24,10 @@ double squared_differences(mat outnode, colvec teaching, int outcomes) {
 mat delta_learning(mat outnode, colvec teaching, rowvec input, double beta) {
   colvec error = teaching - outnode;
   colvec delta = beta * error;
-  mat activation = input % teaching;
-  mat out = activation % delta;
+  mat activation(teaching.n_rows, input.n_cols, fill::ones);
+  activation = activation.each_row() % input;
+  activation = activation.each_col() % teaching;
+  mat out = activation.each_col() % delta;
   return out;
 }
 
@@ -87,21 +88,20 @@ Rcpp::List slpLMSnet(List st, mat tr, bool xtdo = false) {
     output = train.subvec(n + colskip, tcol - 1).as_col();
     // LW: OK Tue 14 Jul 2020 16:14:31 BST -----------------------------
     Out = node_activation(input, Weights);                     // Equation 3
-    ER = squared_differences(Out, output, om);                 // Equation 4
-    Rcout << "Eq4 done" << ER << std::endl;
+    ER = squared_differences(Out, output, (double)outcomes);   // Equation 4
     // calculate weights if it is a learning trial
     if ( tr(i, 0) !=  2 ) {
       deltaM = delta_learning(Out, output, input, beta);       // Equation 5
       Weights += deltaM;
     }
-    probabilities = logistic_choice(Out, beta);                // Equation 7
+    probabilities = logistic_choice(Out, om);                // Equation 7
     // bind output
-    prob.row(i) += probabilities;
-    activations.row(i) += Out;
-    xOUT.row(i) += ER;
+    prob.row(i) = probabilities.as_row();
+    activations.row(i) = Out.as_row();
+    xOUT.row(i) = ER;
   }
 
-  if (xtdo) {
+  if (xtdo == false) {
     outFIN = Rcpp::List::create(Rcpp::Named("p") = prob,
         Rcpp::Named("nodeActivations") = activations);
   } else {
