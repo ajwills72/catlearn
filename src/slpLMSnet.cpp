@@ -1,84 +1,114 @@
-// Plugin for enabling C++11
-// [[Rcpp::plugins(cpp11)]]
+// [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
 
 // [[Rcpp::depends(RcppArmadillo)]]
 using namespace Rcpp;
 using namespace arma;
 
-// [[Rcpp::export]]
 
-// TODO define initial state in an st file
-
-// Equation 3
-// [[Rcpp::export]]
-
+// Equation 3: calculate output node activations
 mat node_activation(rowvec input, mat weights) {
-  mat weightA = weights.each_col() % input;
-  mat nodeact = cumsum(out, 1);
+  mat weightA = weights.each_row() % input;
+  mat nodeact = sum(weightA, 1);
   return nodeact;
 }
 
-// Equation 4
-// [[Rcpp::export]]
-mat squared_differences(mat o, mat d, int m) {
-  mat lms = o % d;
-  mat sqdif = (1/m)(sum(square(lms)));
+// Equation 4: calculate least mean square error
+double squared_differences(mat outnode, colvec teaching, int outcomes) {
+  Rcout << outnode << std::endl;
+  mat lms = outnode % teaching;
+  double sqdif = (1/outcomes) * (accu(powmat(lms, 2)));
   return sqdif;
 }
 
-// Equation 5
-// [[Rcpp::export]]
-mat LMS_learning(mat o, mat d, double beta) {
-  mat error = d - o;
+// Equation 5: calculate the weight changes
+mat delta_learning(mat outnode, colvec teaching, rowvec input, double beta) {
+  colvec error = teaching - outnode;
+  colvec delta = beta * error;
+  mat activation = input % teaching;
+  mat out = activation % delta;
+  return out;
 }
 
 // Equation 7
-// [[Rcpp::export]]
-mat logistic_choice() {
-
+vec logistic_choice(mat outnode, double om) {
+  vec scale = outnode * om;
+  vec power = zeros(outnode.n_elem);
+  for (uword j = 0; j < power.n_elem; ++j) {
+    power[j] = std::exp(scale[j]);
+  }
+  vec denominator = 1 + power;
+  vec out = 1 / denominator;
+  return out;
 }
 
 // [[Rcpp::export]]
-List slpLMSnet(List st, NumericMatrix tr, bool xtdo = false) {
+Rcpp::List slpLMSnet(List st, mat tr, bool xtdo = false) {
 
+  // declare initial state of the model
+  double    beta = as<double>(st["beta"]);
+  double    om = as<double>(st["om"]);
+  int       colskip = as<int>(st["colskip"]);
+  int       outcomes = as<int>(st["outcomes"]);
+  mat       initW = as<mat>(st["w"]);
 
-// declare initial state of the model
-double    beta = as<double>(st["beta"]);
-double    om = as<double>(st["om"]);
-int       colskip = as<int>(st["colskip"]);
-int       outcomes = as<int>(st["outcomes"]);
-const mat initW = as<mat>(st["w"]);
-
-// declare variables for simulation
-mat W; W = Rcpp::clone(initw);
-mat O;
-int m = W.n_rows, n = W.n_cols;
-int trow = tr.n_rows; tcol = tr.n_col;
-// positions of stimuli and outcomes in each row of tr
-vec stimpos = linspace(0, m - 1, m);
-vec outpos  = linspace((m - outcomes) - 1, (m - 1), m)
-// initialize miscellaneous variables used at different parts of the function
-rowvec trian; train = zeros(tcol)
-rowvec input; input = zeros(n);
-colvec output; output = zeros(outcomes); 
-// store outputs
-mat activations(trow, as<int>(st["outcomes"]));
-mat xOUT(trow, 1)
+  // declare variables for simulation
+  mat Weights(initW);
+  mat Out;
+  uword m = Weights.n_rows, n = Weights.n_cols;
+  uword trow = tr.n_rows, tcol = tr.n_cols;
+  // initialize miscellaneous variables used at different parts of the function
+  rowvec train(tcol);
+  rowvec input(m);
+  colvec output; output = zeros(outcomes);
+  vec ER; ER = zeros(outcomes);
+  mat deltaM; deltaM = zeros(m, n);
+  vec probabilities; probabilities = zeros(outcomes);
+  // store outputs
+  mat activations(trow, outcomes);
+  mat prob(trow, outcomes);
+  mat xOUT(trow, 1);
+  List outFIN;
 
   // run model
 
- for (i = 0, i < nrow ; i++) {
-   if ( tr(i, 0) == 1 )
-   {
-    W.fill(initW);
-   }
-   train = tr.row(i);
-   input = train.elem(colskip + stimpos);
-   output = tarin.elem(colskip + outpos);
-   O = node_activation(input, output, weights);
- }
+  for (uword i = 0; i < trow ; i++) {
+    if ( tr(i, 0) == 1 )
+    {
+      Weights.zeros();
+      Weights += initW;
+    }
+    train = tr.row(i);
+    // LW: OK Tue 14 Jul 2020 15:23:57 BST 
+    // Extract input node activations
+    input = train.subvec(colskip, colskip + n - 1).as_row();
+    // Extract teaching signals
+    // LW: OK Tue 14 Jul 2020 15:49:42 BST
+    output = train.subvec(n + colskip, tcol - 1).as_col();
+    // LW: OK Tue 14 Jul 2020 16:14:31 BST -----------------------------
+    Out = node_activation(input, Weights);                     // Equation 3
+    ER = squared_differences(Out, output, om);                 // Equation 4
+    Rcout << "Eq4 done" << ER << std::endl;
+    // calculate weights if it is a learning trial
+    if ( tr(i, 0) !=  2 ) {
+      deltaM = delta_learning(Out, output, input, beta);       // Equation 5
+      Weights += deltaM;
+    }
+    probabilities = logistic_choice(Out, beta);                // Equation 7
+    // bind output
+    prob.row(i) += probabilities;
+    activations.row(i) += Out;
+    xOUT.row(i) += ER;
+  }
 
+  if (xtdo) {
+    outFIN = Rcpp::List::create(Rcpp::Named("p") = prob,
+        Rcpp::Named("nodeActivations") = activations);
+  } else {
+    outFIN = Rcpp::List::create(Rcpp::Named("p") = prob,
+        Rcpp::Named("nodeActivations") = activations,
+        Rcpp::Named("squaredDifferences") = xOUT);
+  }
 
- return(out)
+  return outFIN;
 }
