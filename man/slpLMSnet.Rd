@@ -28,30 +28,33 @@ Returns a list with the following items if \code{xtdo = FALSE}:
 
     \item{p}{Probabilites of responses on each trial, as output by the
         logistic choice function (Eq. 7 in Gluck and Bower, 1988).}
+
     \item{nodeActivation}{Output node activations on each trial, as
         output by Equation 3 in Gluck and Bower (1988).}
+    
     \item{connectionWeightMatrix}{A connection weight matrix, W, where each 
-        row represents a corresponding element in the array of teaching signals
-        in \code{tr}, while each column represents a corresponding element from
-        input activation array from \code{tr}. So \eqn{w_{12}} would be the 
-        connection weight between the second stimuli and the first category.}
+        row represents the corresponding element in the teaching signals array
+        in \code{tr}, while each column represents the corresponding element
+        from the input activation array from \code{tr}. So cell \eqn{w_12} would
+        be the connection weight between the second stimuli and the first
+        category.}
 
 If \code{xtdo = TRUE}, the following item also returned:
+    
     \item{squaredDifferences}{The least mean squeared differences between
-        desired and actual activations of the output nodes on each trial
-        (Eq. 4 in Gluck and Bower, 1988). This measure is an indicator of
-        the accuracy of the network's performance on each trial after the
-        output nodes are activated.}
+        desired and actual activations of output nodes on each trial
+        (Eq. 4 in Gluck and Bower, 1988). This metric is an indicator of
+        the network's performance, which is measured by its accuracy.}
 
 }
 
-\details {
+\details{
 
 The function operates as a stateful list processor (slp; see Wills et al., 2017).
 Specifically, it takes a matrix as an argument. Each row represents a
-single training or test trial. Each coloumn represents different types of
+single trial. Each coloumn represents different types of
 information required by the implementation of the model, such as the elemental
-representation of stimuli, teching signals, and other variables that control
+representation of stimuli, teching signals, and other variables specifying
 the model's behaviour (e.g. freeze learning).
 
 Argument \code{st} must be a list containing the following items:
@@ -62,7 +65,7 @@ Argument \code{st} must be a list containing the following items:
 
 \code{theta} - is a positive scaling constant. When theta rises, the logistic
     choice function will become less linear. When theta is high, the logistic
-    function will approximate the beahviour of a step function.
+    function will approximate the behaviour of a step function.
 
 \code{bias} - is a bias parameter. It is the value of the output
   activation that results in an output rating of P = 0.5. For example,
@@ -72,10 +75,10 @@ Argument \code{st} must be a list containing the following items:
   LMS network, see Note 1.
 
 \code{w} - is a matrix of initial connection weights, where each row is an 
-    outcome, and each column is a cue/feature. If you are not sure what to
-    use here, set all value to 0.
+    outcome, and each column is a feature or cue. If you are not sure what to
+    use here, set all values to 0.
 
-\code{outcomes} - is the number of possible outcomes.
+\code{outcomes} - is the number of possible categories or outcomes.
 
 \code{colskip} - the number of optional columns to be skipped in the tr matrix.
     colskip should be set to the number of optional columns PLUS ONE. So, if
@@ -101,17 +104,17 @@ described below:
     condition. The argument colskip (see above) must be set to the number of
     optional columns plus one.
 
-\code{x1, x2, \dots} - activation of input nodes of corresponding input or 
-    feature elements. Feature elements usually represented as a bit array. Each
-    element in that array encode activation of the input node given the presence
-    or absence of a feature. These activations take on either 1 or 0, present 
-    and absent elements respectively. For example, Medin and Edelson's (1988)
-    inverse base-rate effect with stimuli AB and AC can be represented as
-    [1 1 0] and [1 0 1] respectively. In a more unconventional scenario, you
-    can set activation to vary between present 1 and absent -1, see Note 2.
-    slpLMSnet can support any positive or negative real number for activations,
-    e.g. one might use values between 0 and 1 to represent salience of an
-    element.
+\code{x1, x2, \dots} - activation of input nodes of corresponding features.
+    Feature patterns usually represented as a bit array. Each element in the
+    bit array encode the activations of the input nodes given the presence or
+    absence of the corresponding features. These activations can take on either
+    1 or 0, present and absent features respectively. For example, Medin and 
+    Edelson's (1988) inverse base-rate effect with stimuli AB and AC can be 
+    represented as [1 1 0] and [1 0 1] respectively. In a more unconventional
+    scenario, you can set activation to vary between present 1 and absent -1,
+    see Note 2. slpLMSnet can also support any positive or negative real number
+    for activations, e.g. one might use values between 0 and 1 to represent the 
+    salience of the features.
 
 \code{d1, d2, \dots} - teaching input signals indicating the category feedback
     on the current trial. It is a bit array, similar to the activations of
@@ -148,20 +151,22 @@ described below:
 }
 
 \note{
-    1. The bias parameter \code{bias} is not part of the original Gluck and
+    1. The \code{bias} parameter  is not part of the original Gluck and
     Bower (1988) model. \code{bias} in the current implementation helps direct
     comparisons between simulations using a logistic choice function
     \code{act2probrat}, which is already part of catlearn. Setting it to 0
     will essentialy make it absent from simulations.
 
-    2. Markman (1989) suggested that the presence of a feature element is
-    encoded as -1 instead of 0 in the inverse base-rate effect. slpLMSnet can
-    support both positive and negative real numbers as input node activations.
+    2. slpLMSnet can support both positive and negative real numbers as input
+    node activations. E.g. one might wish to follow Markman's (1989) suggestion
+    that the absence of a feature element is encoded as -1 instead of 0 to
+    simulate the inverse base-rate effect.
 
-    3. slpLMSnet can process a bot array of teaching signals, where the model
-    is told that the stimuli belongs to more than one category. slpLMSnet use
-    matrix operations to update weights, so it can encode multiple teaching 
-    signals at the same time.
+
+    3. slpLMSnet can process a bit array of teaching signals, where the model
+    is told that the stimuli belongs to more than one category. slpLMSnet uses
+    matrix operations to update weights, so it can encode and update multiple
+    teaching signals on the same trial.
 }
 
 \examples{
