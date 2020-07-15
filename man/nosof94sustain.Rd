@@ -60,14 +60,14 @@
  Nosofsky et al. (1994) experiment, in which participants are trained to
  a criterion of four consecutive errorless 8-trial subblocks.
 
- The simulation by Gureckis (2016) builds this criterion-based training
+ The simulation by Gureckis (2014) builds this criterion-based training
  into their simulation by using a random number generator to turn the
  response probability on each trial into a correct or incorrect
- response. This feature of the Gureckis (2016) simulation is not
+ response. This feature of the Gureckis (2014) simulation is not
  incorporated here, because the instability in ouput this generates
  makes parameter optimization (e.g. via \code{optim}) less reliable.
 
- A comparison of 10,000 simulated participants in the Gureckis (2016)
+ A comparison of 10,000 simulated participants in the Gureckis (2014)
  simulation with 1,000 simulated participants in the current simulation
  reveals a mean difference in the 96 reported response probabilities of
  less than 0.01.
@@ -84,6 +84,8 @@
   Love, B. C., Medin, D. L., & Gureckis, T. M. (2004). SUSTAIN: a
   network model of category learning. \emph{Psychological Review, 111},
   309-332.
+
+  Gureckis, T. M. (2014). sustain_python. \emph{https://github.com/NYUCCL/sustain_python}
   
   Nosofsky, R.M., Gluck, M.A., Plameri, T.J., McKinley, S.C. and
   Glauthier, P.  (1994). Comparing models of rule-based classification

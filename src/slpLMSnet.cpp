@@ -32,8 +32,8 @@ mat delta_learning(mat outnode, colvec teaching, rowvec input, double beta) {
 }
 
 // Equation 7
-vec logistic_choice(mat outnode, double om) {
-  vec scale = outnode * om;
+vec logistic_choice(mat outnode, double theta, double bias) {
+  vec scale = (outnode - bias) * -(theta);
   vec power = zeros(outnode.n_elem);
   for (uword j = 0; j < power.n_elem; ++j) {
     power[j] = std::exp(scale[j]);
@@ -48,7 +48,8 @@ Rcpp::List slpLMSnet(List st, mat tr, bool xtdo = false) {
 
   // declare initial state of the model
   double    beta = as<double>(st["beta"]);
-  double    om = as<double>(st["om"]);
+  double    theta = as<double>(st["theta"]);
+  double    bias = as<double>(st["bias"]);
   int       colskip = as<int>(st["colskip"]);
   int       outcomes = as<int>(st["outcomes"]);
   mat       initW = as<mat>(st["w"]);
@@ -80,13 +81,10 @@ Rcpp::List slpLMSnet(List st, mat tr, bool xtdo = false) {
       Weights += initW;
     }
     train = tr.row(i);
-    // LW: OK Tue 14 Jul 2020 15:23:57 BST 
     // Extract input node activations
     input = train.subvec(colskip, colskip + n - 1).as_row();
     // Extract teaching signals
-    // LW: OK Tue 14 Jul 2020 15:49:42 BST
     output = train.subvec(n + colskip, tcol - 1).as_col();
-    // LW: OK Tue 14 Jul 2020 16:14:31 BST -----------------------------
     Out = node_activation(input, Weights);                     // Equation 3
     ER = squared_differences(Out, output, (double)outcomes);   // Equation 4
     // calculate weights if it is a learning trial
@@ -94,7 +92,7 @@ Rcpp::List slpLMSnet(List st, mat tr, bool xtdo = false) {
       deltaM = delta_learning(Out, output, input, beta);       // Equation 5
       Weights += deltaM;
     }
-    probabilities = logistic_choice(Out, om);                // Equation 7
+    probabilities = logistic_choice(Out, theta, bias);         // Equation 7
     // bind output
     prob.row(i) = probabilities.as_row();
     activations.row(i) = Out.as_row();
@@ -102,12 +100,15 @@ Rcpp::List slpLMSnet(List st, mat tr, bool xtdo = false) {
   }
 
   if (xtdo == false) {
-    outFIN = Rcpp::List::create(Rcpp::Named("p") = prob,
-        Rcpp::Named("nodeActivations") = activations);
+    outFIN = Rcpp::List::create(
+        Rcpp::Named("p") = prob,
+        Rcpp::Named("nodeActivations") = activations,
+        Rcpp::Named("connectionWeightMatrix") = Weights);
   } else {
     outFIN = Rcpp::List::create(Rcpp::Named("p") = prob,
         Rcpp::Named("nodeActivations") = activations,
-        Rcpp::Named("squaredDifferences") = xOUT);
+        Rcpp::Named("squaredDifferences") = xOUT,
+        Rcpp::Named("connectionWeightMatrix") = Weights);
   }
 
   return outFIN;

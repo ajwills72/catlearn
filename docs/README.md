@@ -191,19 +191,28 @@ _Andy Wills_, 23rd March 2017. International Convention of Psychological Science
 
 # Roadmap
 
-We aim to release version 0.8 to CRAN by 16th March 2020.
+We aim to release version 0.8 to CRAN by 16th September 2020.
 
-Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 2nd March 2020, the latest unstable release on github will be used to check and build stable version 0.8 for release to CRAN. 
+Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 2nd September 2020, the latest unstable release on github will be used to check and build stable version 0.8 for release to CRAN. 
 
 # History
 
-Dates of CRAN releases, along with email-list announcements:
+Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
+[CHANGELOG](CHANGELOG.md) for more detail):
 
-- Version 0.7 ("Gooey chocolate")
+- Version 0.8.x ("Harmonious honey") _future_
 
-	- 2019-10-10: Version 0.7.1: Stable release on CRAN.
+    - Stable CRAN release planned for September 2020. 
 
-- Version 0.6 ("Fried chicken")
+- Version 0.7.x ("Gooey chocolate") **CURRENT**
+
+    - 2020-05-15: Version 0.7.3: slpALCOVE upgraded to include some checks for user errors in model specification.
+
+    - 2020-05-13: Version 0.7.2: slpSUSTAIN upgraded to: (a) improve implementation of cluster recruitment in edge cases not covered in Love et al. (2004), and (b) add basic checking of common user errors.
+
+	- 2019-10-10: Version 0.7.1: Stable release on CRAN. [announcement](announce/version-0.7.1-email.txt).
+
+- Version 0.6.x ("Fried chicken")
 
     - 2019-10-03: Version 0.6.5: slpSUSTAIN uprgaded to include unsupervised category learning. 
 
@@ -213,21 +222,25 @@ Dates of CRAN releases, along with email-list announcements:
 
 	- 2019-03-18: Version 0.6.2: Minor patch so packages tests work on R 3.6.0.
 
-	- 2019-02-18: Version 0.6.1: Minor maintenance release.
+	- 2019-02-18: Version 0.6.1: Stable release on CRAN. Minor maintenance release.  [announcement](announce/version-0.6.1-email.txt).
 
-	- 2018-07-17: Version 0.6: slpEXIT and slpSUSTAIN added. 
+	- 2018-07-17: Version 0.6: Stable release on CRAN. slpEXIT and slpSUSTAIN added.  [announcement](announce/version-0.6-email.txt).
 
 - Version 0.5 ("Excellent bacon") 
 
-	- 2017-12-11: [announcement](announce/version-0.5-email.txt).
+	- 2017-12-11: Stable release on CRAN [announcement](announce/version-0.5-email.txt).
 	
 - Version 0.4 ("Dinky doughnut")
 
-	- 2017-02-23: [announcement](announce/version-0.4-email.txt).
+	- 2017-02-23: Stable release on CRAN [announcement](announce/version-0.4-email.txt).
 
 - Version 0.3 ("Cream cake") 
 
-	- 2016-08-18: [announcement](announce/version-0.3-email.txt).
+	- 2016-08-18: Stable release on CRAN [announcement](announce/version-0.3-email.txt).
+
+- Versions 0.1, 0.2 (not named)
+
+    - These were internal development versions, never publicly released.
 
 # References
 

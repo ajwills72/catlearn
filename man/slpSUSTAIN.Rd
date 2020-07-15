@@ -9,7 +9,7 @@ Supervised and Unsupervised STratified Adaptive Incremental Network
 }
 
 \usage{
-slpSUSTAIN(st, tr, xtdo = FALSE)
+slpSUSTAIN(st, tr, xtdo = FALSE, ties = "random")
 }
 
 \arguments{
@@ -18,7 +18,12 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   \item{tr}{Matrix of training items}
 
   \item{xtdo}{Boolean specifying whether to include extended information
-  in the output (see below)} }
+  in the output (see below)}
+
+  \item{ties}{Model behaviour where multiple clusters have the same
+      highest activations. Options are: \code{random}, \code{first}, see
+      below.}
+    }
 
 \value{
 
@@ -54,8 +59,8 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   number of the winning cluster and its output activation after cluster
   competition, Eq. 6 in Love et al. (2004). The last column contains the
   recognition scores for the current stimulus from Eq. A6 in Love and
-  Gureckis (2007); this measure represents model's overall familiarity
-  with the stimuli.}
+  Gureckis (2007); this measure represents the model's overall familiarity
+  with the stimulus.}
 
 }
 
@@ -65,7 +70,7 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   al., 2017). It takes a matrix (tr) as an argument, where each row
   represents a single training trial, while each column represents some
   information required by the model, such as the stimulus
-  representation, indications of supervised/unsupervised learning, etc
+  representation, indications of supervised/unsupervised learning, etc.
   (details below).
 
   Argument \code{st} must be a list containing the following items:
@@ -74,9 +79,9 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
 
   \code{beta} - Cluster competition parameter, always non-negative.
 
-  \code{d} - Decision consistency parameter, always non-negative
+  \code{d} - Decision consistency parameter, always non-negative.
 
-  \code{eta} - Learning rate parameter, see Note 1
+  \code{eta} - Learning rate parameter, see Note 1.
 
   \code{tau} - Threshold parameter for cluster recruitment under
   unsupervised learning conditions (Love et al., 2004, Eq. 11). If every
@@ -163,6 +168,20 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
   category membership [0 1], then the input representation is [0 1 0 1 0
   0 1].
 
+  Argument \code{ties} can be either \code{random} or \code{first}. It specifies
+  how the model behaves in the event, when there are multiple winning clusters
+  with the same activations (see Note):
+
+  \code{random} - The model randomly selects one cluster from the ones
+  that have the same activations. To increase the reproducibility of
+  your simulation, set a specific random seed seed before calling
+  \code{slpSUSTAIN} (use e.g.\code{set.seed}).
+
+  \code{first} - The model selects the cluster that was first recruited
+  from the clusters that have the same activations. Up to and including
+  version 0.7.1 of \code{catlearn}, this was the default behaviour of
+  \code{slpSUSTAIN}.
+
 }
 
 \references{
@@ -180,7 +199,7 @@ slpSUSTAIN(st, tr, xtdo = FALSE)
 
   Medin, D. L., Wattenmaker, W. D., & Hampson, S. E. (1987). Family 
   resemblance, conceptual cohesiveness, and category construction. 
-  \emph{Cognitive Psychology, 19(2)}, 242–279.
+  \emph{Cognitive Psychology, 19(2)}, 242-279.
 
   Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster,
   A.B.(2017). Progress in modeling through distributed collaboration:
@@ -196,5 +215,28 @@ Lenard Dome, Andy Wills
 
 1. Love et al. (2004) do not explicitly set a range for the learning
 rate; we recommend a range of 0-1.
+
+2. The specification of SUSTAIN states that under supervised learning, a
+new cluster is recruited each time the model predicts category
+membership incorrectly. This new cluster is centered on the current
+stimulus. The implementation in slpSUSTAIN adds the stipulation that a
+new cluster is NOT recruited if it already exists, i.e. if its location
+in stimulus space is identical to the location on an existing
+cluster. Instead, it selects the existing cluster and updates as
+normal. Love et al. (2004) do not specify model behaviour under such
+conditions, so this is an assumption of our implementation. We'd argue
+that this is a reasonable implementation - without it SUSTAIN would add
+clusters indefinitely under conditions where the stimulus -> category
+associations are proabilistic rather than deterministic.
+
+
+4. In some cases, two or more clusters can have identical activations
+because the presented stimulus is equally similar to multiple
+clusters. Love et al. (2004) does not specify how the model will behave
+in these cases. In our implementation, we make the assumption that the
+model picks randomly between the highest activated clusters (given that
+they have the same activations). This, we felt, was in line with the
+approximation of lateral inhibition in the SUTAIN specification (Love
+et al.  2004, Eq. 6).
 
 }
