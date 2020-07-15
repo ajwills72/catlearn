@@ -14,7 +14,8 @@ slpLMSnet(st, tr, xtdo = FALSE)
 
   \item{st}{List of model parameters}
   
-  \item{tr}{Matrix of training items}
+  \item{tr}{Numerical matrix of training items, use \code{data.matrix()} if
+      matrix is not numeric.}
   
   \item{xtdo}{Boolean specifying whether to include extended information
   in the output (see below)}
@@ -161,4 +162,29 @@ described below:
     is told that the stimuli belongs to more than one category. slpLMSnet use
     matrix operations to update weights, so it can encode multiple teaching 
     signals at the same time.
+}
+
+\examples{
+
+# load catlearn
+library(catlearn)
+
+# create st with initial state
+st <- list(beta = 0.025, # positive learning parameter
+           theta = 1, # positive scaling parameter
+           bias = 0, # bias parameter, same as beta in @ act2probrat
+           # initialist weight matrix, 
+           # row = number of categories,
+           # col = number of cues
+           w = matrix(rep(0, 6*4), nrow = 4, ncol = 6),
+           outcomes = 4, # number of possible outcomes
+           colskip = 3)
+
+# create inverse base-rate effect tr for 1 subject and without bias cue
+tr <- krus96train(subjs = 1, ctxt = FALSE)
+
+# run simulation and store output
+out <- slpLMSnet(st, data.matrix(tr))
+
+out$connectionWeightMatrix
 }

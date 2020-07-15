@@ -33,13 +33,12 @@ mat delta_learning(mat outnode, colvec teaching, rowvec input, double beta) {
 
 // Equation 7
 vec logistic_choice(mat outnode, double theta, double bias) {
-  vec scale = (outnode - bias) * -(theta);
+  vec scale = -theta * (outnode - bias);
   vec power = zeros(outnode.n_elem);
   for (uword j = 0; j < power.n_elem; ++j) {
     power[j] = std::exp(scale[j]);
   }
-  vec denominator = 1 + power;
-  vec out = 1 / denominator;
+  vec out = 1 / (1 + power);
   return out;
 }
 
