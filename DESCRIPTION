@@ -10,6 +10,7 @@ Description: Formal psychological models of categorization and learning, indepen
 License: GPL (>= 2)
 Imports:
 	Rcpp (>= 0.12.6),
+	RcppArmadillo,
 	doParallel,
 	foreach,
 	tidyr,
