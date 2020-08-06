@@ -204,13 +204,17 @@ Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
 
     - Stable CRAN release planned for September 2020. 
 
-- Version 0.7.x ("Gooey chocolate") **CURRENT**
+- Version 0.7.x ("Gooey chocolate") _CURRENT_
+
+    - 2020-08-06: Version 0.7.5: **unstable release**: slpLMSnet added, implements Gluck & Bower (1988).
+
+    - 2020-07-01: Version 0.7.4: fix for slpSUSTAIN bug introduced in 0.7.2.
 
     - 2020-05-15: Version 0.7.3: slpALCOVE upgraded to include some checks for user errors in model specification.
 
     - 2020-05-13: Version 0.7.2: slpSUSTAIN upgraded to: (a) improve implementation of cluster recruitment in edge cases not covered in Love et al. (2004), and (b) add basic checking of common user errors.
 
-	- 2019-10-10: Version 0.7.1: Stable release on CRAN. [announcement](announce/version-0.7.1-email.txt).
+	- 2019-10-10: Version 0.7.1: **stable release**  on CRAN. [announcement](announce/version-0.7.1-email.txt).
 
 - Version 0.6.x ("Fried chicken")
 
