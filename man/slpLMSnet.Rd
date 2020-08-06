@@ -1,6 +1,11 @@
 \name{slpLMSnet}
-    \alias{slpLMSnet}
+\alias{slpLMSnet}
+
 \title{
+  Gluck & Bower (1988) network model
+}
+
+\description{
 Gluck and Bower (1988) adaptive least-mean-square (LMS) network
 }
 
