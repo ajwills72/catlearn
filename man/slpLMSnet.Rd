@@ -67,7 +67,7 @@ Argument \code{st} must be a list containing the following items:
 
 \code{beta} - the learning rate (fixed for a given simulation) for the LMS
     learning rule. The upper bounds of this parameter is not specified, but
-    we suggest \eqn{0 < beta  \leq 1}.
+    we suggest \eqn{0 < beta  \le 1}.
 
 \code{theta} - is a positive scaling constant. When theta rises, the logistic
     choice function will become less linear. When theta is high, the logistic
