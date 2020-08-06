@@ -27,7 +27,8 @@ slpLMSnet(st, tr, xtdo = FALSE)
 Returns a list with the following items if \code{xtdo = FALSE}:
 
     \item{p}{Probabilites of responses on each trial, as output by the
-        logistic choice function (Eq. 7 in Gluck and Bower, 1988).}
+        logistic choice function (Eq. 7, and Footnote 2, in Gluck and
+        Bower, 1988).}
 
     \item{nodeActivation}{Output node activations on each trial, as
         output by Equation 3 in Gluck and Bower (1988).}
