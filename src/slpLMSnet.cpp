@@ -43,7 +43,7 @@ vec logistic_choice(mat outnode, double theta, double bias) {
 }
 
 // [[Rcpp::export]]
-Rcpp::List slpLMSnet(List st, mat tr, bool xtdo = false) {
+Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
 
   // declare initial state of the model
   double    beta = as<double>(st["beta"]);

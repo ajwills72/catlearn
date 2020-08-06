@@ -33,13 +33,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // slpLMSnet
-Rcpp::List slpLMSnet(List st, mat tr, bool xtdo);
+Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo);
 RcppExport SEXP _catlearn_slpLMSnet(SEXP stSEXP, SEXP trSEXP, SEXP xtdoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< List >::type st(stSEXP);
-    Rcpp::traits::input_parameter< mat >::type tr(trSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type tr(trSEXP);
     Rcpp::traits::input_parameter< bool >::type xtdo(xtdoSEXP);
     rcpp_result_gen = Rcpp::wrap(slpLMSnet(st, tr, xtdo));
     return rcpp_result_gen;
