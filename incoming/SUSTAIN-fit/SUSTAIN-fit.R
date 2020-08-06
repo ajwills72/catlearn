@@ -9,7 +9,6 @@ rm(list=ls())
 #sink(file = "sustain_fit.txt")
 
 ##load libraries
-library(data.table)
 library(plyr)
 library(tidyverse)
 library(catlearn)
@@ -23,8 +22,8 @@ sustain_obj <- function(parms) {
 }
 
 ## import all data from blobs experiment
-data_low_sim <- fread("experiment_lowsim.txt")
-data_high_sim <- fread("experiment_highsim.txt")
+data_low_sim <- suppressMessages(suppressWarnings(read_delim("experiment_lowsim.txt",delim=" ")))
+data_high_sim <- suppressMessages(suppressWarnings(read_delim("experiment_highsim.txt",delim=" ")))
 
 ## clean things as we did in the original experiment
 
@@ -55,7 +54,7 @@ data_high_sim$studied_rec <- ifelse(data_high_sim$studied=="0","novel","studied"
 ## aggregaate empirical data for fit
 all_data <- rbind(data_high_sim,data_low_sim)
 
-sumdata_test_empirical <- all_data[trial_type=="3",.(accuracy=mean(hit,na.rm=T)),by=.(subject,sim_cond,schedule,studied_rec)]
+sumdata_test_empirical <- ddply(.data = all_data[all_data$trial_type=="3",],.variables = .(subject,sim_cond,schedule,studied_rec),.fun = summarize,accuracy=mean(hit,na.rm=T))
 
 ## load and convert stims structure into padded structure
 high_stim <- read_csv("exemplars_highsim.csv")
@@ -137,8 +136,8 @@ getregpred <- function(parms){
   data_all <- rbind(data_high_sim[,c(2:17,56:57)],data_low_sim[,c(2:17,367:368)])
   
   # aggregate by condition
-  sumdata_test_model <<- data_all[trial_type=="3",.(accuracy=mean(model_acc,na.rm=T)),by=.(subject,sim_cond,schedule,studied_rec)]
-
+  sumdata_test_model <<- ddply(.data = data_all[data_all$trial_type=="3",],.variables = .(subject,sim_cond,schedule,studied_rec),.fun = summarize,accuracy=mean(model_acc,na.rm=T))
+  
   return(sumdata_test_model)
   }
 
@@ -148,31 +147,6 @@ ub <- c(500,500,500,1)            # Upper bounds
 startParms <- c(12, 1, 1, 0.5)
 xout <- optim(startParms, sustain_obj, gr=NULL, method = "L-BFGS-B",lower = lb, upper = ub,control=list(maxit = 3000,trace=TRUE)) #to be equivalent to fminsearch
 
-# plot
-conf.int <-function(x) qnorm(0.975)*sd(x)/sqrt(length(x))
-
-test_empirical <- sumdata_test_empirical[,.(NRuns =.N,accuracy=mean(accuracy,na.rm=T),stderr=sd(accuracy,na.rm=T)/length(unique(paste(sim_cond,subject,sep = ""))),confint=conf.int(accuracy)),by=.(sim_cond,schedule,studied_rec)]
-
-test_model <- sumdata_test_model[,.(NRuns =.N,accuracy=mean(accuracy,na.rm=T),stderr=sd(accuracy,na.rm=T)/length(unique(paste(sim_cond,subject,sep = ""))),confint=conf.int(accuracy)),by=.(sim_cond,schedule,studied_rec)]
-
-graph1 <- ggplot(test_empirical, aes(x=schedule,y=accuracy,fill=studied_rec)) + geom_bar(stat="identity",position=position_dodge()) + coord_cartesian(ylim=c(0,1)) + geom_errorbar(aes(ymin = accuracy-stderr, ymax = accuracy+stderr),position = position_dodge2(width = 0.5, padding = 0.5)) + geom_point(data = test_model, aes(x=schedule, y=accuracy,group = studied_rec),position=position_dodge(width = 0.90),size=4) + geom_errorbar(data = test_model, aes(ymax = accuracy+stderr, ymin= accuracy-stderr, width=0.2),position=position_dodge(width = 0.90)) + facet_wrap(. ~ sim_cond,nrow=1)
-
-
-studied.labs <- c("New Items", "Old Items")
-names(studied.labs) <- c("novel","studied")
-
-plot <- ggplot(test_empirical, aes(x=sim_cond, y=accuracy,fill = schedule)) + geom_bar(position="dodge",stat="identity",color="black",alpha=0.4) + coord_cartesian(ylim = c(0,1), expand = TRUE) + geom_errorbar(data = test_empirical,aes(ymax = accuracy + confint, ymin= accuracy - confint, width=0.2),position=position_dodge(width = 0.90)) + geom_point(data = test_model, aes(x=sim_cond, y=accuracy,group = schedule,colour=schedule),position=position_dodge(width = 0.90),size=4) + geom_errorbar(data = test_model, aes(ymax = accuracy + confint, ymin= accuracy - confint, width=0.2,colour=schedule),position=position_dodge(width = 0.90)) + scale_colour_manual(values=c("#e66101","#b2abd2"),labels = c("Blocked", "Interleaved")) + labs(x="Category Structure",y="Probability of Correct Classification") + theme_bw() +  theme(legend.position="right",legend.title = element_blank(),panel.grid.major = element_blank(),panel.grid.minor=element_blank(),panel.background=element_blank()) + scale_fill_manual(values=c("#e66101","#b2abd2"),labels = c("Blocked", "Interleaved")) + theme(legend.position = c(0.1,0.8)) + scale_x_discrete(labels= c("High Similarity","Low Similarity"))
-
-plot + facet_grid(. ~ studied_rec,as.table = T,labeller = labeller(studied_rec=studied.labs))
-
-ggsave(filename = "results.pdf",plot = graph1,device = "pdf")
-
-ggsave(filename = "Fitting results.png",plot = plot + facet_grid(. ~ studied_rec,as.table = T,labeller = labeller(studied_rec=studied.labs)),width = 8,height = 5)
-
 ssecl(sumdata_test_empirical$accuracy,sumdata_test_model$accuracy)
 plot(sumdata_test_empirical$accuracy,sumdata_test_model$accuracy); abline(0,1)
 cor(sumdata_test_empirical$accuracy,sumdata_test_model$accuracy)^2
-
-save.image(paste(getwd(),"Fit.RData",sep="/"))
-warnings()
-#sink()
