@@ -158,3 +158,6 @@ xout <- optim(startParms, alcove_obj, gr=NULL,method = "L-BFGS-B",lower = lb, up
 ssecl(sumdata_test_empirical$accuracy,sumdata_test_model$accuracy)
 plot(sumdata_test_empirical$accuracy,sumdata_test_model$accuracy); abline(0,1)
 cor(sumdata_test_empirical$accuracy,sumdata_test_model$accuracy)^2
+
+sumdata_test_empirical %>% group_by(sim_cond, schedule, studied_rec) %>% summarise(mean(accuracy))
+sumdata_test_model %>% group_by(studied_rec,  sim_cond, schedule) %>% summarise(mean(accuracy))
