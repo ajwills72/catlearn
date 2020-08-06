@@ -142,7 +142,12 @@ described below:
     
     Medin, D. L., & Edelson, S. M. (1988). Problem structure and the use of 
     base-rate information from experience. \emph{Journal of Experimental
-    Psychology: General, 117}, 68-85.
+      Psychology: General, 117}, 68-85.
+
+    Nosofsky, R.M., Gluck, M.A., Plameri, T.J., McKinley, S.C. and
+  Glauthier, P.  (1994). Comparing models of rule-based classification
+  learning: A replication and extension of Shepaard, Hovland, and
+  Jenkins (1961). \emph{Memory and Cognition, 22}, 352-369.
 
     Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster,
     A.B.(2017). Progress in modeling through distributed collaboration:
@@ -157,7 +162,13 @@ described below:
     Bower (1988) model. \code{bias} in the current implementation helps
     comparisons between simulations using the \code{act2probrat}
     logistic choice function. Set bias to 0 for operation as specified
-    in Gluck & Bower (1988).
+    in Gluck & Bower (1988). Also note that, where there is more than
+    one output node, the same bias value is subtracted from the output
+    of each node. This form of decision mechanism is not present in the
+    literature as far as we are aware, although using a negative bias
+    value would, in multi-outcome cases, approximate a 'background
+    noise' decision rule, as used in, for example, Nosofsky et
+    al. (1994).
 
     2. slpLMSnet can support both positive and negative real numbers as
     input node activations. For example, one might wish to follow
