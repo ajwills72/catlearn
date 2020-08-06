@@ -36,7 +36,7 @@ Returns a list with the following items if \code{xtdo = FALSE}:
         row represents the corresponding element in the teaching signals array
         in \code{tr}, while each column represents the corresponding element
         from the input activation array from \code{tr}. So cell \eqn{w_12} would
-        be the connection weight between the second stimuli and the first
+        be the connection weight between the second stimulus and the first
         category.}
 
 If \code{xtdo = TRUE}, the following item also returned:
@@ -52,10 +52,10 @@ If \code{xtdo = TRUE}, the following item also returned:
 
 The function operates as a stateful list processor (slp; see Wills et al., 2017).
 Specifically, it takes a matrix as an argument. Each row represents a
-single trial. Each coloumn represents different types of
+single trial. Each column represents different types of
 information required by the implementation of the model, such as the elemental
-representation of stimuli, teching signals, and other variables specifying
-the model's behaviour (e.g. freeze learning).
+representation of stimuli, teaching signals, and other variables specifying
+the model's behaviour (e.g. freezing learning).
 
 Argument \code{st} must be a list containing the following items:
 
@@ -98,7 +98,7 @@ described below:
 \code{opt1, opt2, \dots} - any number of preferred optional columns, the
     names of which can be chosen by the user. It is important that these
     columns are placed after the control column, and before the remaining
-    columns (see below). These optional columns are ignored by the slpRW
+    columns (see below). These optional columns are ignored by the slpLMSnet
     function, but you may wish to use them for readability. For example, you
     might choose to include columns such as block number, trial number and
     condition. The argument colskip (see above) must be set to the number of
@@ -106,7 +106,7 @@ described below:
 
 \code{x1, x2, \dots} - activation of input nodes of corresponding features.
     Feature patterns usually represented as a bit array. Each element in the
-    bit array encode the activations of the input nodes given the presence or
+    bit array encodes the activations of the input nodes given the presence or
     absence of the corresponding features. These activations can take on either
     1 or 0, present and absent features respectively. For example, Medin and 
     Edelson's (1988) inverse base-rate effect with stimuli AB and AC can be 
@@ -133,15 +133,15 @@ described below:
 
     Gluck, M. A., & Bower, G. H. (1988). From conditioning to category 
     learning: An adaptive network model. \emph{Journal of Experimental
-    Psychology: General}, 117(3), 227.
+    Psychology: General, 117}, 227-247.
 
-    Markman, A. B. (1989). LMS rules and the inverse base-rate effect: Comment
-    on Gluck and Bower (1988). \emph{Journal of Experimental Psychology: 
-    General}, 118(4), 417–421.
+    Markman, A. B. (1989). LMS rules and the inverse base-rate effect:
+    Comment on Gluck and Bower (1988). \emph{Journal of Experimental
+    Psychology: General, 118}, 417-421.
     
     Medin, D. L., & Edelson, S. M. (1988). Problem structure and the use of 
     base-rate information from experience. \emph{Journal of Experimental
-    Psychology: General}, 117(1), 68.
+    Psychology: General, 117}, 68-85.
 
     Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster,
     A.B.(2017). Progress in modeling through distributed collaboration:
@@ -151,41 +151,42 @@ described below:
 }
 
 \note{
-    1. The \code{bias} parameter  is not part of the original Gluck and
-    Bower (1988) model. \code{bias} in the current implementation helps direct
-    comparisons between simulations using a logistic choice function
-    \code{act2probrat}, which is already part of catlearn. Setting it to 0
-    will essentialy make it absent from simulations.
 
-    2. slpLMSnet can support both positive and negative real numbers as input
-    node activations. E.g. one might wish to follow Markman's (1989) suggestion
-    that the absence of a feature element is encoded as -1 instead of 0 to
-    simulate the inverse base-rate effect.
+    1. The \code{bias} parameter is not part of the original Gluck and
+    Bower (1988) model. \code{bias} in the current implementation helps
+    comparisons between simulations using the \code{act2probrat}
+    logistic choice function. Set bias to 0 for operation as specified
+    in Gluck & Bower (1988).
 
+    2. slpLMSnet can support both positive and negative real numbers as
+    input node activations. For example, one might wish to follow
+    Markman's (1989) suggestion that the absence of a feature element is
+    encoded as -1 instead of 0.
 
-    3. slpLMSnet can process a bit array of teaching signals, where the model
-    is told that the stimuli belongs to more than one category. slpLMSnet uses
-    matrix operations to update weights, so it can encode and update multiple
-    teaching signals on the same trial.
+    3. slpLMSnet can process a bit array of teaching signals, where the
+    model is told that the stimuli belongs to more than one
+    category. slpLMSnet uses matrix operations to update weights, so it
+    can encode and update multiple teaching signals on the same trial.
+    
 }
 
 \examples{
 
-# load catlearn
+## load catlearn
 library(catlearn)
 
-# create st with initial state
-st <- list(beta = 0.025, # positive learning parameter
-           theta = 1, # positive scaling parameter
-           bias = 0, # bias parameter, same as beta in @ act2probrat
-           # initialist weight matrix, 
+## create st with initial state
+st <- list(beta = 0.025, # learning rate
+           theta = 1, # decision scaling parameter
+           bias = 0, # decision bias parameter
+           # initial weight matrix, 
            # row = number of categories,
            # col = number of cues
            w = matrix(rep(0, 6*4), nrow = 4, ncol = 6),
            outcomes = 4, # number of possible outcomes
            colskip = 3)
 
-# create inverse base-rate effect tr for 1 subject and without bias cue
+## create inverse base-rate effect tr for 1 subject and without bias cue
 tr <- krus96train(subjs = 1, ctxt = FALSE)
 
 # run simulation and store output
