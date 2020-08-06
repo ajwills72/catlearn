@@ -9,13 +9,12 @@ Maintainer: Andy Wills <andy@willslab.co.uk>
 Description: Formal psychological models of categorization and learning, independently-replicated data sets against which to test them, and simulation archives.
 License: GPL (>= 2)
 Imports:
-	Rcpp (>= 0.12.6),
-	RcppArmadillo,
+	Rcpp (>= 1.0.0),
 	doParallel,
 	foreach,
 	tidyr,
 	dplyr
-LinkingTo: Rcpp
+LinkingTo: Rcpp, RcppArmadillo
 LazyData: true
 Suggests: testthat
-Depends: R (>= 3.5.0)
+Depends: R (>= 3.5)

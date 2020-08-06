@@ -2,30 +2,30 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 slpBM <- function(st, tr, xtdo = FALSE) {
-    .Call('_catlearn_slpBM', PACKAGE = 'catlearn', st, tr, xtdo)
+    .Call(`_catlearn_slpBM`, st, tr, xtdo)
 }
 
 slpEXIT <- function(st, tr, xtdo = FALSE) {
-    .Call('_catlearn_slpEXIT', PACKAGE = 'catlearn', st, tr, xtdo)
+    .Call(`_catlearn_slpEXIT`, st, tr, xtdo)
 }
 
 slpLMSnet <- function(st, tr, xtdo = FALSE) {
-    .Call('_catlearn_slpLMSnet', PACKAGE = 'catlearn', st, tr, xtdo)
+    .Call(`_catlearn_slpLMSnet`, st, tr, xtdo)
 }
 
 slpMack75 <- function(st, tr, xtdo = FALSE) {
-    .Call('_catlearn_slpMack75', PACKAGE = 'catlearn', st, tr, xtdo)
+    .Call(`_catlearn_slpMack75`, st, tr, xtdo)
 }
 
 slpRW <- function(st, tr, xtdo = FALSE) {
-    .Call('_catlearn_slpRW', PACKAGE = 'catlearn', st, tr, xtdo)
+    .Call(`_catlearn_slpRW`, st, tr, xtdo)
 }
 
 slpALCOVE <- function(st, tr, dec = "ER", humble = TRUE, attcon = FALSE, absval = -1, xtdo = FALSE) {
-    .Call('_catlearn_slpALCOVE', PACKAGE = 'catlearn', st, tr, dec, humble, attcon, absval, xtdo)
+    .Call(`_catlearn_slpALCOVE`, st, tr, dec, humble, attcon, absval, xtdo)
 }
 
 slpCOVIS <- function(st, tr, crx = TRUE, respt = FALSE, rgive = TRUE, xtdo = FALSE) {
-    .Call('_catlearn_slpCOVIS', PACKAGE = 'catlearn', st, tr, crx, respt, rgive, xtdo)
+    .Call(`_catlearn_slpCOVIS`, st, tr, crx, respt, rgive, xtdo)
 }
 

@@ -1,5 +1,5 @@
-useDynLib(catlearn)
-exportPattern("^[^\\.]")
+useDynLib(catlearn, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
 importFrom("graphics", "axis", "box", "legend", "lines", "plot")
 importFrom("stats", "aggregate", "runif", "optim")
