@@ -26,7 +26,7 @@ generally, see Wills et al. (2017). There is also information here:
 https://ajwills72.github.io/catlearn
 
 Thanks to all the contributors to catlearn, and particular thanks to Lenard
-Dome  who contributed new code for the version 0.8 release.
+Dome who contributed new code for the version 0.8 release.
 
 All the best
 
