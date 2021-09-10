@@ -55,9 +55,7 @@ mat evidence(colvec t, double s, int outcomes, vec mute,
   colvec evidence = zeros(outcomes);
   for (uword i = 0; i < outcomes; i++) {
     colvec cat_sim = similar.rows( find(categories == (i + 1)) );
-    cout << cat_sim << endl;
     colvec cat_dissim = dissimilar.rows( find(categories != (i + 1)) );
-    cout << cat_dissim << endl;
     evidence[i] = sum(cat_sim) + sum(cat_dissim);
   }
   evidence = evidence % mute;
