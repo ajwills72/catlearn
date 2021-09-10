@@ -6,14 +6,11 @@ sourceCpp("stdissGCM.cpp")
 
 
 #training stimuli (only one row per unique stimuli, reps are account for using memory weights)
-stim=matrix(c(
+stim = matrix(c(
               1,1,0,0,0,0, 1,
               1,0,1,0,0,0, 2,
               0,0,0,1,1,0, 3,
               0,0,0,1,0,1, 4), ncol = 7, byrow = T)
-
-#Category labels, one for each stimulus
-cats=c(1,2,3,4)
 
 #Transfer/test stimuli
 #This is a row for each unique transfer stimulus
@@ -40,7 +37,12 @@ tr = matrix(c(
              ncol = 6,
              byrow = T)
 
-params=c(0.27692188, 0.66524089, 0.88723335, 0.16967400, 0.71206208, 0.87939732, 9.04906080, 0.94614863, 0.02250668)
+names <- c("F1 + S1", "F1 + O1", "F2 + O2", "F2 + S2", "F1", "F2", "S1", "O1",
+           "O2", "S2", "S1 + O1", "O2 + S2", "F1 + O2", "F1 + S2", "F2 + S1",
+           "F2 + O1", "O1 + O2", "S1 + S2")
+
+# parameters from paper
+params = c(0.27692188, 0.66524089, 0.88723335, 0.16967400, 0.71206208, 0.87939732, 9.04906080, 0.94614863, 0.02250668)
 
 st <- list(attentional_weights = params[1:6]/sum(abs(params[1:6])),
            c = params[7],
@@ -52,4 +54,27 @@ st <- list(attentional_weights = params[1:6]/sum(abs(params[1:6])),
            outcomes = 4,
            exemplars = stim)
 
-model_out <- stdissGCM(st, tr[11:12, ])
+model_out <- stdissGCM(st, tr)
+paper_prob <- read.csv("tmp/obryan18.csv")
+model_prob <- cbind(data.frame(names), round(data.matrix(model_out$p), 3))
+
+diff <- mean(data.matrix(model_prob[, -1] - paper_prob[, -1]))
+paste("Recreated O'Bryan with a mean difference of", round(diff, 5))
+
+dat <- krus96train(blocks = 1, subjs = 1, ctxt = FALSE, seed = 1)
+dat_model <- dat[dat$ctrl == 2, 4:9]
+
+st <- list(attentional_weights = params[1:6]/sum(abs(params[1:6])),
+           c = params[7],
+           s = params[8],
+           b = params[9],
+           t = c(3, 1, 3, 1),
+           r = 1,
+           colskip = 1,
+           outcomes = 4,
+           exemplars = exemplars <- rbind(c(1,1,0,0,0,0,1),
+                                          c(1,0,1,0,0,0,2),
+                                          c(0,0,0,1,1,0,3),
+                                          c(0,0,0,1,0,1,4)))
+
+stdissGCM(st, data.matrix(dat_model)[15:16, ])
