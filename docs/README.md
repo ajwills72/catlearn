@@ -201,7 +201,7 @@ _Andy Wills_, 23rd March 2017. International Convention of Psychological Science
 
 # Roadmap
 
-We aim to release version 0.9 to CRAN by 19th March 2021.
+We aim to release version 0.9 to CRAN by 21st March 2022.
 
 Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 5th March 2021, the latest unstable release on github will be used to check and build stable version 0.9 for release to CRAN. 
 
