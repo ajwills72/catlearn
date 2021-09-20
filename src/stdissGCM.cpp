@@ -63,8 +63,8 @@ mat evidence(colvec t, double s, int outcomes, vec mute,
 }
 
 // Equation 4
-vec respond(double b, colvec evidence) {
-  double denominator = sum(evidence) + (4 * b);
+vec respond(double b, colvec evidence, double outcomes) {
+  double denominator = sum(evidence) + (outcomes * b);
   mat out = (evidence + b) / denominator;
   return out;
 }
@@ -80,6 +80,7 @@ Rcpp::List stdissGCM(List st, arma::mat test, bool xtdo = false) {
   colvec    t = as<colvec>(st["t"]); // exemplar-specific memory strength
   rowvec    attention = as<rowvec>(st["attentional_weights"]);
   int       outcomes = as<int>(st["outcomes"]);
+  double    num_out = as<double>(st["outcomes"]);
   int       colskip = as<int>(st["colskip"]);
   mat       exemplars = as<mat>(st["exemplars"]);
   mat       pure_exemplars = exemplars.cols(0, exemplars.n_cols - 2);
@@ -106,7 +107,7 @@ Rcpp::List stdissGCM(List st, arma::mat test, bool xtdo = false) {
     similarity = exponential_similarity(c, outcomes, distances);
     muted = mute(pure_exemplars, input);
     evidence_all = evidence(t, s, outcomes, muted, pure_categories, similarity);
-    probabilities = respond(b, evidence_all);
+    probabilities = respond(b, evidence_all, num_out);
     // record outputs
     similarity_out.row(i) = evidence_all.t().as_row();
     evidence_out.row(i) = similarity.t().as_row();
