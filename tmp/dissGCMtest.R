@@ -1,8 +1,7 @@
-library(catlearn)
 library(Rcpp)
 library(RcppArmadillo)
-
-sourceCpp("stdissGCM.cpp")
+sourceCpp("../src/stdissGCM.cpp")
+paper_prob <- read.csv("obryan18.csv")
 
 
 #training stimuli (only one row per unique stimuli, reps are account for using memory weights)
@@ -49,32 +48,16 @@ st <- list(attentional_weights = params[1:6]/sum(abs(params[1:6])),
            s = params[8],
            b = params[9],
            t = c(3, 1, 3, 1),
+           beta = c(1, 1, 1, 1)/4,
+           gamma = 1,
+           theta = 0.4,
            r = 1,
            colskip = 1,
            outcomes = 4,
            exemplars = stim)
 
-model_out <- stdissGCM(st, tr)
-paper_prob <- read.csv("tmp/obryan18.csv")
+model_out <- stdissGCM(st, tr, exemplar_decay = FALSE)
 model_prob <- cbind(data.frame(names), round(data.matrix(model_out$p), 3))
 
 diff <- mean(data.matrix(model_prob[, -1] - paper_prob[, -1]))
-paste("Recreated O'Bryan with a mean difference of", round(diff, 5))
-
-dat <- krus96train(blocks = 1, subjs = 1, ctxt = FALSE, seed = 1)
-dat_model <- dat[dat$ctrl == 2, 4:9]
-
-st <- list(attentional_weights = params[1:6]/sum(abs(params[1:6])),
-           c = params[7],
-           s = params[8],
-           b = params[9],
-           t = c(3, 1, 3, 1),
-           r = 1,
-           colskip = 1,
-           outcomes = 4,
-           exemplars = exemplars <- rbind(c(1,1,0,0,0,0,1),
-                                          c(1,0,1,0,0,0,2),
-                                          c(0,0,0,1,1,0,3),
-                                          c(0,0,0,1,0,1,4)))
-
-stdissGCM(st, data.matrix(dat_model)[15:16, ])
+paste("Recreated O'Bryan with a mean difference of", abs(round(diff, 5)))
