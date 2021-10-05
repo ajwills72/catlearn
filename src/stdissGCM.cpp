@@ -178,7 +178,13 @@ Rcpp::List stdissGCM(List st, arma::mat test,
     prob.row(i) = probabilities.as_row();
     if(exemplar_decay) memory_decay.row(i) = t.t().as_row();
   }
-  return Rcpp::List::create(Rcpp::Named("Evidence") = evidence_out,
-                            Rcpp::Named("Similarity") = similarity_out,
-                            Rcpp::Named("p") = prob);
+  if (exemplar_decay) {
+    return Rcpp::List::create(Rcpp::Named("decay") = memory_decay,
+                              Rcpp::Named("v") = evidence_out,
+                              Rcpp::Named("p") = prob);
+
+  } else {
+    return Rcpp::List::create(Rcpp::Named("v") = evidence_out,
+                              Rcpp::Named("p") = prob);
+  }
 }
