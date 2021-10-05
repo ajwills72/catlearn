@@ -90,9 +90,8 @@ vec decay(colvec n, double theta, colvec distances) {
   colvec term = n * theta;
   colvec result = zeros(distances.n_elem);
   for (uword i = 0; i < close.n_elem; i++) {
-    result[close[i]] -= std::exp(-term[close[i]]);
+    result[close[i]] = std::exp(-term[close[i]]);
   }
-  // cap values at 0
   return result;
 }
 
@@ -108,10 +107,9 @@ vec respond_bias(colvec beta, colvec evidence, double gamma) {
 
 // [[Rcpp::export]]
 Rcpp::List stdissGCM(List st, arma::mat test,
-                     std::string dec = "NOISE",
+                     std::string dec = "BIAS",
                      bool exemplar_decay = true,
-                     bool exemplar_mute = true,
-                     bool xtdo = false) {
+                     bool exemplar_mute = false) {
 
   // declare initial state of the model
   double    r = as<double>(st["r"]);    // Euclidean - distance metric
@@ -147,7 +145,6 @@ Rcpp::List stdissGCM(List st, arma::mat test,
 
   // declare output of main function
   mat evidence_out(n_trials, outcomes);
-  mat similarity_out(n_trials, outcomes);
   mat prob(n_trials, outcomes);
 
   List outFIN;
@@ -161,20 +158,19 @@ Rcpp::List stdissGCM(List st, arma::mat test,
     } else {
       muted = ones(exemplars.n_rows);
     }
-    evidence_all = evidence(t, s, outcomes, muted,
-                            pure_categories, similarity);
     if(exemplar_decay) {
       count = trial_count(distances, count);
       t = decay(count, theta, distances);
     }
+    evidence_all = evidence(t, s, outcomes, muted,
+                            pure_categories, similarity);
     if(dec == "NOISE") {
       probabilities = respond_noise(base, evidence_all, num_out);
     } else if(dec == "BIAS") {
       probabilities = respond_bias(beta, evidence_all, gamma);
     }
     // record outputs
-    similarity_out.row(i) = evidence_all.t().as_row();
-    evidence_out.row(i) = similarity.t().as_row();
+    evidence_out.row(i) = evidence_all.t().as_row();
     prob.row(i) = probabilities.as_row();
     if(exemplar_decay) memory_decay.row(i) = t.t().as_row();
   }
