@@ -1,7 +1,9 @@
+library(data.table)
+library(DEoptim)
 library(Rcpp)
 library(RcppArmadillo)
-sourceCpp("../src/stdissGCM.cpp")
-paper_prob <- read.csv("obryan18.csv")
+sourceCpp("./src/stdissGCM.cpp")
+paper_prob <- read.csv("tmp/obryan18.csv")
 
 
 #training stimuli (only one row per unique stimuli, reps are account for using memory weights)
@@ -56,8 +58,42 @@ st <- list(attentional_weights = params[1:6]/sum(abs(params[1:6])),
            outcomes = 4,
            exemplars = stim)
 
-model_out <- stdissGCM(st, tr, exemplar_decay = FALSE)
+model_out <- stdissGCM(st, tr, exemplar_decay = FALSE,
+                       exemplar_mute = TRUE, dec = "NOISE")
 model_prob <- cbind(data.frame(names), round(data.matrix(model_out$p), 3))
 
 diff <- mean(data.matrix(model_prob[, -1] - paper_prob[, -1]))
 paste("Recreated O'Bryan with a mean difference of", abs(round(diff, 5)))
+
+## fit Stewart and Morin (2007) to data
+fitSW <- function(params) {
+  st <- list(attentional_weights = params[1:6]/sum(abs(params[1:6])),
+             c = params[7], # generalization parameter 0-Inf
+             s = params[8], # similarity weighing 0-1
+             b = params[9], # baseline similarity 0-1
+             t = c(3, 1, 3, 1),
+             beta = c(1, 1, 1, 1)/4, # category resonse bias 0-1
+             gamma = 1, # response determinism 0-10
+             theta = 1, # decay rate 0-Inf
+             r = 1,
+             colskip = 1,
+             outcomes = 4,
+             exemplars = stim)
+
+  model_out <- stdissGCM(st, tr, exemplar_decay = FALSE,
+                         exemplar_mute = TRUE, dec = "BIAS")
+  model_prob <- cbind(data.frame(names), round(data.matrix(model_out$p), 3))
+  mod_long <- melt(data.table(model_prob), id.vars = "names")
+  pap_long <- melt(data.table(paper_prob), id.vars = "Test.item")
+  pap_long$variable <- as.factor(rep(1:4, each = 18))
+  colnames(pap_long) <- c("names", "variable", "human")
+  big <- merge(mod_long, pap_long)
+  out <- catlearn::ssecl(obs = big$value, exp = big$human)
+  return(out)
+}
+
+optim <- DEoptim(fitSW, lower = rep(0, 9),
+                        upper = c(rep(1, 6), 100, 1, 1),
+                        DEoptim.control(itermax = 500))
+
+optim$optim

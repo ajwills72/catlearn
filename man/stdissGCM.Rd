@@ -133,7 +133,7 @@ test of the similarity–dissimilarity generalized context model.
 \note{
 
   1. In order to use the instantiation of dissGCM described in O'Bryan et al.
-  (2018), set \code{exemplar_decay = FALSE} and \code{exemplar_mute = TRUE}
+  (2018), set \code{exemplar_decay = FALSE} and \code{exemplar_mute = TRUE}.
 
   2.
 
