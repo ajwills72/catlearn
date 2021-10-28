@@ -37,3 +37,7 @@ slpCOVIS <- function(st, tr, crx = TRUE, respt = FALSE, rgive = TRUE, xtdo = FAL
     .Call(`_catlearn_slpCOVIS`, st, tr, crx, respt, rgive, xtdo)
 }
 
+stdissGCM <- function(st, test, dec = "BIAS", exemplar_decay = TRUE, exemplar_mute = FALSE) {
+    .Call(`_catlearn_stdissGCM`, st, test, dec, exemplar_decay, exemplar_mute)
+}
+
