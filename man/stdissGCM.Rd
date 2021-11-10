@@ -49,10 +49,36 @@
 
 This function operates as a stateful list processor.
 
+\code{st} must be a list containing the following items:
+
+\code{attentional_weights}
+
+\code{c}
+
+\code{s}
+
+\code{b}
+
 \code{t} Exemplar weighting. If \code{memory_decay = FALSE}, it is a vector
 of exemplar-specific memory strength. If \code{memory_decay = TRUE} (default),
 t is set by the function as specified in Equation 4 in Stewart and Morin (2007).
 }
+
+\code{beta}
+
+\code{gamma}
+
+\code{theta}
+
+\code{r}
+
+\code{colskip}
+
+\code{outcomes}
+
+\code{exemplars}
+
+\code{test} has to be a numeric matrix with the following columns:
 
 \author{ Lenard Dome, Andy Wills }
 
@@ -134,7 +160,5 @@ test of the similarity–dissimilarity generalized context model.
 
   1. In order to use the instantiation of dissGCM described in O'Bryan et al.
   (2018), set \code{exemplar_decay = FALSE} and \code{exemplar_mute = TRUE}.
-
-  2.
 
   }
