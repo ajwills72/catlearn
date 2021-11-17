@@ -9,32 +9,32 @@ using namespace arma;
 
 // Equation 11
 // Find attended cues
-vec attention_gain(rowvec input, rowvec eta) {
-    vec gain = input % eta;
+rowvec attention_gain(rowvec input, rowvec eta) {
+    rowvec gain = input % eta;
     return gain;
 }
 
 // Equation 13
 // Calculate p-norm of attention
-double attention_gain_pnorm(double P, vec gain) {
-    vec gain_p(gain);
+double attention_gain_pnorm(double P, rowvec gain) {
+    rowvec gain_p(gain);
     for (uword j = 0; j < gain.n_elem; ++j) {
-        gain_p[j] = pow(abs(gain[j]), P);
+        gain_p[j] = pow(std::abs(gain[j]), P);
     }
-    double p_sum = pow(accu(gain_p), 1/P);
+    double p_sum = pow(sum(gain_p), 1/P);
     return p_sum;
 }
 
 // Equation 12
 // Normalize Attentional Gains
-mat attention_normalize(rowvec gain, double p_sum) {
+rowvec attention_normalize(rowvec gain, double p_sum) {
     rowvec attention_norm = gain / p_sum;
     return attention_norm;
 }
 
 // Equation 5
 // Calcualte Model Predictions
-mat prediction(rowvec input, rowvec attention_norm, mat weights) {
+rowvec prediction(rowvec input, rowvec attention_norm, mat weights) {
     rowvec attended = input % attention_norm;
     mat activations = weights.each_row() % attended;
     mat predictions = sum(activations, 1);
@@ -43,27 +43,29 @@ mat prediction(rowvec input, rowvec attention_norm, mat weights) {
 
 // Equation 2
 // Exponential Ratio Scale Choice Rule
-mat choice_rule(rowvec predictions, double phi, int outcomes) {
-    vec scaled = predictions * phi;
-    vec power = zeros(outcomes);
+rowvec choice_rule(rowvec predictions, double phi, int outcomes) {
+    rowvec scaled = predictions * phi;
+    rowvec power(outcomes);
     for (uword j = 0; j < power.n_elem; ++j) {
         power[j] = std::exp(scaled[j]);
     }
-    rowvec out_choice = power / accu(power);
+    rowvec out_choice = (power / sum(power));
     return out_choice;
 }
 
 // Prediction Error
-mat prediction_error(rowvec output, rowvec predictions) {
+colvec prediction_error(rowvec output, rowvec predictions) {
     rowvec delta = output - predictions; // prediction error
     return delta.as_col();
 }
 
 // Equation 6
-mat delta_learning(double lambda, rowvec output, colvec delta,
+mat delta_learning(double lambda, colvec delta,
                    rowvec input, rowvec attention_norm) {
     rowvec attended = input % attention_norm;
-    mat out = delta.each_row() % attended;
+    mat out(delta.n_elem, input.n_elem, fill::ones);
+    out = out.each_row() % attended;
+    out = out.each_col() % delta;
     out = out * lambda;
     return out;
 }
@@ -72,37 +74,38 @@ mat delta_learning(double lambda, rowvec output, colvec delta,
 mat attentional_learning(double mu, double P, double p_norm, mat weights,
                          colvec delta, rowvec a_gain, rowvec input,
                          rowvec predictions) {
-    predictions = predictions.as_col();
     mat activations = weights.each_row() % input;
-    rowvec a_power = zeros(a_gain.n_elem);
+    rowvec a_power(a_gain.n_elem);
     for (uword k = 0; k < a_gain.n_elem; ++k) {
           a_power[k] = pow(a_gain[k], (P - 1));
     }
-    vec att_descend = predictions.each_row() % a_power;
-    mat out = delta.each_row() % (activations - att_descend);
-    out = out % delta;
-    mat out_sum = sum(out, 1);
-    mat delta_eta = out_sum.each_col() % input;
+    mat attention(weights.n_rows, weights.n_cols, fill::ones);
+    attention = attention.each_row() % a_power;
+    attention = attention.each_col() % predictions.as_col();
+    mat out = (activations - attention);
+    out = out.each_col() % delta;
+    mat out_sum = sum(out, 0);
+    mat delta_eta = out_sum % input;
     delta_eta = delta_eta * mu * pow(p_norm, -1);
     return delta_eta;
 }
 
 // [[Rcpp::export]]
-Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
+Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
 
-    // declare variables  double    beta = as<double>(st["beta"]);
+    // declare variables
     double    P = as<double>(st["P"]);              // attentional normalization
     double    phi = as<double>(st["phi"]);          // response consistency
-    double    lambda = as<double>(st["lambda"]);      // learning rate paramter
+    double    lambda = as<double>(st["lambda"]);    // learning rate paramter
     double    mu = as<double>(st["mu"]);            // attentional learning rate
     int       colskip = as<int>(st["colskip"]);
     int       outcomes = as<int>(st["outcomes"]);
-    mat       iweights = as<mat>(st["w"]);
-    mat       ieta = as<mat>(st["eta"]);
+    mat       iweights = as<mat>(st["w"]);          // initial connection weights
+    rowvec    ieta = as<rowvec>(st["eta"]);         // initial salience
 
-    // declare data objects
+    // declare variables that will be updated through the sim
     mat       weights(iweights);
-    mat       eta(ieta);
+    rowvec    eta(ieta);
     mat       out;
     // get size of weight matrix
     uword m = weights.n_rows, n = weights.n_cols;
@@ -118,8 +121,9 @@ Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
     colvec delta(m);     // vector of prediction errors
     colvec output; output = zeros(outcomes); // teaching vector
     mat deltaW; deltaW = zeros(m, n); // change in weights
-    mat deltaT; deltaT = zeros(m, n); // change in salience
-    vec probabilities; probabilities = zeros(outcomes);
+    rowvec deltaT; deltaT.zeros(n); // change in salience
+
+    rowvec probabilities(outcomes); // vector of response probabilities
     // store outputs
     mat activations(trow, outcomes);
     mat attention(trow, n);
@@ -144,20 +148,30 @@ Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
         // Extract input node activations
         input = train.subvec(colskip, colskip + n - 1).as_row();
         // Extract teaching signals
-        output = train.subvec(n + colskip, tcol - 1).as_row();
+        output = train.subvec(n + colskip, tcol - 1).as_col();
         // Calculate attention
         a_gain = attention_gain(input, eta);
-        Rcout << a_gain << "\n";
         p_norm = attention_gain_pnorm(P, a_gain);
         a_norm = attention_normalize(a_gain, p_norm);
-
-        // if it is a learning trial then update weights
-        if ( tr(i, 0) !=  2 )
-        {
-            deltaW = delta_learning(lambda, output, delta, input, a_norm);       // Equation 5
-            weights += deltaW;
+        pred_out = prediction(input, a_norm, weights);
+        probabilities = choice_rule(pred_out, phi, outcomes);
+        delta = prediction_error(output.as_row(), pred_out);
+        // calculate weights if it is a learning trial
+        if ( tr(i, 0) !=  2 ) {
+          deltaW = delta_learning(lambda, delta, input, a_norm);
+          deltaT = attentional_learning(mu, P, p_norm, weights,
+                                   delta, a_gain, input, pred_out);
+          weights += deltaW;
+          eta += deltaT;
         }
+        prob.row(i) = probabilities.as_row();
+        activations.row(i) = pred_out.as_row();
+        attention.row(i) = eta.as_row();
     }
+    outFIN = Rcpp::List::create(Rcpp::Named("p") = prob,
+        // Rcpp::Named("model_predictions") = activations,
+        Rcpp::Named("attention") = attention,
+        Rcpp::Named("final_weights") = weights);
 
-    return 1;
+    return outFIN;
 }
