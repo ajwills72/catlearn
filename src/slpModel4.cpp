@@ -150,28 +150,38 @@ Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
         // Extract teaching signals
         output = train.subvec(n + colskip, tcol - 1).as_col();
         // Calculate attention
-        a_gain = attention_gain(input, eta);
-        p_norm = attention_gain_pnorm(P, a_gain);
-        a_norm = attention_normalize(a_gain, p_norm);
-        pred_out = prediction(input, a_norm, weights);
-        probabilities = choice_rule(pred_out, phi, outcomes);
+        a_gain = attention_gain(input, eta);                    // Equation 11
+        p_norm = attention_gain_pnorm(P, a_gain);               // Equation 13
+        a_norm = attention_normalize(a_gain, p_norm);           // Equation 12
+        pred_out = prediction(input, a_norm, weights);          // Equation 5
+        probabilities = choice_rule(pred_out, phi, outcomes);   // Equation 2
         delta = prediction_error(output.as_row(), pred_out);
         // calculate weights if it is a learning trial
         if ( tr(i, 0) !=  2 ) {
-          deltaW = delta_learning(lambda, delta, input, a_norm);
-          deltaT = attentional_learning(mu, P, p_norm, weights,
-                                   delta, a_gain, input, pred_out);
+          deltaW = delta_learning(lambda, delta, input, a_norm);  // Equation 6
+          deltaT = attentional_learning(mu, P, p_norm, weights, delta,
+                                        a_gain, input, pred_out); // Equation 14
           weights += deltaW;
           eta += deltaT;
         }
+        // strore trial-level output
         prob.row(i) = probabilities.as_row();
         activations.row(i) = pred_out.as_row();
         attention.row(i) = eta.as_row();
     }
-    outFIN = Rcpp::List::create(Rcpp::Named("p") = prob,
-        // Rcpp::Named("model_predictions") = activations,
-        Rcpp::Named("attention") = attention,
-        Rcpp::Named("final_weights") = weights);
+
+    if (xtdo == false) {
+        outFIN = Rcpp::List::create(
+            Rcpp::Named("p") = prob,
+            Rcpp::Named("final_attention") = eta,
+            Rcpp::Named("final_weights") = weights);
+    } else {
+        outFIN = Rcpp::List::create(
+            Rcpp::Named("p") = prob,
+            Rcpp::Named("model_predictions") = activations,
+            Rcpp::Named("attention") = attention,
+            Rcpp::Named("final_weights") = weights);
+    }
 
     return outFIN;
 }
