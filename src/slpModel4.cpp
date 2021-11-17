@@ -16,7 +16,7 @@ vec attention_gain(rowvec input, rowvec eta) {
 
 // Equation 13
 // Calculate p-norm of attention
-mat attention_gain_pnom(double P, vec gain) {
+mat attention_gain_pnorm(double P, vec gain) {
     vec gain_p(gain);
     for (uword j = 0; j < gain.n_elem; ++j) {
       gain_p[j] = pow(abs(gain[j]), P);
@@ -38,8 +38,7 @@ mat prediction(rowvec input, rowvec attention_norm, mat weights) {
     rowvec attended = input % attention_norm;
     mat activations = weights.each_row() % attended;
     mat predictions = sum(activations, 1);
-    return predictions;
-
+    return predictions.as_row();
 }
 
 // Equation 2
@@ -55,26 +54,46 @@ mat choice_rule(rowvec predictions, double phi, int outcomes) {
 }
 
 // Prediction Error
-mat prediction_error() {
-
+mat prediction_error(rowvec output, rowvec predictions) {
+    rowvec delta = output - predictions; // prediction error
+    return delta.as_col();
 }
 
 // Equation 6
-mat delta_learning() {
-
+mat delta_learning(double lambda, rowvec output, colvec delta,
+                   rowvec input, rowvec attention_norm) {
+    rowvec attended = input % attention_norm;
+    mat out = delta.each_row() % attended;
+    out = out * lambda;
+    return out;
 }
 
 // Equation 14
-mat attentional_learning() {
-
+mat attentional_learning(double mu, double P, double p_norm, mat weights,
+                         colvec delta, rowvec eta, rowvec input,
+                         rowvec predictions) {
+    predictions = predictions.as_col();
+    mat activations = weights.each_row() % input;
+    rowvec a_power = zeros(eta.n_elem);
+    for (uword k = 0; k < eta.n_elem; ++j) {
+        a_power[k] = pow(eta[k], (P - 1));
+    }
+    vec att_descend = predictions.each_row() * a_power;
+    mat out = predictions.each_col() * (activations - att_descend);
+    out = out % delta;
+    mat out_sum = sum(out, 1);
+    mat delta_eta= out_sum.each_col() * input;
+    delta_eta = delta_eta * mu;
+    return delta_eta;
 }
 
 // [[Rcpp::export]]
 Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
+
     // declare variables  double    beta = as<double>(st["beta"]);
     double    P = as<double>(st["P"]);              // attentional normalization
     double    phi = as<double>(st["phi"]);          // response consistency
-    double    delta = as<double>(st["delta"]);      // learning rate paramter
+    double    lamba = as<double>(st["lambda"]);      // learning rate paramter
     double    mu = as<double>(st["mu"]);            // attentional learning rate
     int       colskip = as<int>(st["colskip"]);
     int       outcomes = as<int>(st["outcomes"]);
@@ -84,13 +103,14 @@ Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
     // declare data objects
     mat       weights(iweights);
     mat       out;
-    // get size of weights
+    // get size of weight matrix
     uword m = weghts.n_rows, n = weights.n_cols;
     // get size of tr
     uword trow = tr.n_rows, tcol = tr.n_cols;
     // initialize miscellaneous variables
     rowvec train(tcol);
     rowvec input(m);
+    rowvec a_norm = zeros(n);
     colvec output; output = zeros(outcomes);
     mat deltaW; deltaW = zeros(m, n); // change in weights
     mat deltaT; deltaT = zeros(m, n); // change in salience
@@ -107,15 +127,22 @@ Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
         // reset network to inital state if ctrl = 1
         if ( tr(i, 0) == 1 )
         {
-          Weights.zeros();
-          Weights += initW;
+          weights.zeros();
+          weights += initW;
         }
         // Extract current trial
         train = tr.row(i);
         // Extract input node activations
         input = train.subvec(colskip, colskip + n - 1).as_row();
         // Extract teaching signals
-        output = train.subvec(n + colskip, tcol - 1).as_col();
+        output = train.subvec(n + colskip, tcol - 1).as_row();
+
+        // if it is a learning trial then update weights
+        if ( tr(i, 0) !=  2 )
+        {
+          deltaM = delta_learning(delta, predout, input,attention_norm);       // Equation 5
+          weights += deltaM;
+        }
 
     }
 }

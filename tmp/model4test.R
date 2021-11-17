@@ -12,7 +12,7 @@ print(tr)
 ## Set state
 st <- list(P = params[1],     ## attentional normalization
            phi = params[2],   ## response consistency
-           delta = params[3], ## learning rate parameter
+           lambda = params[3], ## learning rate parameter
            mu = params[4],    ## attentional learning rate parameter
            colskip = 1,
            outcomes = 4,
