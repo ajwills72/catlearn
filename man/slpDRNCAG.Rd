@@ -6,7 +6,7 @@ Delta-Rule Neural Network with Competitive Attentional Gating, a.k.a. Model 4 in
 \description{
 
   This is the C++ implementation of Model 4 from Paskweitz and Jones (2021).
-  Model 4 is a Delta-Rule Neural Network with Competitive Attentional Gating - a
+  Model 4 is a Delta-Rule Network with Competitive Attentional Gating - a
   fragmented version of EXIT (Kruschke, 2001) lacking exemplar-based rapid
   attentional shifts.
 
