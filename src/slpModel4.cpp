@@ -90,6 +90,9 @@ mat attentional_learning(double mu, double P, double p_norm, mat weights,
     return delta_eta;
 }
 
+// TODO: salience capped at 0.1
+// TODO: only correct category weights are updated?
+
 // [[Rcpp::export]]
 Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
 
@@ -158,11 +161,11 @@ Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
         delta = prediction_error(output.as_row(), pred_out);
         // calculate weights if it is a learning trial
         if ( tr(i, 0) !=  2 ) {
-          deltaW = delta_learning(lambda, delta, input, a_norm);  // Equation 6
-          deltaT = attentional_learning(mu, P, p_norm, weights, delta,
-                                        a_gain, input, pred_out); // Equation 14
-          weights += deltaW;
-          eta += deltaT;
+            deltaW = delta_learning(lambda, delta, input, a_norm);  // Equation 6
+            deltaT = attentional_learning(mu, P, p_norm, weights, delta,
+                                          a_gain, input, pred_out); // Equation 14
+            weights += deltaW;
+            eta += deltaT;
         }
         // strore trial-level output
         prob.row(i) = probabilities.as_row();
