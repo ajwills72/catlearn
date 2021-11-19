@@ -2,7 +2,7 @@ library(catlearn)
 library(Rcpp)
 library(data.table)
 library(stringr)
-sourceCpp("src/slpModel4.cpp")
+sourceCpp("src/slpDRNCAG.cpp")
 
 seq <- fread("tmp/trial_order.csv", header = TRUE)
 out_sim <- fread("tmp/sim2model4.csv")

@@ -183,6 +183,7 @@ Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
             Rcpp::Named("p") = prob,
             Rcpp::Named("model_predictions") = activations,
             Rcpp::Named("attention") = attention,
+            Rcpp::Named("final_attention") = eta,
             Rcpp::Named("final_weights") = weights);
     }
 
