@@ -70,7 +70,8 @@ mat delta_learning(double lambda, colvec delta,
     return out;
 }
 
-// Equation 14
+// Equation 15
+// TODO: this is equation 14, needs to make it to create model 5
 mat attentional_learning(double mu, double P, double p_norm, mat weights,
                          colvec delta, rowvec a_gain, rowvec input,
                          rowvec predictions) {

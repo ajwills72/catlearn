@@ -13,7 +13,7 @@ Delta-Rule Neural Network with Competitive Attentional Gating, a.k.a. Model 4 in
 }
 \usage{
 
-slpDNNCAG(st, tr, xtdo = FALSE)
+slpDRNCAG(st, tr, xtdo = FALSE)
 
 }
 \arguments{
