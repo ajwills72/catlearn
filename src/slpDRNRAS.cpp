@@ -72,9 +72,9 @@ mat delta_learning(double lambda, colvec delta,
 
 // Equation 15
 // TODO: this is equation 14, needs to make it to create model 5
-mat attentional_learning(double mu, double P, double p_norm, mat weights,
-                         colvec delta, rowvec a_gain, rowvec input,
-                         rowvec predictions) {
+mat attentional_shift(double rho, double P, double p_norm, mat weights,
+                      colvec delta, rowvec a_gain, rowvec input,
+                      rowvec predictions) {
     mat activations = weights.each_row() % input;
     rowvec a_power(a_gain.n_elem);
     for (uword k = 0; k < a_gain.n_elem; ++k) {
@@ -86,9 +86,14 @@ mat attentional_learning(double mu, double P, double p_norm, mat weights,
     mat out = (activations - attention);
     out = out.each_col() % delta;
     mat out_sum = sum(out, 0);
-    mat delta_eta = out_sum % input;
-    delta_eta = delta_eta * mu * pow(p_norm, -1);
+    mat delta_eta = rho * pow(p_norm, -1) * out_sum;
     return delta_eta;
+}
+
+// Equation 16
+mat attentional_learning(double mu, rowvec a_gain,
+                         rowvec shift, rowvec input) {
+
 }
 
 // [[Rcpp::export]]
@@ -99,6 +104,7 @@ Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
     double    phi = as<double>(st["phi"]);          // response consistency
     double    lambda = as<double>(st["lambda"]);    // learning rate paramter
     double    mu = as<double>(st["mu"]);            // attentional learning rate
+    double    rho = as<double>(st["rho"]);          // attentional shift rate
     int       colskip = as<int>(st["colskip"]);
     int       outcomes = as<int>(st["outcomes"]);
     mat       iweights = as<mat>(st["w"]);          // initial connection weights
@@ -115,14 +121,16 @@ Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
     // initialize miscellaneous variables
     rowvec train(tcol); // vector of current trial
     rowvec input(m);
-    rowvec a_gain(n);    // attention gain
-    double p_norm(n);    // p-norm of attention gains
-    rowvec a_norm(n);    // normalized attention
-    rowvec pred_out(m);  // vector of model predictions
-    colvec delta(m);     // vector of prediction errors
+    rowvec a_gain(n);           // attention gain
+    rowvec shift_gain(n);       // attention gain during attentional shifts
+    double p_norm(n);           // p-norm of attention gains
+    rowvec a_norm(n);           // normalized attention
+    rowvec pred_out(m);         // vector of model predictions
+    colvec delta(m);            // vector of prediction errors
     colvec output; output = zeros(outcomes); // teaching vector
     mat deltaW; deltaW = zeros(m, n); // change in weights
     rowvec deltaT; deltaT.zeros(n); // change in salience
+    rowvec shiftT; shiftT.zeros(n); // attentional shifts
 
     rowvec probabilities(outcomes); // vector of response probabilities
     // store outputs
@@ -152,6 +160,7 @@ Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
         output = train.subvec(n + colskip, tcol - 1).as_col();
         // Calculate attention
         a_gain = attention_gain(input, eta);                    // Equation 11
+        shift_gain = a_gain;                                    // store gain
         p_norm = attention_gain_pnorm(P, a_gain);               // Equation 13
         a_norm = attention_normalize(a_gain, p_norm);           // Equation 12
         pred_out = prediction(input, a_norm, weights);          // Equation 5
@@ -159,9 +168,16 @@ Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
         delta = prediction_error(output.as_row(), pred_out);
         // calculate weights if it is a learning trial
         if ( tr(i, 0) !=  2 ) {
-            deltaW = delta_learning(lambda, delta, input, a_norm);  // Equation 6
-            deltaT = attentional_learning(mu, P, p_norm, weights, delta,
-                                          a_gain, input, pred_out); // Equation 14
+            deltaW = delta_learning(lambda, delta, input, a_norm);      // Equation 6
+            for (uword i = 0; i < 10; i++) {
+                shift_gain += attentional_shifts(mu, P, p_norm, weights,                                             delta,
+                                             a_gain, input, pred_out);  // Equation 15
+                p_norm = attention_gain_pnorm(P, shift_gain);           // Equation 13
+                a_norm = attention_normalize(shift_gain, p_norm);       // Equation 12
+                pred_out = prediction(input, a_norm, weights);          // Equation 5
+            } // Equation 14
+            deltaT = attentional_learning(mu, a_gain,
+                                          shift_gain, input);           // Equation 16
             weights += deltaW;
             eta += deltaT;
         }
