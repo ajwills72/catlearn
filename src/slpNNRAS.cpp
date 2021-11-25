@@ -97,7 +97,7 @@ mat attentional_learning(double mu, rowvec a_gain,
 }
 
 // [[Rcpp::export]]
-Rcpp::List slpDRNCAG(List st, arma::mat tr, bool xtdo = false) {
+Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo = false) {
 
     // declare variables
     double    P = as<double>(st["P"]);              // attentional normalization
