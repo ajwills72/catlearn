@@ -17,6 +17,10 @@ slpMack75 <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpMack75`, st, tr, xtdo)
 }
 
+slpNNCAG <- function(st, tr, xtdo = FALSE) {
+    .Call(`_catlearn_slpNNCAG`, st, tr, xtdo)
+}
+
 slpRW <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpRW`, st, tr, xtdo)
 }
