@@ -150,11 +150,12 @@ Rcpp::List slpNNCAG(List st, arma::mat tr, bool xtdo = false) {
         // Extract teaching signals
         output = train.subvec(n + colskip, tcol - 1).as_col();
         // Calculate attention
-        a_gain = attention_gain(input, eta);                    // Equation 11
-        p_norm = attention_gain_pnorm(P, a_gain);               // Equation 13
-        a_norm = attention_normalize(a_gain, p_norm);           // Equation 12
-        pred_out = prediction(input, a_norm, weights);          // Equation 5
-        probabilities = choice_rule(pred_out, phi, outcomes);   // Equation 2
+        eta.replace(0, 0.1);                                  // Reset 0 values to 0.01
+        a_gain = attention_gain(input, eta);                  // Equation 11
+        p_norm = attention_gain_pnorm(P, a_gain);             // Equation 13
+        a_norm = attention_normalize(a_gain, p_norm);         // Equation 12
+        pred_out = prediction(input, a_norm, weights);        // Equation 5
+        probabilities = choice_rule(pred_out, phi, outcomes); // Equation 2
         delta = prediction_error(output.as_row(), pred_out);
         // calculate weights if it is a learning trial
         if ( tr(i, 0) !=  2 ) {
