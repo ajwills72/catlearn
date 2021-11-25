@@ -1,7 +1,7 @@
 \name{slpNNCAG}
 \alias{slpNNCAG}
 \title{
-Delta-Rule Neural Network with Competitive Attentional Gating, a.k.a. Model 4 in Paskewitz and Jones (2021)
+A Nerual Network with Competitive Attentional Gating (NNCAG), a.k.a. Model 4 in Paskewitz and Jones (2021).
 }
 
 \description{
