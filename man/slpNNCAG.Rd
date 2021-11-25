@@ -34,58 +34,60 @@ presence or absence of an outcome.
 
 Argument \code{st} must be a list containing the following items:
 
-\item{P}{Attention normalization constant, \eqn{P}}.
+\code{P} - attention normalization constant, \eqn{P}.
 
-\item{phi}{Decision-making constant, \eqn{\phi}, also referred to as
-specificity constant.}
+\code{phi} - decision-making constant, \eqn{\phi}, also referred to as
+specificity constant.
 
-\item{lambda}{Learning rate, \eqn{\lambda}.}
+\code{lambda} - learning rate, \eqn{\lambda}.
 
-\item{mu}{Attentional learning rate, \eqn{\mu}.}
+\code{mu} - attentional learning rate, \eqn{\mu}.
 
-\item{outcomes}{The number of categories.}
+\code{outcomes} - The number of categories.
 
-\item{w}{A \eqn{k \times i} matrix of initial weights, where \eqn{k} equals to the number of categories and \eqn{i} equals to the number of stimuli.}
+\code{w} - a \eqn{k \times i} matrix of initial weights, where \eqn{k} equals to the number of categories and \eqn{i} equals to the number of stimuli.
 
-\item{eta}{A vector with \eqn{i} number of element, wher the \eqn{i} element is the salience of \eqn{i^th} cue. In edge cases, \code{eta} is capped at lower bound of 0.1, see Note 1.}
+\code{eta} - a vector with \eqn{i} number of element, wher the \eqn{i} element is the salience of \eqn{i^th} cue. In edge cases, \code{eta} is capped at lower bound of 0.1, see Note 1.
 
-\item{colskip}{The number of optional columns to be skipped in the tr
+\code{colskip} - The number of optional columns to be skipped in the tr
 matrix. colskip should be set to the number of optional columns you have
 added to the tr matrix, PLUS ONE. So, if you have added no optional
 columns, colskip=1. This is because the first (non-optional) column
-contains the control values (details below).}
+contains the control values (details below).
 
 Argument \code{tr}must be a matrix, where each row is one trial
 presented to the model. Trials are always presented in the order
 specified. The columns must be as described below, in the order
 described below:
 
-\item{ctrl}{A vector of control codes. Available codes are: 0 = normal
+\code{ctrl} - a vector of control codes. Available codes are: 0 = normal
 trial; 1 = reset model (i.e. set matrix of initial weights and vector of
 salience back to their initial values as specified in \code{st}); 2 = Freeze
-learning. Control codes are actioned before the trial is processed.}
+learning. Control codes are actioned before the trial is processed.
 
-\item{opt1, opt2, \dots}{any number of preferred optional columns, the
+\code{opt1, opt2, \dots} - any number of preferred optional columns, the
 names of which can be chosen by the user. It is important that these
 columns are placed after the control column, and before the remaining
 columns (see below). These optional columns are ignored by the
 function, but you may wish to use them for readability. For example, you
 might choose to include columns such as block number, trial number and
 condition. The argument colskip (see above) must be set to the number of
-optional columns plus one.}
+optional columns plus one.
 
-\item{x1, x2, \dots}{columns for each cue (\code{1} = cue present, \code{0} =
+\code{x1, x2, \dots} - columns for each cue (\code{1} = cue present, \code{0} =
 cue absent). There must be one column for each input element. Each row is one
 trial. In simple applications, one element is used for each stimulus (e.g. a
 simulation of blocking (Kamin, 1969), A+, AX+, would have two inputs, one for A
 and one for X). In simple applications, all present elements have an activation
 of 1 and all absence elements have an activation of 0. However, slpNNCAG
-supports any real number for activations.}
+supports any real number for activations.
 
-\item{t1, t2, \dots}{columns for the teaching values indicating the
+\code{t1, t2, \dots} - columns for the teaching values indicating the
 category feedback on the current trial. Each category needs a single
 teaching signal in a dummy coded fashion, e.g., if the first category
-is the correct category for that trial. For example, if there are four categories and the current stimulus belongs to the second category.}
+is the correct category for that trial. For example, if there are four
+categories and the current stimulus belongs to the second category, then we
+would have \code{[0, 1, 0, 0]}.
 }
 
 \value{
@@ -117,7 +119,7 @@ Lenard Dome, Andy Wills
 
 \note{
 
-1. If there is only one stimulus present on the trial with \eqn(eta) = \code{1}, Equation 12 breaks down. Under these circumstances, \eqn{eta} is set to \code{0.1}.
+1. If there is only one stimulus present on the trial with \eqn{eta} = \code{1}, Equation 12 breaks down. Under these circumstances, \eqn{eta} is set to \code{0.1}.
 
 }
 

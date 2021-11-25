@@ -122,6 +122,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_catlearn_slpBM", (DL_FUNC) &_catlearn_slpBM, 3},
     {"_catlearn_slpEXIT", (DL_FUNC) &_catlearn_slpEXIT, 3},
     {"_catlearn_slpLMSnet", (DL_FUNC) &_catlearn_slpLMSnet, 3},
+    {"_catlearn_slpNNCAG", (DL_FUNC) &_catlearn_slpNNCAG, 3},
     {"_catlearn_slpMack75", (DL_FUNC) &_catlearn_slpMack75, 3},
     {"_catlearn_slpRW", (DL_FUNC) &_catlearn_slpRW, 3},
     {"_catlearn_slpALCOVE", (DL_FUNC) &_catlearn_slpALCOVE, 7},
