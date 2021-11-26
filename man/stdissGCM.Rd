@@ -19,9 +19,9 @@
 
   \item{dec}{Decision mechanism. If \code{NOISE}, use O'Bryan et al. (2018)'s background-noise decision rule. If \code{BIAS} (default), use Stewart and Morin (2007)'s category-bias decision rule.}
 
-  \item{exemplar_mute}{If \code{TRUE}, only those exemplars contribute evidence    to the decision rule, which have at least one feature common with the    current stimuli. If \code{FALSE} (default), all exemplars contribute.}
+  \item{exemplar_mute}{If \code{TRUE}, only those exemplars contribute evidence to the decision rule, which have at least one feature common with the    current stimuli. If \code{FALSE} (default), all exemplars contribute.}
 
-  \item{exemplar_decay}{If \code{TRUE} (default), exemplar weightings decay   as specified by Stewart and Morin (2007). If \code{FALSE}, exemplar weightings   are static.}
+  \item{exemplar_decay}{If \code{TRUE} (default), exemplar weightings decay as specified by Stewart and Morin (2007). If \code{FALSE}, exemplar weightings are static.}
 
 }
 
@@ -45,31 +45,31 @@ This function operates as a stateful list processor.
 
 \code{st} must be a list containing the following items:
 
-\item{attentional_weights}{A vector of attentional weights, where sum of all elements equal to 1.}
+\code{attentional_weights} -  vector of attentional weights, where sum of all elements equal to 1.
 
-\item{c}{Generalization constant.}
+\code{c} - generalization constant.
 
-\item{s}{Similarity and dissimilarity weighting. If 0, evidence for a category will be purely based on the dissimilarity between current input vector and all exemplars from the other categories. If it is 1, evidence for a given category will be solely based on similarity to its own exemplars.}
+\code{s} - similarity and dissimilarity weighting. If 0, evidence for a category will be purely based on the dissimilarity between current input vector and all exemplars from the other categories. If it is 1, evidence for a given category will be solely based on similarity to its own exemplars.
 
-\item{b}{Baseline level of similarity. This parameter will control how much noise will spread over all categories in the background-noise decision rule. It is only used if \code{dec} is set to NOISE.}
+\code{b} - baseline level of similarity. This parameter will control how much noise will spread over all categories in the background-noise decision rule. It is only used if \code{dec} is set to NOISE.
 
-\item{t}{Exemplar weighting. If \code{memory_decay = FALSE}, it is a vector of exemplar-specific memory strength. If  \code{memory_decay = TRUE} (default), it is set by the function as specified in Equation 4 in Stewart and Morin (2007).}
+\code{t} - exemplar weighting. If \code{memory_decay = FALSE}, it is a vector of exemplar-specific memory strength. If  \code{memory_decay = TRUE} (default), it is set by the function as specified in Equation 4 in Stewart and Morin (2007).
 
-\item{beta}{Category bias vector. Only used when \code{dec} set to BIAS. Otherwise set it to \code{NULL}.}
+\code{beta} - category bias vector. Only used when \code{dec} set to BIAS. Otherwise set it to \code{NULL}.
 
-\item{gamma}{Decision scaling constant, when \code{dec} is set to BIAS.}
+\code{gamma} - decision scaling constant, when \code{dec} is set to BIAS.
 
-\item{colskip}{The number of optional columns to skip in test plus one. If you have no optional columns, set it to one}
+\code{colskip} - the number of optional columns to skip in test plus one. If you have no optional columns, set it to one.
 
-\item{outcomes}{The number of categories.}
+\code{outcomes} - the number of categories.
 
-\item{exemplars}{A matrix of exemplars and their corresponding category indicated by a single integer.}
+\code{exemplars} - a matrix of exemplars and their corresponding category indicated by a single integer.
 
-\code{test} has to be a numeric matrix with the following columns:
+\code{test} has to be a numeric data matrix with the following columns:
 
-\item{opt1, opt2, \dots}{}
+\code{opt1, opt2, \dots}{}
 
-\item{x1, x2, x3, \dots}{}
+\code{x1, x2, x3, \dots}{}
 
 }
 
