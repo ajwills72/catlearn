@@ -152,6 +152,7 @@ Rcpp::List slpNNCAG(List st, arma::mat tr, bool xtdo = false) {
         // Calculate attention
         eta.replace(0, 0.1);                                  // Reset 0 values to 0.01
         a_gain = attention_gain(input, eta);                  // Equation 11
+        a_gain.replace(0, 0.1);                                  // Reset 0 values to 0.01
         p_norm = attention_gain_pnorm(P, a_gain);             // Equation 13
         a_norm = attention_normalize(a_gain, p_norm);         // Equation 12
         pred_out = prediction(input, a_norm, weights);        // Equation 5
