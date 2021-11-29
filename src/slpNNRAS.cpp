@@ -71,7 +71,6 @@ mat delta_learning(double lambda, colvec delta,
 }
 
 // Equation 15
-// TODO: this is equation 14, needs to make it to create model 5
 mat attentional_shift(double rho, double P, double p_norm, mat weights,
                       colvec delta, rowvec a_gain, rowvec input,
                       rowvec predictions) {
@@ -93,6 +92,10 @@ mat attentional_shift(double rho, double P, double p_norm, mat weights,
 // Equation 16
 mat attentional_learning(double mu, rowvec a_gain,
                          rowvec shift, rowvec input) {
+    rowvec doa = shift - a_gain;
+    doa = doa % input;
+    doa = doa * mu;
+    return doa;
 
 }
 
@@ -159,25 +162,30 @@ Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo = false) {
         // Extract teaching signals
         output = train.subvec(n + colskip, tcol - 1).as_col();
         // Calculate attention
+        eta.replace(0, 0.1);                                    // Reset 0 values to 0.01
         a_gain = attention_gain(input, eta);                    // Equation 11
         shift_gain = a_gain;                                    // store gain
         p_norm = attention_gain_pnorm(P, a_gain);               // Equation 13
         a_norm = attention_normalize(a_gain, p_norm);           // Equation 12
         pred_out = prediction(input, a_norm, weights);          // Equation 5
         probabilities = choice_rule(pred_out, phi, outcomes);   // Equation 2
-        for (uword i = 0; i < 10; i++) {
-            shift_gain += attentional_shift(mu, P, p_norm, weights,                                             delta,
-                                         a_gain, input, pred_out);  // Equation 15
-            p_norm = attention_gain_pnorm(P, shift_gain);           // Equation 13
-            a_norm = attention_normalize(shift_gain, p_norm);       // Equation 12
-            pred_out = prediction(input, a_norm, weights);          // Equation 5
-        }
-        delta = prediction_error(output.as_row(), pred_out);    // Equation 14
 
         // update weights and salience if it is a learning trial
         if ( tr(i, 0) !=  2 ) {
+            for (uword i = 0; i < 10; i++) {
+                p_norm = attention_gain_pnorm(P, shift_gain);           // Equation 13
+                a_norm = attention_normalize(shift_gain, p_norm);       // Equation 12
+                pred_out = prediction(input, a_norm, weights);          // Equation 5
+                shift_gain += attentional_shift(mu, P, p_norm, weights,
+                                      delta, a_gain, input, pred_out);  // Equation 15
+                shift_gain.replace(0, 0.1);                             // Reset 0 values to 0.01
+            }
+            // recalculate attention before updates
+            p_norm = attention_gain_pnorm(P, shift_gain);           // Equation 13
+            a_norm = attention_normalize(shift_gain, p_norm);       // Equation 12
+            pred_out = prediction(input, a_norm, weights);          // Equation 5
+            delta = prediction_error(output.as_row(), pred_out);        // Equation 14
             deltaW = delta_learning(lambda, delta, input, a_norm);      // Equation 6
-
             deltaT = attentional_learning(mu, a_gain,
                                           shift_gain, input);           // Equation 16
             weights += deltaW;
