@@ -21,6 +21,10 @@ slpNNCAG <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpNNCAG`, st, tr, xtdo)
 }
 
+slpNNRAS <- function(st, tr, xtdo = FALSE) {
+    .Call(`_catlearn_slpNNRAS`, st, tr, xtdo)
+}
+
 slpRW <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpRW`, st, tr, xtdo)
 }

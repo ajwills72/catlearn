@@ -76,6 +76,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// slpNNRAS
+Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo);
+RcppExport SEXP _catlearn_slpNNRAS(SEXP stSEXP, SEXP trSEXP, SEXP xtdoSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type st(stSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type tr(trSEXP);
+    Rcpp::traits::input_parameter< bool >::type xtdo(xtdoSEXP);
+    rcpp_result_gen = Rcpp::wrap(slpNNRAS(st, tr, xtdo));
+    return rcpp_result_gen;
+END_RCPP
+}
 // slpRW
 List slpRW(List st, NumericMatrix tr, bool xtdo);
 RcppExport SEXP _catlearn_slpRW(SEXP stSEXP, SEXP trSEXP, SEXP xtdoSEXP) {
@@ -129,6 +142,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_catlearn_slpLMSnet", (DL_FUNC) &_catlearn_slpLMSnet, 3},
     {"_catlearn_slpMack75", (DL_FUNC) &_catlearn_slpMack75, 3},
     {"_catlearn_slpNNCAG", (DL_FUNC) &_catlearn_slpNNCAG, 3},
+    {"_catlearn_slpNNRAS", (DL_FUNC) &_catlearn_slpNNRAS, 3},
     {"_catlearn_slpRW", (DL_FUNC) &_catlearn_slpRW, 3},
     {"_catlearn_slpALCOVE", (DL_FUNC) &_catlearn_slpALCOVE, 7},
     {"_catlearn_slpCOVIS", (DL_FUNC) &_catlearn_slpCOVIS, 6},
