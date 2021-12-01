@@ -1,11 +1,11 @@
-context("slpNNCAG")
-load("../data/test_slpNNCAG.RData")
+context("slpNNRAS")
+load("../data/test_slpNNRAS.RData")
 
 st.copy <- st
 tr.copy <- bigtr
 
 ## Run simulation
-out <- slpNNCAG(st.copy, data.matrix(tr.copy)[, c(1, 4:13)])
+out <- slpNNRAS(st.copy, data.matrix(tr.copy)[, c(1, 4:13)])
 
 probs <- out$p
 probs <- data.table(cbind(tr.copy[, 1:3], probs))
@@ -15,14 +15,14 @@ rownames(probs) <- NULL
 colnames(probs)[2:5] <- c("C1", "R1", "C2", "R2")
 
 # Test that it reproduces a quick ibre-type simulation
-test_that("slpNNCAG reproduces simulation.", {
+test_that("slpNNRAS reproduces simulation.", {
     expect_equal(data.table(out_sim[order(out_sim$V1), 2:5]),
                  data.table(probs[order(probs$stim), 2:5]))
 })
 
 
 ## Below guards against common RCpp error.
-test_that("slpNNCAG does not change st, tr.", {
+test_that("slpNNRAS does not change st, tr.", {
     expect_equal(st.copy, st)
     expect_equal(tr.copy, bigtr)
 })

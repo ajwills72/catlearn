@@ -151,7 +151,7 @@ Rcpp::List slpNNCAG(List st, arma::mat tr, bool xtdo = false) {
         output = train.subvec(n + colskip, tcol - 1).as_col();
         // Calculate attention
         a_gain = attention_gain(input, eta);                  // Equation 11
-        a_gain.clamp(0.01, datum::inf);                        // clamp gains to 0.01
+        a_gain.clamp(0.01, datum::inf);                       // clamp gains to 0.01
         p_norm = attention_gain_pnorm(P, a_gain);             // Equation 13
         a_norm = attention_normalize(a_gain, p_norm);         // Equation 12
         pred_out = prediction(input, a_norm, weights);        // Equation 5
