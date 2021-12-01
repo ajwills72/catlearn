@@ -9,7 +9,7 @@ using namespace arma;
 
 // Equation 11
 // Find attended cues
-rowvec gain(rowvec input, rowvec eta) {
+rowvec activate_gains(rowvec input, rowvec eta) {
     rowvec gain = input % eta;
     return gain;
 }
@@ -43,7 +43,7 @@ rowvec z_prediction(rowvec input, rowvec attention_norm, mat weights) {
 
 // Equation 2
 // Exponential Ratio Scale Choice Rule
-rowvec choice_rule(rowvec predictions, double phi, int outcomes) {
+rowvec ratio_rule(rowvec predictions, double phi, int outcomes) {
     rowvec scaled = predictions * phi;
     rowvec power(outcomes);
     for (uword j = 0; j < power.n_elem; ++j) {
@@ -139,7 +139,7 @@ Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo = false) {
     rowvec probabilities(outcomes); // vector of response probabilities
     // store outputs
     mat activations(trow, outcomes);
-    mat attention(trow, n);
+    mat salience(trow, n);
     mat prob(trow, outcomes);
     mat xOUT(trow, 1);
     List outFIN;
@@ -163,13 +163,13 @@ Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo = false) {
         // Extract teaching signals
         output = train.subvec(n + colskip, tcol - 1).as_col();
         // Calculate attention
-        a_gain = gain(input, eta);                    // Equation 11
+        a_gain = activate_gains(input, eta);                    // Equation 11
         a_gain.clamp(0.01, datum::inf);                          // clamp values at 0.1
         shift_gain = a_gain;                                    // store gain
         p_norm = gain_pnorm(P, a_gain);               // Equation 13
         a_norm = attention(a_gain, p_norm);           // Equation 12
         pred_out = z_prediction(input, a_norm, weights);          // Equation 5
-        probabilities = choice_rule(pred_out, phi, outcomes);   // Equation 2
+        probabilities = ratio_rule(pred_out, phi, outcomes);   // Equation 2
 
         // update weights and salience if it is a learning trial
         if ( tr(i, 0) !=  2 ) {
@@ -198,7 +198,7 @@ Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo = false) {
         // strore trial-level output
         prob.row(i) = probabilities.as_row();
         activations.row(i) = delta.as_row();
-        attention.row(i) = eta.as_row();
+        salience.row(i) = eta.as_row();
     }
 
     if (xtdo == false) {
@@ -210,7 +210,7 @@ Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo = false) {
         outFIN = Rcpp::List::create(
             Rcpp::Named("p") = prob,
             Rcpp::Named("prediction_error") = activations,
-            Rcpp::Named("attention") = attention,
+            Rcpp::Named("eta") = salience,
             Rcpp::Named("final_attention") = eta,
             Rcpp::Named("final_weights") = weights);
     }
