@@ -19,7 +19,7 @@ rowvec attention_gain(rowvec input, rowvec eta) {
 double attention_gain_pnorm(double P, rowvec gain) {
     rowvec gain_p(gain);
     for (uword j = 0; j < gain.n_elem; ++j) {
-        gain_p[j] = pow(std::abs(gain[j]), P);
+        gain_p[j] = pow(gain[j], P);
     }
     double p_sum = pow(sum(gain_p), 1/P);
     return p_sum;
