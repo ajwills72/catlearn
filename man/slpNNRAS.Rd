@@ -1,20 +1,20 @@
-\name{slpNNCAG}
-\alias{slpNNCAG}
+\name{slpNNRAS}
+\alias{slpNNRAS}
 \title{
-A Nerual Network with Competitive Attentional Gating (NNCAG)
+A Nerual Network with Rapid Attentional Shifts (NNRAS)
 }
 
 \description{
 
-  This is the C++ implementation of Model 4 from Paskweitz and Jones (2021).
-  Model 4 is a Neural Network with Competitive Attentional Gating - a
-  fragmented version of EXIT (Kruschke, 2001) lacking exemplar-based rapid
-  attentional shifts.
+  This is the C++ implementation of Model 5 from Paskweitz and Jones (2021).
+  Model 5 is a Neural Network with Rapid Attentional Shifts the also contains
+  an enclosed competitive attentional gating - a fragmented version of EXIT
+  (Kruschke, 2001) lacking exemplar-mediated attention.
 
 }
 \usage{
 
-slpNNCAG(st, tr, xtdo = FALSE)
+slpNNRAS(st, tr, xtdo = FALSE)
 
 }
 \arguments{
@@ -42,6 +42,8 @@ specificity constant.
 \code{lambda} - learning rate, \eqn{\lambda}.
 
 \code{mu} - attentional learning rate, \eqn{\mu}.
+
+\code{rho} - attentional shift rate, \eqn{\rho}. Attention shifts ten times.
 
 \code{outcomes} - The number of categories.
 
@@ -79,7 +81,7 @@ cue absent). There must be one column for each input element. Each row is one
 trial. In simple applications, one element is used for each stimulus (e.g. a
 simulation of blocking (Kamin, 1969), A+, AX+, would have two inputs, one for A
 and one for X). In simple applications, all present elements have an activation
-of 1 and all absence elements have an activation of 0. However, slpNNCAG
+of 1 and all absence elements have an activation of 0. However, slpNNRAS
 supports any real number for activations.
 
 \code{t1, t2, \dots} - columns for the teaching values indicating the
@@ -129,9 +131,11 @@ Kamin,  L.J. (1969). Predictability,  surprise,  attention  and  conditioning.
 In Campbell, B.A. & Church, R.M. (eds.), \emph{Punishment and  Aversive
 Behaviour}. New York: Appleton-Century-Crofts, 1969,  pp.279-296.
 
-Kruschke, J. K. (2001). Toward a unified model of attention in associative learning. \emph{Journal of mathematical psychology, 45(6)}, 812-863.
+Kruschke, J. K. (2001). Toward a unified model of attention in associative
+learning. \emph{Journal of mathematical psychology, 45(6)}, 812-863.
 
-Paskewitz, S., & Jones, M. (2020). Dissecting EXIT. \emph{Journal of Mathematical Psychology, 97}, 102371.
+Paskewitz, S., & Jones, M. (2020). Dissecting EXIT. \emph{Journal of
+Mathematical Psychology, 97}, 102371.
 
 Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster,
 A.B.(2017). Progress in modeling through distributed collaboration:
