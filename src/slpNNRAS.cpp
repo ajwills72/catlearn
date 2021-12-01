@@ -204,14 +204,14 @@ Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo = false) {
     if (xtdo == false) {
         outFIN = Rcpp::List::create(
             Rcpp::Named("p") = prob,
-            Rcpp::Named("final_attention") = eta,
+            Rcpp::Named("final_eta") = eta,
             Rcpp::Named("final_weights") = weights);
     } else {
         outFIN = Rcpp::List::create(
             Rcpp::Named("p") = prob,
             Rcpp::Named("prediction_error") = activations,
             Rcpp::Named("eta") = salience,
-            Rcpp::Named("final_attention") = eta,
+            Rcpp::Named("final_eta") = eta,
             Rcpp::Named("final_weights") = weights);
     }
 

@@ -175,14 +175,14 @@ Rcpp::List slpNNCAG(List st, arma::mat tr, bool xtdo = false) {
     if (xtdo == false) {
         outFIN = Rcpp::List::create(
             Rcpp::Named("p") = prob,
-            Rcpp::Named("final_attention") = eta,
+            Rcpp::Named("final_eta") = eta,
             Rcpp::Named("final_weights") = weights);
     } else {
         outFIN = Rcpp::List::create(
             Rcpp::Named("p") = prob,
             Rcpp::Named("model_predictions") = activations,
-            Rcpp::Named("attention") = attention,
-            Rcpp::Named("final_attention") = eta,
+            Rcpp::Named("eta") = attention,
+            Rcpp::Named("final_eta") = eta,
             Rcpp::Named("final_weights") = weights);
     }
 
