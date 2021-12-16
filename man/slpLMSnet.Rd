@@ -11,7 +11,7 @@ Gluck and Bower (1988) adaptive least-mean-square (LMS) network
 
 \usage{
 
-slpLMSnet(st, tr, xtdo = FALSE)
+slpLMSnet(st, tr, xtdo = FALSE, dec = "logistic")
 
 }
 
@@ -25,16 +25,20 @@ slpLMSnet(st, tr, xtdo = FALSE)
   \item{xtdo}{Boolean specifying whether to include extended information
   in the output (see below)}
 
+  \item{dec}{Specify what response rule to use. \code{logistic},
+  Equation 7 in Gluck and Bower (1988), which will output ratings of
+  probability of outcomes. \code{softmax}, Footnote 2, will output
+  probabilities of responding with an outcome.}
 }
 
 \value{
 
 Returns a list with the following items if \code{xtdo = FALSE}:
 
-    \item{p}{Probabilites of responses on each trial, as output by the
-        logistic choice function (Eq. 7, and Footnote 2, in Gluck and
-        Bower, 1988).}
-
+    \item{p}{A matrix with either the ratings for the probability of each
+        outcome on each trial if \code{dec == "logistic"},
+        or response probabilities for each outcome on each trial if
+        \code{dec == "softmax"}.}
     \item{nodeActivation}{Output node activations on each trial, as
         output by Equation 3 in Gluck and Bower (1988).}
     

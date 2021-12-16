@@ -107,7 +107,7 @@ Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false,
     // pick choice function
     if (dec == "logistic") {
         probabilities = logistic_choice(Out, theta, bias);     // Equation 7
-    } else if (dec == "ratio") {
+    } else if (dec == "softmax") {
         probabilities = ratio_scale(Out, theta);               // Footnote 2
     }
     // bind output
