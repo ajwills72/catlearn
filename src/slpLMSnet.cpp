@@ -42,8 +42,21 @@ vec logistic_choice(mat outnode, double theta, double bias) {
   return out;
 }
 
+
+// Footnote 2
+vec ratio_scale(mat outnode, double theta) {
+  vec scale = theta * outnode;
+  vec power = zeros(outnode.n_elem);
+  for (uword j = 0; j < power.n_elem; ++j) {
+    power[j] = std::exp(scale[j]);
+  }
+  vec out = power / sum(power);
+  return out;
+}
+
 // [[Rcpp::export]]
-Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
+Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false,
+                     std::string dec = "logistic") {
 
   // declare initial state of the model
   double    beta = as<double>(st["beta"]);
@@ -91,7 +104,12 @@ Rcpp::List slpLMSnet(List st, arma::mat tr, bool xtdo = false) {
       deltaM = delta_learning(Out, output, input, beta);       // Equation 5
       Weights += deltaM;
     }
-    probabilities = logistic_choice(Out, theta, bias);         // Equation 7
+    // pick choice function
+    if (dec == "logistic") {
+        probabilities = logistic_choice(Out, theta, bias);     // Equation 7
+    } else if (dec == "ratio") {
+        probabilities = ratio_scale(Out, theta);               // Footnote 2
+    }
     // bind output
     prob.row(i) = probabilities.as_row();
     activations.row(i) = Out.as_row();
