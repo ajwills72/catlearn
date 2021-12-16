@@ -92,7 +92,7 @@ Stewart, N., & Morin, C. (2007). Dissimilarity is used as evidence of category m
                 1,1,0,0,0,0, 1,
                 1,0,1,0,0,0, 2,
                 0,0,0,1,1,0, 3,
-                0,0,0,1,0,1, 4), ncol = 7, byrow = T)
+                0,0,0,1,0,1, 4), ncol = 7, byrow = TRUE)
 
   # Transfer/test stimuli
   # This is a row for each unique transfer stimulus
@@ -117,7 +117,7 @@ Stewart, N., & Morin, C. (2007). Dissimilarity is used as evidence of category m
                0, 1, 0, 0, 0, 1 #24, 25
                ),
                ncol = 6,
-               byrow = T)
+               byrow = TRUE)
 
   names <- c("F1 + S1", "F1 + O1", "F2 + O2", "F2 + S2", "F1", "F2", "S1", "O1",
              "O2", "S2", "S1 + O1", "O2 + S2", "F1 + O2", "F1 + S2", "F2 + S1",
