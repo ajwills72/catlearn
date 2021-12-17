@@ -9,8 +9,8 @@ slpEXIT <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpEXIT`, st, tr, xtdo)
 }
 
-slpLMSnet <- function(st, tr, xtdo = FALSE) {
-    .Call(`_catlearn_slpLMSnet`, st, tr, xtdo)
+slpLMSnet <- function(st, tr, xtdo = FALSE, dec = "logistic") {
+    .Call(`_catlearn_slpLMSnet`, st, tr, xtdo, dec)
 }
 
 slpMack75 <- function(st, tr, xtdo = FALSE) {
