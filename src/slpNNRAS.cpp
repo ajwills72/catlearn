@@ -163,37 +163,38 @@ Rcpp::List slpNNRAS(List st, arma::mat tr, bool xtdo = false) {
         // Extract teaching signals
         output = train.subvec(n + colskip, tcol - 1).as_col();
         // Calculate attention
-        a_gain = activate_gains(input, eta);                    // Equation 11
-        a_gain.clamp(0.01, datum::inf);                          // clamp values at 0.1
-        shift_gain = a_gain;                                    // store gain
+        a_gain = activate_gains(input, eta);          // Equation 11
+        a_gain.clamp(0.01, datum::inf);               // clamp values at 0.1
+        shift_gain = a_gain;                          // store gain
         p_norm = gain_pnorm(P, a_gain);               // Equation 13
         a_norm = attention(a_gain, p_norm);           // Equation 12
-        pred_out = z_prediction(input, a_norm, weights);          // Equation 5
+        pred_out = z_prediction(input, a_norm, weights);       // Equation 5
         probabilities = ratio_rule(pred_out, phi, outcomes);   // Equation 2
 
         // update weights and salience if it is a learning trial
         if ( tr(i, 0) !=  2 ) {
             for (uword i = 0; i < 10; i++) {
-                p_norm = gain_pnorm(P, shift_gain);           // Equation 13
-                a_norm = attention(shift_gain, p_norm);       // Equation 12
-                pred_out = z_prediction(input, a_norm, weights);          // Equation 5
-                delta = error(output.as_row(), pred_out);    // Equation 14
+                p_norm = gain_pnorm(P, shift_gain);               // Equation 13
+                a_norm = attention(shift_gain, p_norm);           // Equation 12
+                pred_out = z_prediction(input, a_norm, weights);  // Equation 5
+                delta = error(output.as_row(), pred_out);         // Equation 14
+		// Equation 15
                 shift_gain += attentional_shift(rho, P, p_norm, weights,
-                                      delta, shift_gain, input, pred_out);  // Equation 15
-                shift_gain.clamp(0.01, datum::inf);                          // clamp values to 0.01
+                                      delta, shift_gain, input, pred_out); 
+                shift_gain.clamp(0.01, datum::inf);      // clamp values to 0.01
             }
             // recalculate attention and prediction before updates
-            p_norm = gain_pnorm(P, shift_gain);           // Equation 13
-            a_norm = attention(shift_gain, p_norm);       // Equation 12
-            pred_out = z_prediction(input, a_norm, weights);          // Equation 5
-            delta = error(output.as_row(), pred_out);    // Equation 14
+            p_norm = gain_pnorm(P, shift_gain);                   // Equation 13
+            a_norm = attention(shift_gain, p_norm);               // Equation 12
+            pred_out = z_prediction(input, a_norm, weights);      // Equation 5
+            delta = error(output.as_row(), pred_out);             // Equation 14
             // updates weights and salience
-            deltaW = delta_rule(lambda, delta, input, a_norm);  // Equation 6
+            deltaW = delta_rule(lambda, delta, input, a_norm);    // Equation 6
             deltaT = salience_update(mu, a_gain,
-                                          shift_gain, input);       // Equation 16
+                                          shift_gain, input);     // Equation 16
             weights += deltaW;
             eta += deltaT;
-            eta.clamp(0.01, datum::inf);                             // clamp values at 0.1
+            eta.clamp(0.01, datum::inf);                  // clamp values at 0.1
         }
         // strore trial-level output
         prob.row(i) = probabilities.as_row();
