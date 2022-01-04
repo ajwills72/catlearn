@@ -49,7 +49,7 @@ specificity constant.
 equals to the number of categories and \eqn{i} equals to the number of
 stimuli.
 
-\code{eta} - \eqn{\eta}, a vector with \eqn{i} number of element, where
+\code{eta} - \eqn{\eta}, a vector with \eqn{i} elements, where
 \eqn{\eta^{th}} is the salience of the \eqn{i^{th}} cue. In edge cases,
 \eqn{\eta} is capped at lower bound of 0.1, see Note 1.
 
@@ -135,6 +135,8 @@ Lenard Dome, Andy Wills
 Paskewitz & Jones (2020) breaks down. In order to avoid this, \eqn{eta}
 and \eqn{g} are capped at the lower limit of \code{0.01}.
 
+2. This model is implemented in C++ for speed.
+
 }
 
 \references{
@@ -145,7 +147,7 @@ and Aversive Behaviour}. New York: Appleton-Century-Crofts, 1969,
 pp.279-296.
 
 Kruschke, J. K. (2001). Toward a unified model of attention in
-associative learning. \emph{Journal of mathematical psychology, 45(6)},
+associative learning. \emph{Journal of Mathematical Psychology, 45(6)},
 812-863.
 
 Paskewitz, S., & Jones, M. (2020). Dissecting EXIT. \emph{Journal of
