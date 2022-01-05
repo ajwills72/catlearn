@@ -208,17 +208,19 @@ Contributions of working, tested, Rd-documented code are welcome for considerati
 # History
 
 Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
-[CHANGELOG](CHANGELOG.md) for more detail):
+[CHANGELOG](CHANGELOG.md) for more detail of changes):
 
 - Version 0.9.x ("Incredible Icing") _future_
 
 - Version 0.8.x ("Harmonious honey") _CURRENT_
 
+    - 2022-01-05: Version 0.8.1: **unstable release** on github: slpNNCAG and slpNNRAS added, implements Models 4 and 5 from Paskewitz & Jones (2020). 
+
     - 2020-09-16: Version 0.8: **stable release** on CRAN. [announcement](announce/version-0.8-email.txt).
 
 - Version 0.7.x ("Gooey chocolate") 
 
-    - 2020-08-06: Version 0.7.5: **unstable release**: slpLMSnet added, implements Gluck & Bower (1988).
+    - 2020-08-06: Version 0.7.5: slpLMSnet added, implements Gluck & Bower (1988).
 
     - 2020-07-01: Version 0.7.4: fix for slpSUSTAIN bug introduced in 0.7.2.
 
