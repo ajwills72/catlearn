@@ -1,5 +1,5 @@
-\name{dissGCM}
-\alias{dissGCM}
+\name{slpDGCM}
+\alias{slpDGCM}
 \title{
   Similarity-Dissimilarity Generalized Context Model
 }
@@ -10,30 +10,23 @@
 }
 
 \usage{
-  dissGCM(st, test, dec = "BIAS", exemplar_mute = FALSE, exemplar_decay = TRUE)
+  slpDGCM(st, test, dec = "BIAS", exemplar_mute = FALSE, exemplar_decay = TRUE)
 }
 \arguments{
   \item{st}{List of model parameters}
-
   \item{test}{Test matrix.}
-
   \item{dec}{Decision mechanism. If \code{NOISE}, use O'Bryan et al. (2018)'s background-noise decision rule. If \code{BIAS} (default), use Stewart and Morin (2007)'s category-bias decision rule.}
-
   \item{exemplar_mute}{If \code{TRUE}, only those exemplars contribute evidence to the decision rule, which have at least one feature common with the    current stimuli. If \code{FALSE} (default), all exemplars contribute.}
-
   \item{exemplar_decay}{If \code{TRUE} (default), exemplar weightings decay as specified by Stewart and Morin (2007). If \code{FALSE}, exemplar weightings are static.}
 
 }
 
 \value{
   If \code{exemplar_decay = FALSE}, returns a list of the following matrices:
-
   \code{v} A matrix of evidence accumulated for each category (columns) on each
   trial (rows).
-
   \code{p} A matrix of category responses (columns) for each
   trial (rows).
-
   If \code{exemplar_decay = TURE}, the function also returns memory decay for
   each trial, \code{decay}.
 
@@ -139,7 +132,7 @@ Stewart, N., & Morin, C. (2007). Dissimilarity is used as evidence of category m
              outcomes = 4,
              exemplars = stim)
 
-  stdissGCM(st, tr, exemplar_decay = FALSE, exemplar_mute = TRUE, dec = "NOISE")
+  slpDGCM(st, tr, exemplar_decay = FALSE, exemplar_mute = TRUE, dec = "NOISE")
 
 }
 
