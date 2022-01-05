@@ -2,11 +2,11 @@
 ## Inverse base rate effect with one participant
 
 context("slpLMSnet")
-load('../data/test_slpLMSnet.RData') # Load cor.out, str, and tr.
+load("../data/test_slpLMSnet.RData") # Load cor.out, str, and tr.
 
 st.copy <- st
 tr.copy <- tr
-out <- slpLMSnet(st,data.matrix(tr))
+out <- slpLMSnet(st, data.matrix(tr))
 
 test_that("slpLMSnet reproduces IBRE simulation.", {
     expect_equal(out$connectionWeightMatrix, cor.out)
@@ -16,6 +16,14 @@ test_that("slpLMSnet reproduces IBRE simulation.", {
 test_that("slpLMSnet does not change st, tr.", {
     expect_equal(st.copy, st)
     expect_equal(tr.copy, tr)
+})
+
+
+out_dec <- slpLMSnet(st, data.matrix(tr), dec = "softmax")
+
+row_sums <- rowSums(out_dec$p)
+test_that("slpLMSnet softmax options returns probabilities.", {
+            expect_equal(row_sums, rep(1, length(row_sums)))
 })
 
 ## Generating code
