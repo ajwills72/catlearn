@@ -1,12 +1,12 @@
 \name{slpNNRAS}
 \alias{slpNNRAS}
 \title{
-A Nerual Network with Rapid Attentional Shifts (NNRAS)
+A Neural Network with Rapid Attentional Shifts (NNRAS)
 }
 
 \description{
 
-  This is Model 5 from Paskweitz and Jones (2020).  Model 5 is a Neural
+  This is Model 5 from Paskewitz and Jones (2020).  Model 5 is a Neural
   Network with Rapid Attentional Shifts the also contains an competitive
   attentional gating mechanism. It is a fragmented version of EXIT
   (Kruschke, 2001) lacking exemplar-mediated attention.
@@ -49,13 +49,14 @@ times per trial.
 
 \code{outcomes} - The number of categories.
 
-\code{w} - a \eqn{k \times i} matrix of initial weights, where \eqn{k}
-equals to the number of categories and \eqn{i} equals to the number of
-stimuli.
+\code{w} - a \eqn{k \times i}{k by i} matrix of initial weights, where
+\eqn{k} equals to the number of categories and \eqn{i} equals to the
+number of stimuli.
 
 \code{eta} - \eqn{\eta}, a vector with \eqn{i} elements, where
-\eqn{\eta^{th}} is the salience of the \eqn{i^{th}} cue. In edge cases,
-\eqn{\eta} is capped at lower bound of 0.1, see Note 1.
+\eqn{\eta^{th}}{\eta -th} is the salience of the \eqn{i^{th}}{i -th}
+cue. In edge cases, \eqn{\eta} is capped at lower bound of 0.1, see Note
+1.
 
 \code{colskip} - The number of optional columns to be skipped in the tr
 matrix. colskip should be set to the number of optional columns you have
@@ -111,9 +112,10 @@ if \code{xtdo = FALSE}:
   \item{final_eta}{Salience at the end of training. \eqn{\eta} for each
     stimulus \eqn{i}.}
   
-  \item{final_weights}{An \eqn{k \times i} weight matrix at the end of
-  training, where rows are categories and columns are stimuli. Order of
-  stimuli and categories correspond to their order in \code{tr}.}
+  \item{final_weights}{An \eqn{k \times i}{k by i} weight matrix at the
+  end of training, where rows are categories and columns are
+  stimuli. Order of stimuli and categories correspond to their order in
+  \code{tr}.}
 
 if \code{xtdo = TRUE}, the following values are also returned:
 
