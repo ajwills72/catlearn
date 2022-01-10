@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.8.2
+
+### Added
+
+- **slpLMSnet** [model] Added ratio-rule response output option in response to user query (Ivan Ivanchei) ([@lenarddome](https://github.com/lenarddome))
+
+### Changed
+
+- **slpLMSnet** [model] Documentation improved in response to user query (Ivan Ivanchei) ([@lenarddome](https://github.com/lenarddome))
+
 ## Version 0.8.1
 
 ### Added

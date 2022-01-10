@@ -203,7 +203,7 @@ _Andy Wills_, 23rd March 2017. International Convention of Psychological Science
 
 We aim to release version 0.9 to CRAN by 21st March 2022.
 
-Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 5th March 2021, the latest unstable release on github will be used to check and build stable version 0.9 for release to CRAN. 
+Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 7th March 2022, the latest unstable release on github will be used to check and build stable version 0.9 for release to CRAN. 
 
 # History
 
@@ -214,7 +214,9 @@ Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
 
 - Version 0.8.x ("Harmonious honey") _CURRENT_
 
-    - 2022-01-05: Version 0.8.1: **unstable release** on github: slpNNCAG and slpNNRAS added, implements Models 4 and 5 from Paskewitz & Jones (2020). 
+	- 2022-01-10: Version 0.8.2:  **unstable release** on github: slpLMSnet documentation improvements, plus addition of ratio-rule response function as an option. 
+
+    - 2022-01-05: Version 0.8.1: slpNNCAG and slpNNRAS added, implements Models 4 and 5 from Paskewitz & Jones (2020). 
 
     - 2020-09-16: Version 0.8: **stable release** on CRAN. [announcement](announce/version-0.8-email.txt).
 
