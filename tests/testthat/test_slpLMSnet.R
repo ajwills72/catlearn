@@ -20,10 +20,8 @@ test_that("slpLMSnet does not change st, tr.", {
 
 
 out_dec <- slpLMSnet(st, data.matrix(tr), dec = "softmax")
-
-row_sums <- rowSums(out_dec$p)
-test_that("slpLMSnet softmax options returns probabilities.", {
-            expect_equal(row_sums, rep(1, length(row_sums)))
+test_that("slpLMSnet softmax options reproducues IBRE simulation.", {
+            expect_equal(out_dec$p, cor.softmax)
 })
 
 ## Generating code
