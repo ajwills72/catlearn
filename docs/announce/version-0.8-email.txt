@@ -1,0 +1,38 @@
+Hi,
+
+Version 0.8 of the 'catlearn' package is now available.
+
+Catlearn is an archive of eleven formal models of categorization and
+learning. It's free and open source software ... and always will be. It has
+been downloaded 20,000 times.
+
+Version 0.8 is an upgrade release with one new model (Gluck & Bower, 1988),
+some (non-breaking) improvements to the SUSTAIN model implementation, and
+upgrades to the SUSTAIN and ALCOVE models to include checks for user
+errors in model specification.
+
+Catlearn is a package for R, and is very easy to install within that
+environment. Make sure you're running the latest version of R, and then type:
+
+install.packages('catlearn')
+
+and then
+
+library(catlearn).
+
+For a tutorial introduction to catlearn, and the Open Models initiative more
+generally, see Wills et al. (2017). There is also information here:
+
+https://ajwills72.github.io/catlearn
+
+Thanks to all the contributors to catlearn, and particular thanks to Lenard
+Dome who contributed new code for the version 0.8 release.
+
+All the best
+
+Andy
+2020-09-16
+
+Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster, A.B.(2017). Progress in
+modeling through distributed collaboration: Concepts, tools, and
+category-learning examples. The Psychology of Learning and Motivation
