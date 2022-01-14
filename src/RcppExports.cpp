@@ -24,6 +24,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// slpDGCM
+Rcpp::List slpDGCM(List st, arma::mat test, std::string dec, bool exemplar_mute, bool exemplar_decay);
+RcppExport SEXP _catlearn_slpDGCM(SEXP stSEXP, SEXP testSEXP, SEXP decSEXP, SEXP exemplar_muteSEXP, SEXP exemplar_decaySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type st(stSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type test(testSEXP);
+    Rcpp::traits::input_parameter< std::string >::type dec(decSEXP);
+    Rcpp::traits::input_parameter< bool >::type exemplar_mute(exemplar_muteSEXP);
+    Rcpp::traits::input_parameter< bool >::type exemplar_decay(exemplar_decaySEXP);
+    rcpp_result_gen = Rcpp::wrap(slpDGCM(st, test, dec, exemplar_mute, exemplar_decay));
+    return rcpp_result_gen;
+END_RCPP
+}
 // slpEXIT
 List slpEXIT(List st, DataFrame tr, bool xtdo);
 RcppExport SEXP _catlearn_slpEXIT(SEXP stSEXP, SEXP trSEXP, SEXP xtdoSEXP) {
@@ -136,24 +151,10 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// stdissGCM
-Rcpp::List stdissGCM(List st, arma::mat test, std::string dec, bool exemplar_decay, bool exemplar_mute);
-RcppExport SEXP _catlearn_stdissGCM(SEXP stSEXP, SEXP testSEXP, SEXP decSEXP, SEXP exemplar_decaySEXP, SEXP exemplar_muteSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type st(stSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type test(testSEXP);
-    Rcpp::traits::input_parameter< std::string >::type dec(decSEXP);
-    Rcpp::traits::input_parameter< bool >::type exemplar_decay(exemplar_decaySEXP);
-    Rcpp::traits::input_parameter< bool >::type exemplar_mute(exemplar_muteSEXP);
-    rcpp_result_gen = Rcpp::wrap(stdissGCM(st, test, dec, exemplar_decay, exemplar_mute));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_catlearn_slpBM", (DL_FUNC) &_catlearn_slpBM, 3},
+    {"_catlearn_slpDGCM", (DL_FUNC) &_catlearn_slpDGCM, 5},
     {"_catlearn_slpEXIT", (DL_FUNC) &_catlearn_slpEXIT, 3},
     {"_catlearn_slpLMSnet", (DL_FUNC) &_catlearn_slpLMSnet, 4},
     {"_catlearn_slpMack75", (DL_FUNC) &_catlearn_slpMack75, 3},
@@ -162,7 +163,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_catlearn_slpRW", (DL_FUNC) &_catlearn_slpRW, 3},
     {"_catlearn_slpALCOVE", (DL_FUNC) &_catlearn_slpALCOVE, 7},
     {"_catlearn_slpCOVIS", (DL_FUNC) &_catlearn_slpCOVIS, 6},
-    {"_catlearn_stdissGCM", (DL_FUNC) &_catlearn_stdissGCM, 5},
     {NULL, NULL, 0}
 };
 

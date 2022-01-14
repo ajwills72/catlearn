@@ -5,6 +5,10 @@ slpBM <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpBM`, st, tr, xtdo)
 }
 
+slpDGCM <- function(st, test, dec = "BIAS", exemplar_mute = FALSE, exemplar_decay = TRUE) {
+    .Call(`_catlearn_slpDGCM`, st, test, dec, exemplar_mute, exemplar_decay)
+}
+
 slpEXIT <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpEXIT`, st, tr, xtdo)
 }
@@ -35,9 +39,5 @@ slpALCOVE <- function(st, tr, dec = "ER", humble = TRUE, attcon = FALSE, absval 
 
 slpCOVIS <- function(st, tr, crx = TRUE, respt = FALSE, rgive = TRUE, xtdo = FALSE) {
     .Call(`_catlearn_slpCOVIS`, st, tr, crx, respt, rgive, xtdo)
-}
-
-stdissGCM <- function(st, test, dec = "BIAS", exemplar_decay = TRUE, exemplar_mute = FALSE) {
-    .Call(`_catlearn_stdissGCM`, st, test, dec, exemplar_decay, exemplar_mute)
 }
 

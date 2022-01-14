@@ -108,8 +108,9 @@ vec respond_bias(colvec beta, colvec evidence, double gamma) {
 // [[Rcpp::export]]
 Rcpp::List slpDGCM(List st, arma::mat test,
                      std::string dec = "BIAS",
-                     bool exemplar_decay = true,
-                     bool exemplar_mute = false) {
+                     bool exemplar_mute = false,
+                     bool exemplar_decay = true
+                     ) {
 
   // declare initial state of the model
   double    r = as<double>(st["r"]);    // Euclidean - distance metric
