@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 0.8.3
+
+### Changed
+
+- **DESCRIPTION** Introduced package version requirement for _RcppArmadillo_ to avoid cryptic install errors where installing on out-of-date systems. ([@ajwills72](https://www.andywills.info))
+
 ## Version 0.8.2
 
 ### Added

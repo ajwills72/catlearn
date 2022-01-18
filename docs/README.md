@@ -214,6 +214,8 @@ Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
 
 - Version 0.8.x ("Harmonious honey") _CURRENT_
 
+	- 2022-01-18: Version 0.8.3: **unstable release** on github: edge-case installation bug fix (see changelog)
+
 	- 2022-01-10: Version 0.8.2:  **unstable release** on github: slpLMSnet documentation improvements, plus addition of ratio-rule response function as an option. 
 
     - 2022-01-05: Version 0.8.1: slpNNCAG and slpNNRAS added, implements Models 4 and 5 from Paskewitz & Jones (2020). 

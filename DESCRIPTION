@@ -1,7 +1,7 @@
 Package: catlearn
 Type: Package
 Title: Formal Psychological Models of Categorization and Learning
-Version: 0.8.2
+Version: 0.8.3
 Date: 2022-01-10
 Encoding: UTF-8
 Author: Andy Wills, Lenard Dome, Charlotte Edmunds, Garrett Honke, Angus Inkster, René Schlegelmilch, Stuart Spicer
@@ -14,7 +14,7 @@ Imports:
 	foreach,
 	tidyr,
 	dplyr
-LinkingTo: Rcpp, RcppArmadillo
+LinkingTo: Rcpp, RcppArmadillo (>= 0.10.7.5.0)
 LazyData: true
 Suggests: testthat
 Depends: R (>= 3.5)
