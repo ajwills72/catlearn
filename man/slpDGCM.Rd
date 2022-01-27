@@ -6,7 +6,9 @@
 
 \description{
   Stewart and Morin (2007)'s extension to Nosofsky's (1984, 2011) Exemplar-based
-  Generalized Context Model.
+  Generalized Context Model. With additional settings, this function also
+  implements O'Bryan et al. (2018)'s version of the Similarity-Dissimilarity
+  Generalized Context Model, see Note 1.
 }
 
 \usage{
@@ -25,8 +27,7 @@
   If \code{exemplar_decay = FALSE}, returns a list of the following matrices:
   \code{v} A matrix of evidence accumulated for each category (columns) on each
   trial (rows).
-  \code{p} A matrix of category responses (columns) for each
-  trial (rows).
+  \code{p} A matrix of category responses (columns) for each trial (rows).
   If \code{exemplar_decay = TURE}, the function also returns memory decay for
   each trial, \code{decay}.
 
@@ -59,6 +60,8 @@ This function operates as a stateful list processor.
 \code{exemplars} - a matrix of exemplars and their corresponding category indicated by a single integer.
 
 \code{test} has to be a numeric data matrix with the following columns:
+
+\code{test} must be a \code{data.matix} with the following columns:
 
 \code{opt1, opt2, \dots}{}
 
@@ -139,6 +142,8 @@ Stewart, N., & Morin, C. (2007). Dissimilarity is used as evidence of category m
 \note{
 
   1. In order to use the instantiation of dissGCM described in O'Bryan et al.
-  (2018), set \code{exemplar_decay = FALSE} and \code{exemplar_mute = TRUE}.
+  (2018), set \code{exemplar_decay = FALSE} and \code{exemplar_mute = TRUE}. The
+  default settings of the function will run the model that corresponds to
+  Stewart and Morin (2007).
 
   }
