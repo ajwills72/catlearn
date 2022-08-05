@@ -1,13 +1,13 @@
 \name{slpDGCM}
 \alias{slpDGCM}
 \title{
-  Similarity-Dissimilarity Generalized Context Model
+  Similarity-Dissimilarity Generalized Context Model (DGCM)
 }
 
 \description{
   Stewart and Morin (2007)'s extension to Nosofsky's (1984, 2011) Exemplar-based
-  Generalized Context Model. With additional settings, this function also
-  implements O'Bryan et al. (2018)'s version of the Similarity-Dissimilarity
+  Generalized Context Model. The implementation also
+  contains O'Bryan et al. (2018)'s version of the Similarity-Dissimilarity
   Generalized Context Model, see Note 1.
 }
 
@@ -17,17 +17,27 @@
 \arguments{
   \item{st}{List of model parameters}
   \item{test}{Test matrix.}
-  \item{dec}{Decision mechanism. If \code{NOISE}, use O'Bryan et al. (2018)'s background-noise decision rule. If \code{BIAS} (default), use Stewart and Morin (2007)'s category-bias decision rule.}
-  \item{exemplar_mute}{If \code{TRUE}, only those exemplars contribute evidence to the decision rule, which have at least one feature common with the    current stimuli. If \code{FALSE} (default), all exemplars contribute.}
-  \item{exemplar_decay}{If \code{TRUE} (default), exemplar weightings decay as specified by Stewart and Morin (2007). If \code{FALSE}, exemplar weightings are static.}
+  \item{dec}{Decision mechanism. If \code{NOISE}, use O'Bryan et al. (2018)'s
+             background-noise decision rule. If \code{BIAS} (default), use
+             Stewart and Morin (2007)'s category-bias decision rule.}
+  \item{exemplar_mute}{If \code{TRUE}, only those exemplars contribute evidence
+                       to the decision rule, which have at least one feature
+                       common with the current stimuli (O'Bryan et al., 2018).
+                       If \code{FALSE} (default), all exemplars contribute.}
+  \item{exemplar_decay}{If \code{TRUE} (default), exemplar weightings decay
+                        as specified by Stewart and Morin (2007). If
+                        \code{FALSE}, exemplar weightings are static.}
 
 }
 
 \value{
+
   If \code{exemplar_decay = FALSE}, returns a list of the following matrices:
+
   \code{v} A matrix of evidence accumulated for each category (columns) on each
   trial (rows).
   \code{p} A matrix of category responses (columns) for each trial (rows).
+
   If \code{exemplar_decay = TURE}, the function also returns memory decay for
   each trial, \code{decay}.
 
@@ -35,7 +45,19 @@
 
 \details{
 
-This function operates as a stateful list processor.
+This implementation houses the two version of DGCM.
+In order to use the instantiation of DGCM described in O'Bryan et al.
+(2018), set \code{exemplar_decay = FALSE} and \code{exemplar_mute = TRUE}.
+The default settings of the function will run the model that corresponds
+to Stewart and Morin (2007).
+
+The functions works as a stateful list processor.Specifically, it
+takes a data frame as an argument, where each row is one trial for the
+network, and the columns specify the input representation, teaching
+signals, and other control signals. It returns a matrix where each row
+is a trial, and the columns are the response probabilities at the
+output units. It also returns the final state of the network (e.g. memory decay),
+hence its description as a 'stateful' list processor, see Note 1.
 
 \code{st} must be a list containing the following items:
 
@@ -43,27 +65,48 @@ This function operates as a stateful list processor.
 
 \code{c} - generalization constant.
 
-\code{s} - similarity and dissimilarity weighting. If 0, evidence for a category will be purely based on the dissimilarity between current input vector and all exemplars from the other categories. If it is 1, evidence for a given category will be solely based on similarity to its own exemplars.
+\code{r} - The Minkowski metric parameter \emph{r} gives a city block metric when
+           r = 1 (used for separable-dimension stimuli) and a Euclidean metric when
+           r = 2 (used for integral-dimension stimuli).
 
-\code{b} - baseline level of similarity. This parameter will control how much noise will spread over all categories in the background-noise decision rule. It is only used if \code{dec} is set to NOISE.
+\code{s} - similarity and dissimilarity weighting. If 0, evidence for a category will be
+           purely based on the dissimilarity between current input vector and all exemplars
+           from the other categories. If it is 1, evidence for a given category will be
+           solely based on similarity to its own exemplars.
 
-\code{t} - exemplar weighting. If \code{memory_decay = FALSE}, it is a vector of exemplar-specific memory strength. If  \code{memory_decay = TRUE} (default), it is set by the function as specified in Equation 4 in Stewart and Morin (2007).
+\code{b} - baseline level of similarity. This parameter will control how much noise will
+           spread over all categories in the background-noise decision rule. It is only
+           used if \code{dec} is set to NOISE.
 
-\code{beta} - category bias vector. Only used when \code{dec} set to BIAS. Otherwise set it to \code{NULL}.
+\code{t} - exemplar weighting. If \code{memory_decay = FALSE}, it is a vector of
+           exemplar-specific memory strength. If  \code{memory_decay = TRUE} (default),
+           it is a vector of exemplar-specific memory strengths that will update according
+           to the function as specified in Equation 4 in Stewart and Morin (2007).
 
-\code{gamma} - decision scaling constant, when \code{dec} is set to BIAS.
+\code{base} - a vector of baseline level of simmilarity, whose elements sum to 1.
+              These parameters are used in the background-noise decision rule, if
+              \code{dec = 'NOISE'}.
 
-\code{colskip} - the number of optional columns to skip in test plus one. If you have no optional columns, set it to one.
+\code{beta} - category bias vector. Only used when \code{dec} set to BIAS, otherwise ignored.
+
+\code{gamma} - decision scaling constant. Only used when \code{dec} is set to BIAS.
+
+\theta{theta} - decay rate. If \code{exemplar_decay = FALSE}, theta is ignored. 
+
+\code{colskip} - the number of optional columns to skip in test plus one. If you have
+no optional columns, set it to one.
 
 \code{outcomes} - the number of categories.
 
 \code{exemplars} - a matrix of exemplars and their corresponding category indicated by a single integer.
 
-\code{test} has to be a numeric data matrix with the following columns:
-
 \code{test} must be a \code{data.matix} with the following columns:
 
-\code{opt1, opt2, \dots}{}
+\code{opt1, opt2, \dots} - any number of preferred optional columns, the
+    names of which can be chosen by the user. It is important that these
+    columns are placed after the control column, and before the remaining
+    columns (see below). These optional columns are ignored by the slpDGCM
+    function, but you may wish to use them for readability.
 
 \code{x1, x2, x3, \dots}{}
 
@@ -141,9 +184,9 @@ Stewart, N., & Morin, C. (2007). Dissimilarity is used as evidence of category m
 
 \note{
 
-  1. In order to use the instantiation of dissGCM described in O'Bryan et al.
-  (2018), set \code{exemplar_decay = FALSE} and \code{exemplar_mute = TRUE}. The
-  default settings of the function will run the model that corresponds to
-  Stewart and Morin (2007).
+1. O'Bryan et al. (2018)'s version of the DGCM is not a stateful list processor, but
+we decided to include it in the same implementation. In fact, Stewart and Morin
+(2007)'s version only classifies as a stateful list processor, because of the memory
+decay function.
 
-  }
+}

@@ -5,7 +5,7 @@
 using namespace Rcpp;
 using namespace arma;
 
-// Equations correspond to Stewart and Miron (2007)
+// Equations correspond to Stewart and Morin (2007)
 // Equation 1
 mat distanceMatrix(double r, rowvec attention, mat exemplars, rowvec input) {
   mat difference = input - exemplars.each_row();
@@ -104,7 +104,6 @@ vec respond_bias(colvec beta, colvec evidence, double gamma) {
   return out;
 }
 
-
 // [[Rcpp::export]]
 Rcpp::List slpDGCM(List st, arma::mat test,
                      std::string dec = "BIAS",
@@ -140,9 +139,9 @@ Rcpp::List slpDGCM(List st, arma::mat test,
   vec evidence_all; evidence_all = zeros(outcomes);
   vec muted; muted = zeros(exemplars.n_rows);
   // conditional parameters
-  colvec    t = as<colvec>(st["t"]);    // exemplar-specific memory strength
+  colvec t = as<colvec>(st["t"]);    // exemplar-specific memory strength
   if(exemplar_decay) t = zeros(exemplars.n_rows);
-  mat       memory_decay(n_trials, exemplars.n_rows);
+  mat memory_decay(n_trials, exemplars.n_rows);
 
   // declare output of main function
   mat evidence_out(n_trials, outcomes);
