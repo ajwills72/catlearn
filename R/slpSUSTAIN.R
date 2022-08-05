@@ -340,9 +340,10 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
     rownames(prob.o) <- NULL
 
     if (xtdo) {
-        extdo <- cbind("probabilities" = prob.o, "winning" = xout,
+        extdo <- cbind("probabilities" = prob.o,
+                       "winning" = xout,
                        "activation" = activations,
-                       "recognition score" = rec,
+                       "recognition_score" = rec,
                        "endorsement" = endorse)
     }
 

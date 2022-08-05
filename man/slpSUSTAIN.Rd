@@ -55,12 +55,13 @@ slpSUSTAIN(st, tr, xtdo = FALSE, ties = "random")
   If \code{xtdo = TRUE}, \code{xtdo} is returned instead of
   \code{probs}:
 
-  \item{xtdo}{A matrix that includes \code{probs}, and also includes the
-  number of the winning cluster and its output activation after cluster
-  competition, Eq. 6 in Love et al. (2004). The last column contains the
-  recognition scores for the current stimulus from Eq. A6 in Love and
-  Gureckis (2007); this measure represents the model's overall familiarity
-  with the stimulus.}
+  \item{xtdo}{A matrix that includes \code{probs}, and in addition includes
+  the following columns: \code{winning} - number of the winning cluster; 
+  \code{activation} - its output activation after cluster competition,
+  Eq. 6 in Love et al. (2004); \code{recognition_scores} - for the current stimulus
+  from Eq. A6 in Love and Gureckis (2007), this measure represents the model's
+  overall familiarity with the stimulus; \code{endorsement} - as defined by
+  Eq. 11 in Love and Gureckis (2007).}
 
 }
 
