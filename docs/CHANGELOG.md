@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Version 1.0
+## Version 1.0 [unreleased]
 
 ## Added
 
 - **slpDGCM** [model] introduce the implemention of similarity-dissimilarity general-context model (Stewart and Morin, 2007), that also includes settings to run the version of O'Bryan et al. (2018). ([@lenarddome](https://github.com/lenarddome))
 
-## Version 0.9.1
+## Version 0.9.1 [cran]
 
 ## Added
 
