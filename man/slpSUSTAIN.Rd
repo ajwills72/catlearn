@@ -60,8 +60,8 @@ slpSUSTAIN(st, tr, xtdo = FALSE, ties = "random")
   \code{activation} - its output activation after cluster competition,
   Eq. 6 in Love et al. (2004); \code{recognition_scores} - for the current stimulus
   from Eq. A6 in Love and Gureckis (2007), this measure represents the model's
-  overall familiarity with the stimulus; \code{endorsement} - as defined by
-  Eq. 11 in Love and Gureckis (2007).}
+  overall familiarity with the stimulus; \code{endorsement} - the probability of
+  judging an item as old per Eq. 11 in Love and Gureckis (2007).}
 
 }
 
