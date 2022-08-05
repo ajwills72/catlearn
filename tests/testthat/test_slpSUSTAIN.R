@@ -15,6 +15,14 @@ test_that("slpSUSTAIN reproduces a short Medin et al. (1987) Exp. 1 simulation."
     expect_equal(out$cluster[1,], cor.medin)
 })
 
+out <- slpSUSTAIN(st, tr, ties = "random", xtdo = TRUE)
+
+
+test_that("slpSUSTAIN ties and xtdo works as expected.",
+{
+    expect_equal(out, out_random_xtdo)
+})
+
 ## Generating code for Shepard et al 1961
 #library(catlearn)
 #tr <- nosof94train(cond = 1, blocks = 1, absval = 0, blkstyle = "eights",
