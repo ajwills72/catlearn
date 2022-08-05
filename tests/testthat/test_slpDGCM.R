@@ -1,6 +1,6 @@
 context("slpDGCM")
 library(catlearn)
-load('../data/test_slpDGCM.RData')
+load("../data/test_slpDGCM.RData")
 
 out <- slpDGCM(st, tr, exemplar_decay = FALSE,
                exemplar_mute = TRUE, dec = "NOISE")

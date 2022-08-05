@@ -91,7 +91,7 @@ hence its description as a 'stateful' list processor, see Note 1.
 
 \code{gamma} - decision scaling constant. Only used when \code{dec} is set to BIAS.
 
-\theta{theta} - decay rate. If \code{exemplar_decay = FALSE}, theta is ignored. 
+\code{theta} - decay rate. If \code{exemplar_decay = FALSE}, theta is ignored. 
 
 \code{colskip} - the number of optional columns to skip in test plus one. If you have
 no optional columns, set it to one.
