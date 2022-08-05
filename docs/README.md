@@ -34,8 +34,8 @@ The latest stable version of catlearn contains the following:
 	
 - DIVA (_slpDIVA_)
 	
-- EXIT (_slpEXIT_)
-	
+- EXIT and two 'dissected' versions thereof (_slpEXIT_, _slpNNCAG_ and _slpNNRAS_)
+
 - GCM (_stsimGCM_)
 
 - SUSTAIN (_slpSUSTAIN_)
@@ -43,6 +43,8 @@ The latest stable version of catlearn contains the following:
 ### Contingency learning
 	
 - Bush-Mosteller (_slpBM_)
+
+- Gluck & Bower (1988) (_slpLMSnet_)
 		
 - MBMF: model-based, model-free hybrid (_slpMBMF_)
 
@@ -128,22 +130,30 @@ contact Andy Wills.
 
 # Invite us to give a talk or workshop
 
-The Catlearn Research Group are keen to talk about the catlearn
-project to any interested party (academic or non-academic). Why not
-invite us to give a talk or run a workshop where you are? We do not
-charge an appearance fee, but would prefer it if you were able to
-reimburse our travel expenses, including accommodation.
+The Catlearn Research Group are keen to talk about the catlearn project to any
+interested party (academic or non-academic). Why not invite us to give a talk
+or run a workshop where you are? We do not charge an appearance fee, but if you
+would like us to be physically present (at an appropriate social distance), we
+would prefer it if you were able to reimburse our travel expenses, including
+accommodation.
 
 The Catlearn Research Group are based in the United Kingdom,
 [Plymouth University](http://www.openstreetmap.org/way/42361939)
 
 Previous talks and workshops have included:
 
+### 2020
+
+**The OpenModels project**
+_Andy Wills_. 8th September 2020.
+UK network of Open Research Working Groups (virtual meeting), MRC-CBU, Cambridge, UK 
+Talk available on [youtube](https://www.youtube.com/watch?v=SfqkqEYagJU&list=PLOA0aRJ90NxvXtMt5Si5ukmR9LYfvDueB&index=10&t=0s).
+
 ### 2019
 
 **Benchmark phenomena in category learning**.
 _Andy Wills_. 22nd June 2019.
-Annual Summer Interdisciplinary Conference (ASIC), Seefeld, Austria
+Annual Summer Interdisciplinary Conference (ASIC), Seefeld, Austria.
 
 **The OpenModels project in category learning**.
 _Stuart Spicer and Angus Inkster_. 14th June 2019.
@@ -180,7 +190,7 @@ School of Psychology, Cardiff University, UK.
 **A Practical Introduction to Distributed Collaboration for Formal Modeling**.
 _Andy Wills and Charlotte Edmunds_, 22nd July 2017. 50th Annual Meeting of the Society for Mathematical Psychology, University of Warwick, UK.
 
-**Progress in learning theory through distribute collaboration**. _Andy Wills_, 11th April 2017. Associative Learning Symposium, Gregynog, Wales.
+**Progress in learning theory through distributed collaboration**. _Andy Wills_, 11th April 2017. Associative Learning Symposium, Gregynog, Wales.
 
 **A Practical Introduction to Distributed Collaboration for Formal Modeling**.
 _Andy Wills_, 23rd March 2017. International Convention of Psychological Science, Vienna, Austria.
@@ -191,20 +201,38 @@ _Andy Wills_, 23rd March 2017. International Convention of Psychological Science
 
 # Roadmap
 
-We aim to release version 0.8 to CRAN by 16th September 2020.
+We aim to release version 1.0 to CRAN by 28st March 2023.
 
-Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 2nd September 2020, the latest unstable release on github will be used to check and build stable version 0.8 for release to CRAN. 
+Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 14th March 2023, the latest unstable release on github will be used to check and build stable version 1.0 for release to CRAN. 
 
 # History
 
 Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
-[CHANGELOG](CHANGELOG.md) for more detail):
+[CHANGELOG](CHANGELOG.md) for more detail of changes):
 
-- Version 0.8.x ("Harmonious honey") _future_
+- Version 1.0.x ("Juicy Jam") _future_
 
-    - Stable CRAN release planned for September 2020. 
+- Version 0.9.x ("Incredible Icing") _CURRENT_
 
-- Version 0.7.x ("Gooey chocolate") **CURRENT**
+    - 2022-03-28: Version 0.9.1. **stable release** on CRAN. [announcement](announce/version-0.9-email.txt).
+
+    - 2022-03-25: Version 0.9 - Release to CRAN subsequently discovered to generate a warning when compiled with clang 14 on linux. 
+
+- Version 0.8.x ("Harmonious honey") 
+
+	- 2022-01-18: Version 0.8.3: **unstable release** on github: edge-case installation bug fix (see changelog)
+
+	- 2022-01-10: Version 0.8.2:  slpLMSnet documentation improvements, plus addition of ratio-rule response function as an option. 
+
+    - 2022-01-05: Version 0.8.1: slpNNCAG and slpNNRAS added, implements Models 4 and 5 from Paskewitz & Jones (2020). 
+
+    - 2020-09-16: Version 0.8: stable release on CRAN. [announcement](announce/version-0.8-email.txt).
+
+- Version 0.7.x ("Gooey chocolate") 
+
+    - 2020-08-06: Version 0.7.5: slpLMSnet added, implements Gluck & Bower (1988).
+
+    - 2020-07-01: Version 0.7.4: fix for slpSUSTAIN bug introduced in 0.7.2.
 
     - 2020-05-15: Version 0.7.3: slpALCOVE upgraded to include some checks for user errors in model specification.
 

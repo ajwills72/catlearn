@@ -108,7 +108,7 @@ NumericVector alpha_i_calc(NumericVector g, NumericVector a_in, double P){
   NumericVector sumstep(ncol);
   for(i=0; i < ncol; i++){
     sumstep(i) = pow(g(i),P);
-    if((sumstep(i) == 0) & (a_in(i) == 1)){
+    if((sumstep(i) == 0) && (a_in(i) == 1)){
       sumstep(i) = std::numeric_limits<double>::min();
     }
   }

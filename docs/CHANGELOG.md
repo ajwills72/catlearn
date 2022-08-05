@@ -4,11 +4,41 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## dev
+## Version 0.8.3
 
 ### Changed
 
-- **slpSUSTAIN** [fixed] in the absence of ties, the winning cluster is returned instead of a random integer between 0 and the number of the winning cluster ([@lenarddome](https://github.com/lenarddome))
+- **DESCRIPTION** Introduced package version requirement for _RcppArmadillo_ to avoid cryptic install errors where installing on out-of-date systems. ([@ajwills72](https://www.andywills.info))
+
+## Version 0.8.2
+
+### Added
+
+- **slpLMSnet** [model] Added ratio-rule response output option in response to user query (Ivan Ivanchei) ([@lenarddome](https://github.com/lenarddome))
+
+### Changed
+
+- **slpLMSnet** [model] Documentation improved in response to user query (Ivan Ivanchei) ([@lenarddome](https://github.com/lenarddome))
+
+## Version 0.8.1
+
+### Added
+
+- **slpNNCAG** [model] and **slpNNRAS** [model] Added Paskewitz and Jones (2020) Models 4 and 5, which are fragmented versions of Kruschke's EXIT model ([@lenarddome](https://github.com/lenarddome))
+
+## Version 0.7.5
+
+### Added
+
+- **slpLMSnet** [model] Added Gluck and Bower (1988) adaptive LMS-network
+    extension of the Rescorla & Wagner (1972) rule (aslo called LMS or delta
+    learning rule)([@lenarddome](https://github.com/lenarddome))
+
+## Version 0.7.4
+
+### Changed
+
+- **slpSUSTAIN** [fixed] a bug relating to new default behaviour `ties = "random"`, introduced in Version 0.7.2. The bug was that a random cluster was selected even in the absence of ties. This patch removes the error, with the code now working as documented ([@lenarddome](https://github.com/lenarddome))
 
 ## Version 0.7.3
 
@@ -18,7 +48,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   in size, or (2) h and w don't match in size, or (3) c, phi, la, lw are
   outside allowed values, or (4) width of tr does not match model spec in
   st. Warn if: (5) phi exceeds 20, (6) r or q have a value other than 1
-  or 2. [@ajwills72](http://www.willslab.org.uk)
+  or 2. [@ajwills72](https://www.andywills.info)
 
 ## Version 0.7.2
 
