@@ -208,7 +208,9 @@ slpSUSTAIN(st, tr, xtdo = FALSE, ties = "random")
 
 }
 \author{
-Lenard Dome, Andy Wills
+
+  Lenard Dome, Andy Wills
+
 }
 
 \note{
@@ -229,8 +231,7 @@ that this is a reasonable implementation - without it SUSTAIN would add
 clusters indefinitely under conditions where the stimulus -> category
 associations are proabilistic rather than deterministic.
 
-
-4. In some cases, two or more clusters can have identical activations
+3. In some cases, two or more clusters can have identical activations
 because the presented stimulus is equally similar to multiple
 clusters. Love et al. (2004) does not specify how the model will behave
 in these cases. In our implementation, we make the assumption that the
