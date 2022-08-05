@@ -34,8 +34,8 @@ The latest stable version of catlearn contains the following:
 	
 - DIVA (_slpDIVA_)
 	
-- EXIT (_slpEXIT_)
-	
+- EXIT and two 'dissected' versions thereof (_slpEXIT_, _slpNNCAG_ and _slpNNRAS_)
+
 - GCM (_stsimGCM_)
 
 - SUSTAIN (_slpSUSTAIN_)
@@ -201,24 +201,32 @@ _Andy Wills_, 23rd March 2017. International Convention of Psychological Science
 
 # Roadmap
 
-We aim to release version 0.9 to CRAN by 21st March 2022.
+We aim to release version 1.0 to CRAN by 28st March 2023.
 
-Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 7th March 2022, the latest unstable release on github will be used to check and build stable version 0.9 for release to CRAN. 
+Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 14th March 2023, the latest unstable release on github will be used to check and build stable version 1.0 for release to CRAN. 
 
 # History
 
 Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
 [CHANGELOG](CHANGELOG.md) for more detail of changes):
 
-- Version 0.9.x ("Incredible Icing") _future_
+- Version 1.0.x ("Juicy Jam") _future_
 
-- Version 0.8.x ("Harmonious honey") _CURRENT_
+- Version 0.9.x ("Incredible Icing") _CURRENT_
 
-	- 2022-01-10: Version 0.8.2:  **unstable release** on github: slpLMSnet documentation improvements, plus addition of ratio-rule response function as an option. 
+    - 2022-03-28: Version 0.9.1. **stable release** on CRAN. [announcement](announce/version-0.9-email.txt).
+
+    - 2022-03-25: Version 0.9 - Release to CRAN subsequently discovered to generate a warning when compiled with clang 14 on linux. 
+
+- Version 0.8.x ("Harmonious honey") 
+
+	- 2022-01-18: Version 0.8.3: **unstable release** on github: edge-case installation bug fix (see changelog)
+
+	- 2022-01-10: Version 0.8.2:  slpLMSnet documentation improvements, plus addition of ratio-rule response function as an option. 
 
     - 2022-01-05: Version 0.8.1: slpNNCAG and slpNNRAS added, implements Models 4 and 5 from Paskewitz & Jones (2020). 
 
-    - 2020-09-16: Version 0.8: **stable release** on CRAN. [announcement](announce/version-0.8-email.txt).
+    - 2020-09-16: Version 0.8: stable release on CRAN. [announcement](announce/version-0.8-email.txt).
 
 - Version 0.7.x ("Gooey chocolate") 
 
