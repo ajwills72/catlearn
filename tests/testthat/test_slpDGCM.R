@@ -6,9 +6,9 @@ out <- slpDGCM(st, tr, exemplar_decay = FALSE,
                exemplar_mute = TRUE, dec = "NOISE")
 
 dgcm <- data.matrix(out$p)
-dgcm <- suppressWarnings(melt(dgcm)$value)
-empirical <- as.matrix(obryan18[, 2:5])
-empirical <- suppressWarnings(melt(empirical)$value)
+dgcm <- c(dgcm)
+empirical <- data.matrix(obryan18[, 2:5])
+empirical <- c(empirical)
 
 test_that("slpDGCM reproduces O'Bryan et al. (2018) with a mean
           difference of 0.000262.", {
