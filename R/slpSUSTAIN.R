@@ -9,6 +9,13 @@
     return(prob)
 }
 
+## Probability of endorsement (Eq. A11)
+
+.prob.endorse <- function(R, threshold) {
+    out <- R / (R + threshold)
+    return(out)
+}
+
 ## Calculating stimulus distance from a cluster (Eq. 4)
 ## AW: OK, 2018-03-21
 .calc.distances <- function(input, cluster, fac.dims, fac.na) {
@@ -60,8 +67,7 @@
     return(clus)
 }
 
-
-# Main function ----------------------------------
+## Main function ----------------------------------
 
 slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
 
@@ -76,11 +82,16 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
     w <- st$w
     cluster <- st$cluster
     maxcat <- st$maxcat
+    threshold <- st$k
 
     ## maxcat introduced in v.0.7, so older sims will not have set it
     ## We need to detect this and set to default value, otherwise older
     ## simulations will break. AW 2019-10-03
     if(is.null(maxcat)) maxcat <- 0
+
+    ## similar to maxcat, k response threshold was introduced later, in v0.7.6
+    ## The following line prevents previous simulations from breaking
+    if(is.null(threshold)) threshold <- 0.19
 
     ## Setting up factors for later
 
@@ -104,6 +115,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
     activations <- rep(0,nrow(tr))
     prob.o <- NULL
     rec <- rep(0,nrow(tr))
+    endorse <- rep(0,nrow(tr))
 
 ### Error checking ---------------------------------
 
@@ -319,6 +331,7 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
         activations[i] <- c.act$out[win] ## Activation of winning cluster
         prob.o <- rbind(prob.o, prob.r) ## Response probabilities
         rec[i] <- c.act$rec ## Recognition score
+        endorse[i] <- .prob.response(c.act$rec, threshold)
     }
 
 ## Organise output --------------------
@@ -327,9 +340,11 @@ slpSUSTAIN <- function(st, tr, xtdo = FALSE, ties = "random") {
     rownames(prob.o) <- NULL
 
     if (xtdo) {
-        extdo <- cbind("probabilities" = prob.o, "winning" = xout,
+        extdo <- cbind("probabilities" = prob.o,
+                       "winning" = xout,
                        "activation" = activations,
-                       "recognition score" = rec)
+                       "recognition_score" = rec,
+                       "endorsement" = endorse)
     }
 
     if (xtdo) {
