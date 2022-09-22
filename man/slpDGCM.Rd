@@ -53,7 +53,7 @@ to Stewart and Morin (2007).
 
 The functions works as a stateful list processor.Specifically, it
 takes a data frame as an argument, where each row is one trial for the
-network, and the columns specify the input representation, teaching
+model, and the columns specify the input representation, teaching
 signals, and other control signals. It returns a matrix where each row
 is a trial, and the columns are the response probabilities at the
 output units. It also returns the final state of the network (e.g. memory decay),
@@ -83,7 +83,7 @@ hence its description as a 'stateful' list processor, see Note 1.
            it is a vector of exemplar-specific memory strengths that will update according
            to the function as specified in Equation 4 in Stewart and Morin (2007).
 
-\code{base} - a vector of baseline level of simmilarity, whose elements sum to 1.
+\code{base} - a vector of baseline level of similarity, whose elements sum to 1.
               These parameters are used in the background-noise decision rule, if
               \code{dec = 'NOISE'}.
 
@@ -102,7 +102,7 @@ no optional columns, set it to one.
 
 \code{test} must be a \code{data.matix} with the following columns:
 
-\code{opt1, opt2, \dots} - any number of preferred optional columns, the
+\code{opt1, opt2, \dots} - any number of optional columns, the
     names of which can be chosen by the user. It is important that these
     columns are placed after the control column, and before the remaining
     columns (see below). These optional columns are ignored by the slpDGCM
