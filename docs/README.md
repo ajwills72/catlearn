@@ -214,13 +214,15 @@ Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
 
 - Version 0.9.x ("Incredible Icing") _CURRENT_
 
+    - 2022-09-22: Version 0.9.2. **unstable release** on github: enhancement to slpSUSTAIN: add probability of item being reported as 'old'. 
+
     - 2022-03-28: Version 0.9.1. **stable release** on CRAN. [announcement](announce/version-0.9-email.txt).
 
     - 2022-03-25: Version 0.9 - Release to CRAN subsequently discovered to generate a warning when compiled with clang 14 on linux. 
 
 - Version 0.8.x ("Harmonious honey") 
 
-	- 2022-01-18: Version 0.8.3: **unstable release** on github: edge-case installation bug fix (see changelog)
+	- 2022-01-18: Version 0.8.3: edge-case installation bug fix (see changelog)
 
 	- 2022-01-10: Version 0.8.2:  slpLMSnet documentation improvements, plus addition of ratio-rule response function as an option. 
 
