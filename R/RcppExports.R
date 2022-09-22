@@ -5,6 +5,10 @@ slpBM <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpBM`, st, tr, xtdo)
 }
 
+slpDGCM <- function(st, test, dec = "BIAS", exemplar_mute = FALSE, exemplar_decay = TRUE) {
+    .Call(`_catlearn_slpDGCM`, st, test, dec, exemplar_mute, exemplar_decay)
+}
+
 slpEXIT <- function(st, tr, xtdo = FALSE) {
     .Call(`_catlearn_slpEXIT`, st, tr, xtdo)
 }

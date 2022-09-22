@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## Version 1.0 [unreleased]
+
+## Added
+
+- **slpDGCM** [model] introduce the implemention of similarity-dissimilarity general-context model (Stewart and Morin, 2007), that also includes settings to run the version of O'Bryan et al. (2018). ([@lenarddome](https://github.com/lenarddome))
+
+## Version 0.9.1 [cran]
+
+## Added
+
+- **slpNNCAG, slpNNRAS** [model] Added Models 4 and 5 from Paskewitz & Jones (2020). ([@lenarddome](https://github.com/lenarddome))
+
+## Changed
+
+- **slpEXIT** [code] [4af799d23adb8f8d42e2479adcb64855709e24bc](https://github.com/ajwills72/catlearn/commit/4af799d23adb8f8d42e2479adcb64855709e24bc) Minor tweak to fix linux+clang14 warning ([@ajwills72](https://www.andywills.info))
+
 ## Version 0.8.3
 
 ### Changed
