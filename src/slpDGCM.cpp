@@ -133,6 +133,7 @@ Rcpp::List slpDGCM(List st, arma::mat test,
   rowvec trial(test.n_cols);
   rowvec input(pure_exemplars.n_cols);
   uword n_trials = test.n_rows;
+  uword n = exemplars.n_cols;
   colvec distances; distances = zeros(exemplars.n_rows);
   colvec similarity; similarity = zeros(exemplars.n_rows);
   vec probabilities; probabilities = zeros(outcomes);
@@ -150,7 +151,8 @@ Rcpp::List slpDGCM(List st, arma::mat test,
   List outFIN;
 
   for (uword i = 0; i < n_trials; i++) {
-    input = test.row(i);
+    trial = test.row(i);
+    input = trial.subvec(colskip - 1, trial.n_cols - 1).as_row();
     distances = distanceMatrix(r, attention, pure_exemplars, input);
     similarity = exponential_similarity(c, outcomes, distances);
     if(exemplar_mute) {
