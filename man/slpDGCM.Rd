@@ -35,8 +35,9 @@
   If \code{exemplar_decay = FALSE}, returns a list of the following matrices:
 
   \code{v} A matrix of evidence accumulated for each category (columns) on each
-  trial (rows).
-  \code{p} A matrix of category responses (columns) for each trial (rows).
+  trial (rows) as output by Equation 3 in Stewart and Morin (2007).
+
+  \code{p} A matrix of response probabilities. Category responses (columns) for each trial (rows).
 
   If \code{exemplar_decay = TURE}, the function also returns memory decay for
   each trial, \code{decay}.
@@ -54,9 +55,9 @@ to Stewart and Morin (2007).
 The functions works as a stateful list processor.Specifically, it
 takes a data frame as an argument, where each row is one trial for the
 model, and the columns specify the input representation, teaching
-signals, and other control signals. It returns a matrix where each row
-is a trial, and the columns are the response probabilities at the
-output units. It also returns the final state of the network (e.g. memory decay),
+signals, and other control signals. It returns two matrices containing, for each trial,
+response probabilities and the accumulated evidence for each category.
+It also returns the final state of the network (e.g. memory decay),
 hence its description as a 'stateful' list processor, see Note 1.
 
 \code{st} must be a list containing the following items:
@@ -74,20 +75,18 @@ hence its description as a 'stateful' list processor, see Note 1.
            from the other categories. If it is 1, evidence for a given category will be
            solely based on similarity to its own exemplars.
 
-\code{b} - baseline level of similarity. This parameter will control how much noise will
-           spread over all categories in the background-noise decision rule. It is only
-           used if \code{dec} is set to NOISE.
-
 \code{t} - exemplar weighting. If \code{memory_decay = FALSE}, it is a vector of
            exemplar-specific memory strength. If  \code{memory_decay = TRUE} (default),
            it is a vector of exemplar-specific memory strengths that will update according
            to the function as specified in Equation 4 in Stewart and Morin (2007).
 
-\code{base} - a vector of baseline level of similarity, whose elements sum to 1.
-              These parameters are used in the background-noise decision rule, if
-              \code{dec = 'NOISE'}.
-
 \code{beta} - category bias vector. Only used when \code{dec} set to BIAS, otherwise ignored.
+            Currently, there is no restriction in place on what values are allowed in this implementation,
+            but Stewart and Morin (2007) specifies that elements of \code{beta} should sum to 1.
+
+\code{base} - a vector of baseline level of similarity. This parameter will control how much noise will
+           spread over all categories in the background-noise decision rule. It is only
+           used if \code{dec} is set to NOISE.
 
 \code{gamma} - decision scaling constant. Only used when \code{dec} is set to BIAS.
 
@@ -103,12 +102,11 @@ no optional columns, set it to one.
 \code{test} must be a \code{data.matix} with the following columns:
 
 \code{opt1, opt2, \dots} - any number of optional columns, the
-    names of which can be chosen by the user. It is important that these
-    columns are placed after the control column, and before the remaining
-    columns (see below). These optional columns are ignored by the slpDGCM
-    function, but you may wish to use them for readability.
+    names of which can be chosen by the user. These optional columns
+    are ignored by the slpDGCM function, but you may wish to use them for readability.
 
-\code{x1, x2, x3, \dots}{}
+\code{x1, x2, x3, \dots}- {input to the model, there must be one column for
+each input unit. Each row is one trial.}
 
 }
 
@@ -157,10 +155,6 @@ Stewart, N., & Morin, C. (2007). Dissimilarity is used as evidence of category m
                ),
                ncol = 6,
                byrow = TRUE)
-
-  names <- c("F1 + S1", "F1 + O1", "F2 + O2", "F2 + S2", "F1", "F2", "S1", "O1",
-             "O2", "S2", "S1 + O1", "O2 + S2", "F1 + O2", "F1 + S2", "F2 + S1",
-             "F2 + O1", "O1 + O2", "S1 + S2")
 
   # parameters from paper
   aweights = c(0.27692188, 0.66524089, 0.88723335, 0.16967400, 0.71206208, 0.87939732)
