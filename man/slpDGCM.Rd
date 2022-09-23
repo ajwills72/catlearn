@@ -60,6 +60,11 @@ response probabilities and the accumulated evidence for each category.
 It also returns the final state of the network (e.g. memory decay),
 hence its description as a 'stateful' list processor, see Note 1.
 
+This implementation took the assumption that when \code{exemplar_decay = TRUE},
+memory strengths for exemplar are equal to each other at the beginning
+of the test phase. In future releases, we plan to implement a feature
+that allows initial memory strengths to be treated as freely varying parameters.
+
 \code{st} must be a list containing the following items:
 
 \code{attentional_weights} -  vector of attentional weights, where sum of all elements equal to 1.
