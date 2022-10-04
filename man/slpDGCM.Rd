@@ -111,7 +111,8 @@ no optional columns, set it to one.
     are ignored by the slpDGCM function, but you may wish to use them for readability.
 
 \code{x1, x2, x3, \dots}- {input to the model, there must be one column for
-each input unit. Each row is one trial.}
+    each input unit. Each row is one trial. DGCM uses a nominal stimulus representation,
+    which means that features are coded as either 0 (absent) or 1 (present).}
 
 }
 
