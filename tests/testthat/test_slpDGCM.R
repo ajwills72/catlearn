@@ -32,4 +32,4 @@ out2 <- slpDGCM(st2, data.matrix(tr2))
 
 test_that("slpDGCM runs without error with SM07 settings", {
         expect_equal(out2, mock_sm)
-}
+})
