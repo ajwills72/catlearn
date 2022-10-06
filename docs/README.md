@@ -214,7 +214,9 @@ Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
 
 - Version 0.9.x ("Incredible Icing") _CURRENT_
 
-    - 2022-09-22: Version 0.9.2. **unstable release** on github: enhancement to slpSUSTAIN: add probability of item being reported as 'old'. 
+    - 2022-10-06: Version 0.9.3. **unstable release** on github: Add slpDGCM - implementation of the similarity-dissimilarity generalized context model of Stewart & Morin (2007), and the variant used by O'Bryan et al. (2018). 
+
+    - 2022-09-22: Version 0.9.2. Enhancement to slpSUSTAIN: add probability of item being reported as 'old'. 
 
     - 2022-03-28: Version 0.9.1. **stable release** on CRAN. [announcement](announce/version-0.9-email.txt).
 
