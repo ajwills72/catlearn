@@ -93,7 +93,7 @@ have not been included.
   Human Learning and Memory, 2}, 322-330.
   
   Huwaldt, J.A. (2015). Plot Digitizer
-  [software]. \url{http://plotdigitizer.sourceforge.net/}
+  [software]. \url{https://plotdigitizer.sourceforge.net/}
 
   Wills et al. (n.d.). Benchmarks for category learning. \emph{Manuscript
   in preparation}.
