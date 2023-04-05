@@ -1,0 +1,38 @@
+Hi,
+
+Version 1.0 of the 'catlearn' package is now available.
+
+Catlearn is an archive of fourteen formal models of categorization and
+learning. It's free and open source software ... and always will be. It has
+been downloaded 37,000 times.
+
+Version 1.0 is an upgrade release with one new model (DGCM, in both the original 
+Stewart & Morin, 2007, form and the more recent O'Bryan et al., 2018, form),
+and one model upgrade (SUSTAIN, which now reports the probability that a 
+presented stimulus is 'old'). 
+
+Catlearn is a package for R, and is very easy to install within that
+environment. Make sure you're running the latest version of R, and then type:
+
+install.packages('catlearn')
+
+and then
+
+library(catlearn).
+
+For a tutorial introduction to catlearn, see Wills et al. (2017). There is also 
+information here:
+
+https://andywills.info/catlearn
+
+Thanks to all the contributors to catlearn, and particular thanks to Lenard
+Dome who contributed new code for the version 1.0 release.
+
+All the best
+
+Andy
+2023-04-05
+
+Wills, A.J., O'Connell, G., Edmunds, C.E.R., & Inkster, A.B.(2017). Progress in
+modeling through distributed collaboration: Concepts, tools, and
+category-learning examples. The Psychology of Learning and Motivation
