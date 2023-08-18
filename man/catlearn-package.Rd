@@ -1,5 +1,5 @@
 \name{catlearn-package}
-\alias{catlearn}
+\alias{catlearn-package}
 \docType{package}
 \title{
   
