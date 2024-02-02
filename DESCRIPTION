@@ -8,6 +8,8 @@ Author: Andy Wills, Lenard Dome, Charlotte Edmunds, Garrett Honke, Angus Inkster
 Maintainer: Andy Wills <andy@willslab.co.uk>
 Description: Formal psychological models of categorization and learning, independently-replicated data sets against which to test them, and simulation archives.
 License: GPL (>= 2)
+URL: https://github.com/ajwills72/catlearn
+BugReports: https://github.com/ajwills72/catlearn/issues
 Imports:
 	Rcpp (>= 1.0.0),
 	doParallel,
