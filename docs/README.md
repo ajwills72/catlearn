@@ -8,13 +8,10 @@ Catlearn is an archive of formal models of categorization and associative learni
 
 Some introductory materials on _catlearn_:
 
-- [a 20-minute video](http://www.willslab.org.uk/vid/catlearn-intro.mp4)
+- [a 20-minute video](https://youtu.be/kXElzA2K1E0)
 
-- [a full-length article](http://www.willslab.org.uk/pubs/wills2016plm.pdf)
+- [a full-length article](https://www.andywills.info/assets/pdf/wills2016plm.pdf)
 
-## Mailing list
-
-Join the [catlearn-package](https://lists.r-forge.r-project.org/mailman/listinfo/catlearn-package) e-mail list to get occasional information on updates to the catlearn package.
 
 ## Installation
 
@@ -145,7 +142,7 @@ The Catlearn Research Group are based in the United Kingdom,
 
 # Roadmap
 
-We aim to release version 1.1 to CRAN by 26th March 2024.
+We aim to release version 1.1 to CRAN by 26th March 2025.
 
 Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 12th March 2024, the latest unstable release on github will be used to check and build stable version 1.1 for release to CRAN. 
 
