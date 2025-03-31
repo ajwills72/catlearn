@@ -142,20 +142,24 @@ The Catlearn Research Group are based in the United Kingdom,
 
 # Roadmap
 
-We aim to release version 1.1 to CRAN by 26th March 2025.
+We aim to release version 1.2 to CRAN by 1st April 2026.
 
-Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 12th March 2024, the latest unstable release on github will be used to check and build stable version 1.1 for release to CRAN. 
+Contributions of working, tested, Rd-documented code are welcome for consideration at any time. Where code is ready for inclusion into catlearn, it will first be released to the community as an unstable point release of catlearn on github. On 15th March 2026, the latest unstable release on github will be used to check and build stable version 1.2 for release to CRAN. 
 
 # History
 
 Dates of CRAN releases, along with email-list announcements (from 0.7.2, see
 [CHANGELOG](CHANGELOG.md) for more detail of changes):
 
-- Version 1.1.x. ("Krispy Kreme") _future_
+- Version 1.2.x ("Luscious Lollipop") _future_
 
-- Version 1.0.x ("Juicy Jam") _CURRENT_
+- Version 1.1.x. ("Krispy Kreme") _CURRENT_
 
-  - 2023-04-04: Version 1.0. **stable release** on its way to CRAN. [announcement](announce/version-1.0-email.txt).
+  - 2023-03-31: Version 1.1. **stable release** on its way to CRAN. This is a maintenance release.
+
+- Version 1.0.x ("Juicy Jam") 
+
+  - 2023-04-04: Version 1.0. on its way to CRAN. [announcement](announce/version-1.0-email.txt).
 
 - Version 0.9.x ("Incredible Icing")
 

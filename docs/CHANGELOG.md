@@ -4,7 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## Version 1.0 [cran]
+## Version 1.1 [cran]
+
+### Changed
+
+- **DESCRIPTION** Replace Author field with Authors@R field, as this now requested by R 4.5 checks
+
+- **Makevars** [code] Fix for portability of RcppArmadillo
+
+- **slpDGCM.Rd** [model] Non-content change to match braces
+
+## Version 1.0 
 
 ### Added
 
