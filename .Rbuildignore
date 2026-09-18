@@ -2,3 +2,5 @@
 ^docs$
 ^_config.yml$
 
+^.*\.Rproj$
+^\.Rproj\.user$
